@@ -1,0 +1,70 @@
+import * as React from "react"
+import { RiMoonClearLine, RiSunLine } from "@remixicon/react"
+
+import { useTheme } from "@/components/theme-provider"
+import { Button } from "@/components/ui/button"
+
+const COLOR_SCHEME_QUERY = "(prefers-color-scheme: dark)"
+
+type ResolvedTheme = "dark" | "light"
+
+function getSystemTheme(): ResolvedTheme {
+  if (
+    typeof window !== "undefined" &&
+    window.matchMedia(COLOR_SCHEME_QUERY).matches
+  ) {
+    return "dark"
+  }
+
+  return "light"
+}
+
+export function ThemeToggle() {
+  const { theme, setTheme } = useTheme()
+  const [systemTheme, setSystemTheme] =
+    React.useState<ResolvedTheme>(getSystemTheme)
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined
+    }
+
+    const mediaQuery = window.matchMedia(COLOR_SCHEME_QUERY)
+    const handleChange = () => {
+      setSystemTheme(mediaQuery.matches ? "dark" : "light")
+    }
+
+    handleChange()
+    mediaQuery.addEventListener("change", handleChange)
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange)
+    }
+  }, [])
+
+  const resolvedTheme: ResolvedTheme = theme === "system" ? systemTheme : theme
+  const isDark = resolvedTheme === "dark"
+
+  const handleToggleTheme = () => {
+    setTheme(isDark ? "light" : "dark")
+  }
+
+  return (
+    <Button
+      type="button"
+      variant="outline"
+      size="sm"
+      className="ml-auto gap-2 border-border/90"
+      onClick={handleToggleTheme}
+      aria-label="Przełącz motyw"
+      title="Przełącz motyw"
+    >
+      {isDark ? (
+        <RiMoonClearLine className="size-4" aria-hidden="true" />
+      ) : (
+        <RiSunLine className="size-4" aria-hidden="true" />
+      )}
+      <span>{isDark ? "Ciemny" : "Jasny"}</span>
+    </Button>
+  )
+}

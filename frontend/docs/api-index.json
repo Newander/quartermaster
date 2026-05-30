@@ -1,0 +1,3570 @@
+{
+  "generated_at": "2026-03-11T21:25:28Z",
+  "info": {
+    "description": "Backend API for Quartermaster CRM System",
+    "title": "Quartermaster System",
+    "version": "1.0.0"
+  },
+  "method_counts": {
+    "DELETE": 21,
+    "GET": 60,
+    "PATCH": 3,
+    "POST": 28,
+    "PUT": 17
+  },
+  "openapi": "3.1.0",
+  "source": "backend-openapi.json",
+  "stats": {
+    "operations": 129,
+    "paths": 66,
+    "schemas": 134,
+    "tags": 16
+  },
+  "tag_counts": {
+    "Admin": 10,
+    "Authentication": 13,
+    "Edit": 53,
+    "HR / Roles & Permissions": 13,
+    "Permissions": 10,
+    "Roles": 10,
+    "contract": 7,
+    "events": 15,
+    "graphql": 2,
+    "instructor": 5,
+    "member": 1,
+    "membership": 20,
+    "shelves": 19,
+    "statistics": 15,
+    "training": 29,
+    "untagged": 3
+  },
+  "tags": {
+    "Admin": [
+      {
+        "method": "GET",
+        "operationId": "list_permissions_api_auth_permissions_get",
+        "path": "/api/auth/permissions",
+        "responses": [
+          "200"
+        ],
+        "summary": "List Permissions",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_permission_api_auth_permissions_post",
+        "path": "/api/auth/permissions",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Permission",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "list_roles_api_auth_roles_get",
+        "path": "/api/auth/roles",
+        "responses": [
+          "200"
+        ],
+        "summary": "List Roles",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_role_api_auth_roles_post",
+        "path": "/api/auth/roles",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_role_api_auth_roles__role_id__delete",
+        "path": "/api/auth/roles/{role_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_role_api_auth_roles__role_id__get",
+        "path": "/api/auth/roles/{role_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "remove_permission_from_role_api_auth_roles__role_id__permissions__permission_id__delete",
+        "path": "/api/auth/roles/{role_id}/permissions/{permission_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Remove Permission From Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "assign_permission_to_role_api_auth_roles__role_id__permissions__permission_id__post",
+        "path": "/api/auth/roles/{role_id}/permissions/{permission_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Assign Permission To Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "remove_role_from_user_api_auth_users__user_id__roles__role_id__delete",
+        "path": "/api/auth/users/{user_id}/roles/{role_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Remove Role From User",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "assign_role_to_user_api_auth_users__user_id__roles__role_id__post",
+        "path": "/api/auth/users/{user_id}/roles/{role_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Assign Role To User",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      }
+    ],
+    "Authentication": [
+      {
+        "method": "POST",
+        "operationId": "login_for_access_token_api_auth_login_post",
+        "path": "/api/auth/login",
+        "requestContentTypes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Login For Access Token",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "read_user_me_api_auth_me_get",
+        "path": "/api/auth/me",
+        "responses": [
+          "200"
+        ],
+        "summary": "Read User Me",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "list_permissions_api_auth_permissions_get",
+        "path": "/api/auth/permissions",
+        "responses": [
+          "200"
+        ],
+        "summary": "List Permissions",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_permission_api_auth_permissions_post",
+        "path": "/api/auth/permissions",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Permission",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "register_user_api_auth_register_post",
+        "path": "/api/auth/register",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Register User",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "list_roles_api_auth_roles_get",
+        "path": "/api/auth/roles",
+        "responses": [
+          "200"
+        ],
+        "summary": "List Roles",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_role_api_auth_roles_post",
+        "path": "/api/auth/roles",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_role_api_auth_roles__role_id__delete",
+        "path": "/api/auth/roles/{role_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_role_api_auth_roles__role_id__get",
+        "path": "/api/auth/roles/{role_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "remove_permission_from_role_api_auth_roles__role_id__permissions__permission_id__delete",
+        "path": "/api/auth/roles/{role_id}/permissions/{permission_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Remove Permission From Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "assign_permission_to_role_api_auth_roles__role_id__permissions__permission_id__post",
+        "path": "/api/auth/roles/{role_id}/permissions/{permission_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Assign Permission To Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "remove_role_from_user_api_auth_users__user_id__roles__role_id__delete",
+        "path": "/api/auth/users/{user_id}/roles/{role_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Remove Role From User",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "assign_role_to_user_api_auth_users__user_id__roles__role_id__post",
+        "path": "/api/auth/users/{user_id}/roles/{role_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Assign Role To User",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      }
+    ],
+    "Edit": [
+      {
+        "method": "POST",
+        "operationId": "create_contract_api_contract__post",
+        "path": "/api/contract/",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Contract",
+        "tags": [
+          "contract",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "add_member_contract_api_contract_member__member_id__contract_post",
+        "path": "/api/contract/member/{member_id}/contract",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Add Member Contract",
+        "tags": [
+          "contract",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_member_contract_api_contract_member__member_id__contract__member_contract_id__put",
+        "path": "/api/contract/member/{member_id}/contract/{member_contract_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Member Contract",
+        "tags": [
+          "contract",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_contract_api_contract__contract_id__put",
+        "path": "/api/contract/{contract_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Contract",
+        "tags": [
+          "contract",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_event_api_events__post",
+        "path": "/api/events/",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Event",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_event_expense_api_events_expenses_post",
+        "path": "/api/events/expenses",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Event Expense",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_event_expense_api_events_expenses__expense_id__delete",
+        "path": "/api/events/expenses/{expense_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Event Expense",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_event_expense_api_events_expenses__expense_id__put",
+        "path": "/api/events/expenses/{expense_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Event Expense",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_event_registration_api_events_registrations_post",
+        "path": "/api/events/registrations",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Event Registration",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_event_registration_api_events_registrations__registration_id__delete",
+        "path": "/api/events/registrations/{registration_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Event Registration",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_event_registration_api_events_registrations__registration_id__put",
+        "path": "/api/events/registrations/{registration_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Event Registration",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_event_api_events__event_id__delete",
+        "path": "/api/events/{event_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Event",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_event_api_events__event_id__put",
+        "path": "/api/events/{event_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Event",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_instructor_api_instructor__post",
+        "path": "/api/instructor/",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Instructor",
+        "tags": [
+          "instructor",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_instructor_api_instructor__instructor_id__delete",
+        "path": "/api/instructor/{instructor_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Instructor",
+        "tags": [
+          "instructor",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_instructor_api_instructor__instructor_id__put",
+        "path": "/api/instructor/{instructor_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Instructor",
+        "tags": [
+          "instructor",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_membership_payment_api_membership__post",
+        "path": "/api/membership/",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Membership Payment",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_money_category_api_membership_categories_post",
+        "path": "/api/membership/categories",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Money Category",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_money_category_api_membership_categories__category_id__delete",
+        "path": "/api/membership/categories/{category_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Money Category",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_money_category_api_membership_categories__category_id__put",
+        "path": "/api/membership/categories/{category_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Money Category",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_payment_api_membership_payments_post",
+        "path": "/api/membership/payments",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Payment",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_payment_api_membership_payments__payment_id__delete",
+        "path": "/api/membership/payments/{payment_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Payment",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_payment_api_membership_payments__payment_id__put",
+        "path": "/api/membership/payments/{payment_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Payment",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_membership_plan_api_membership_plans_post",
+        "path": "/api/membership/plans",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Membership Plan",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_membership_plan_api_membership_plans__plan_id__delete",
+        "path": "/api/membership/plans/{plan_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Membership Plan",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_membership_plan_api_membership_plans__plan_id__put",
+        "path": "/api/membership/plans/{plan_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Membership Plan",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_membership_payment_api_membership__membership_id__delete",
+        "path": "/api/membership/{membership_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Membership Payment",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_membership_payment_api_membership__membership_id__put",
+        "path": "/api/membership/{membership_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Membership Payment",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_shelf_plan_api_shelves_plans_post",
+        "path": "/api/shelves/plans",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Shelf Plan",
+        "tags": [
+          "shelves",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PATCH",
+        "operationId": "update_shelf_plan_api_shelves_plans__plan_id__patch",
+        "path": "/api/shelves/plans/{plan_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Shelf Plan",
+        "tags": [
+          "shelves",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_shelf_rental_api_shelves_rentals_post",
+        "path": "/api/shelves/rentals",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Shelf Rental",
+        "tags": [
+          "shelves",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_shelf_rental_api_shelves_rentals__rental_id__delete",
+        "path": "/api/shelves/rentals/{rental_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Shelf Rental",
+        "tags": [
+          "shelves",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PATCH",
+        "operationId": "update_shelf_rental_api_shelves_rentals__rental_id__patch",
+        "path": "/api/shelves/rentals/{rental_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Shelf Rental",
+        "tags": [
+          "shelves",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_shelf_api_shelves_shelves_post",
+        "path": "/api/shelves/shelves",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Shelf",
+        "tags": [
+          "shelves",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_shelf_api_shelves_shelves__shelf_id__delete",
+        "path": "/api/shelves/shelves/{shelf_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Shelf",
+        "tags": [
+          "shelves",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PATCH",
+        "operationId": "update_shelf_api_shelves_shelves__shelf_id__patch",
+        "path": "/api/shelves/shelves/{shelf_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Shelf",
+        "tags": [
+          "shelves",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_attendance_api_training_attendance_post",
+        "path": "/api/training/attendance",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Attendance",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_attendance_api_training_attendance__attendance_id__delete",
+        "path": "/api/training/attendance/{attendance_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Attendance",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_training_form_api_training_forms_post",
+        "path": "/api/training/forms",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Training Form",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_training_form_api_training_forms__form_id__delete",
+        "path": "/api/training/forms/{form_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Training Form",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_training_form_api_training_forms__form_id__put",
+        "path": "/api/training/forms/{form_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Training Form",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_schedule_api_training_schedule_post",
+        "path": "/api/training/schedule",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Schedule",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_schedule_api_training_schedule__schedule_id__delete",
+        "path": "/api/training/schedule/{schedule_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Schedule",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_schedule_api_training_schedule__schedule_id__put",
+        "path": "/api/training/schedule/{schedule_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Schedule",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_season_api_training_seasons_post",
+        "path": "/api/training/seasons",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Season",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_season_api_training_seasons__season_id__delete",
+        "path": "/api/training/seasons/{season_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Season",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_season_api_training_seasons__season_id__put",
+        "path": "/api/training/seasons/{season_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Season",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_training_session_api_training_sessions_post",
+        "path": "/api/training/sessions",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Training Session",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_training_session_api_training_sessions__session_id__delete",
+        "path": "/api/training/sessions/{session_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Training Session",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_training_session_api_training_sessions__session_id__put",
+        "path": "/api/training/sessions/{session_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Training Session",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_training_zone_api_training_zones_post",
+        "path": "/api/training/zones",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Training Zone",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_training_zone_api_training_zones__zone_id__delete",
+        "path": "/api/training/zones/{zone_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Training Zone",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_training_zone_api_training_zones__zone_id__put",
+        "path": "/api/training/zones/{zone_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Training Zone",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      }
+    ],
+    "HR / Roles & Permissions": [
+      {
+        "method": "POST",
+        "operationId": "login_for_access_token_api_auth_login_post",
+        "path": "/api/auth/login",
+        "requestContentTypes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Login For Access Token",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "read_user_me_api_auth_me_get",
+        "path": "/api/auth/me",
+        "responses": [
+          "200"
+        ],
+        "summary": "Read User Me",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "list_permissions_api_auth_permissions_get",
+        "path": "/api/auth/permissions",
+        "responses": [
+          "200"
+        ],
+        "summary": "List Permissions",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_permission_api_auth_permissions_post",
+        "path": "/api/auth/permissions",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Permission",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "register_user_api_auth_register_post",
+        "path": "/api/auth/register",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Register User",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "list_roles_api_auth_roles_get",
+        "path": "/api/auth/roles",
+        "responses": [
+          "200"
+        ],
+        "summary": "List Roles",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_role_api_auth_roles_post",
+        "path": "/api/auth/roles",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_role_api_auth_roles__role_id__delete",
+        "path": "/api/auth/roles/{role_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_role_api_auth_roles__role_id__get",
+        "path": "/api/auth/roles/{role_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "remove_permission_from_role_api_auth_roles__role_id__permissions__permission_id__delete",
+        "path": "/api/auth/roles/{role_id}/permissions/{permission_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Remove Permission From Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "assign_permission_to_role_api_auth_roles__role_id__permissions__permission_id__post",
+        "path": "/api/auth/roles/{role_id}/permissions/{permission_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Assign Permission To Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "remove_role_from_user_api_auth_users__user_id__roles__role_id__delete",
+        "path": "/api/auth/users/{user_id}/roles/{role_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Remove Role From User",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "assign_role_to_user_api_auth_users__user_id__roles__role_id__post",
+        "path": "/api/auth/users/{user_id}/roles/{role_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Assign Role To User",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      }
+    ],
+    "Permissions": [
+      {
+        "method": "GET",
+        "operationId": "list_permissions_api_auth_permissions_get",
+        "path": "/api/auth/permissions",
+        "responses": [
+          "200"
+        ],
+        "summary": "List Permissions",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_permission_api_auth_permissions_post",
+        "path": "/api/auth/permissions",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Permission",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "list_roles_api_auth_roles_get",
+        "path": "/api/auth/roles",
+        "responses": [
+          "200"
+        ],
+        "summary": "List Roles",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_role_api_auth_roles_post",
+        "path": "/api/auth/roles",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_role_api_auth_roles__role_id__delete",
+        "path": "/api/auth/roles/{role_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_role_api_auth_roles__role_id__get",
+        "path": "/api/auth/roles/{role_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "remove_permission_from_role_api_auth_roles__role_id__permissions__permission_id__delete",
+        "path": "/api/auth/roles/{role_id}/permissions/{permission_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Remove Permission From Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "assign_permission_to_role_api_auth_roles__role_id__permissions__permission_id__post",
+        "path": "/api/auth/roles/{role_id}/permissions/{permission_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Assign Permission To Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "remove_role_from_user_api_auth_users__user_id__roles__role_id__delete",
+        "path": "/api/auth/users/{user_id}/roles/{role_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Remove Role From User",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "assign_role_to_user_api_auth_users__user_id__roles__role_id__post",
+        "path": "/api/auth/users/{user_id}/roles/{role_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Assign Role To User",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      }
+    ],
+    "Roles": [
+      {
+        "method": "GET",
+        "operationId": "list_permissions_api_auth_permissions_get",
+        "path": "/api/auth/permissions",
+        "responses": [
+          "200"
+        ],
+        "summary": "List Permissions",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_permission_api_auth_permissions_post",
+        "path": "/api/auth/permissions",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Permission",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "list_roles_api_auth_roles_get",
+        "path": "/api/auth/roles",
+        "responses": [
+          "200"
+        ],
+        "summary": "List Roles",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_role_api_auth_roles_post",
+        "path": "/api/auth/roles",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_role_api_auth_roles__role_id__delete",
+        "path": "/api/auth/roles/{role_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_role_api_auth_roles__role_id__get",
+        "path": "/api/auth/roles/{role_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "remove_permission_from_role_api_auth_roles__role_id__permissions__permission_id__delete",
+        "path": "/api/auth/roles/{role_id}/permissions/{permission_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Remove Permission From Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "assign_permission_to_role_api_auth_roles__role_id__permissions__permission_id__post",
+        "path": "/api/auth/roles/{role_id}/permissions/{permission_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Assign Permission To Role",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "remove_role_from_user_api_auth_users__user_id__roles__role_id__delete",
+        "path": "/api/auth/users/{user_id}/roles/{role_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Remove Role From User",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "assign_role_to_user_api_auth_users__user_id__roles__role_id__post",
+        "path": "/api/auth/users/{user_id}/roles/{role_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Assign Role To User",
+        "tags": [
+          "HR / Roles & Permissions",
+          "Authentication",
+          "Admin",
+          "Permissions",
+          "Roles"
+        ]
+      }
+    ],
+    "contract": [
+      {
+        "method": "GET",
+        "operationId": "get_contracts_api_contract__get",
+        "path": "/api/contract/",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Contracts",
+        "tags": [
+          "contract"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_contract_api_contract__post",
+        "path": "/api/contract/",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Contract",
+        "tags": [
+          "contract",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_member_contracts_api_contract_member__member_id__contract_get",
+        "path": "/api/contract/member/{member_id}/contract",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Member Contracts",
+        "tags": [
+          "contract"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "add_member_contract_api_contract_member__member_id__contract_post",
+        "path": "/api/contract/member/{member_id}/contract",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Add Member Contract",
+        "tags": [
+          "contract",
+          "Edit"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_member_contract_api_contract_member__member_id__contract__member_contract_id__put",
+        "path": "/api/contract/member/{member_id}/contract/{member_contract_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Member Contract",
+        "tags": [
+          "contract",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_contract_api_contract__contract_id__get",
+        "path": "/api/contract/{contract_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Contract",
+        "tags": [
+          "contract"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_contract_api_contract__contract_id__put",
+        "path": "/api/contract/{contract_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Contract",
+        "tags": [
+          "contract",
+          "Edit"
+        ]
+      }
+    ],
+    "events": [
+      {
+        "method": "GET",
+        "operationId": "get_events_api_events__get",
+        "path": "/api/events/",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Events",
+        "tags": [
+          "events"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_event_api_events__post",
+        "path": "/api/events/",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Event",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_event_expenses_api_events_expenses_get",
+        "path": "/api/events/expenses",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Event Expenses",
+        "tags": [
+          "events"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_event_expense_api_events_expenses_post",
+        "path": "/api/events/expenses",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Event Expense",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_event_expense_api_events_expenses__expense_id__delete",
+        "path": "/api/events/expenses/{expense_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Event Expense",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_event_expense_api_events_expenses__expense_id__get",
+        "path": "/api/events/expenses/{expense_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Event Expense",
+        "tags": [
+          "events"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_event_expense_api_events_expenses__expense_id__put",
+        "path": "/api/events/expenses/{expense_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Event Expense",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_event_registrations_api_events_registrations_get",
+        "path": "/api/events/registrations",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Event Registrations",
+        "tags": [
+          "events"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_event_registration_api_events_registrations_post",
+        "path": "/api/events/registrations",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Event Registration",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_event_registration_api_events_registrations__registration_id__delete",
+        "path": "/api/events/registrations/{registration_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Event Registration",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_event_registration_api_events_registrations__registration_id__get",
+        "path": "/api/events/registrations/{registration_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Event Registration",
+        "tags": [
+          "events"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_event_registration_api_events_registrations__registration_id__put",
+        "path": "/api/events/registrations/{registration_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Event Registration",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_event_api_events__event_id__delete",
+        "path": "/api/events/{event_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Event",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_event_api_events__event_id__get",
+        "path": "/api/events/{event_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Event",
+        "tags": [
+          "events"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_event_api_events__event_id__put",
+        "path": "/api/events/{event_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Event",
+        "tags": [
+          "events",
+          "Edit"
+        ]
+      }
+    ],
+    "graphql": [
+      {
+        "method": "GET",
+        "operationId": "handle_http_get_api_graphql_member_get",
+        "path": "/api/graphql-member",
+        "responses": [
+          "200",
+          "404"
+        ],
+        "summary": "Handle Http Get",
+        "tags": [
+          "graphql"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "handle_http_post_api_graphql_member_post",
+        "path": "/api/graphql-member",
+        "responses": [
+          "200"
+        ],
+        "summary": "Handle Http Post",
+        "tags": [
+          "graphql"
+        ]
+      }
+    ],
+    "instructor": [
+      {
+        "method": "GET",
+        "operationId": "get_instructors_api_instructor__get",
+        "path": "/api/instructor/",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Instructors",
+        "tags": [
+          "instructor"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_instructor_api_instructor__post",
+        "path": "/api/instructor/",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Instructor",
+        "tags": [
+          "instructor",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_instructor_api_instructor__instructor_id__delete",
+        "path": "/api/instructor/{instructor_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Instructor",
+        "tags": [
+          "instructor",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_instructor_api_instructor__instructor_id__get",
+        "path": "/api/instructor/{instructor_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Instructor",
+        "tags": [
+          "instructor"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_instructor_api_instructor__instructor_id__put",
+        "path": "/api/instructor/{instructor_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Instructor",
+        "tags": [
+          "instructor",
+          "Edit"
+        ]
+      }
+    ],
+    "member": [
+      {
+        "method": "GET",
+        "operationId": "wrapped_get_route_api_member__member_id__get",
+        "path": "/api/member/{member_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get a specific Member by ID",
+        "tags": [
+          "member"
+        ]
+      }
+    ],
+    "membership": [
+      {
+        "method": "GET",
+        "operationId": "get_membership_payments_api_membership__get",
+        "path": "/api/membership/",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Membership Payments",
+        "tags": [
+          "membership"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_membership_payment_api_membership__post",
+        "path": "/api/membership/",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Membership Payment",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_money_categories_api_membership_categories_get",
+        "path": "/api/membership/categories",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Money Categories",
+        "tags": [
+          "membership"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_money_category_api_membership_categories_post",
+        "path": "/api/membership/categories",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Money Category",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_money_category_api_membership_categories__category_id__delete",
+        "path": "/api/membership/categories/{category_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Money Category",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_money_category_api_membership_categories__category_id__get",
+        "path": "/api/membership/categories/{category_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Money Category",
+        "tags": [
+          "membership"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_money_category_api_membership_categories__category_id__put",
+        "path": "/api/membership/categories/{category_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Money Category",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_payments_api_membership_payments_get",
+        "path": "/api/membership/payments",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Payments",
+        "tags": [
+          "membership"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_payment_api_membership_payments_post",
+        "path": "/api/membership/payments",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Payment",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_payment_api_membership_payments__payment_id__delete",
+        "path": "/api/membership/payments/{payment_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Payment",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_payment_api_membership_payments__payment_id__get",
+        "path": "/api/membership/payments/{payment_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Payment",
+        "tags": [
+          "membership"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_payment_api_membership_payments__payment_id__put",
+        "path": "/api/membership/payments/{payment_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Payment",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_membership_plans_api_membership_plans_get",
+        "path": "/api/membership/plans",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Membership Plans",
+        "tags": [
+          "membership"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_membership_plan_api_membership_plans_post",
+        "path": "/api/membership/plans",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Membership Plan",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_membership_plan_api_membership_plans__plan_id__delete",
+        "path": "/api/membership/plans/{plan_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Membership Plan",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_membership_plan_api_membership_plans__plan_id__get",
+        "path": "/api/membership/plans/{plan_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Membership Plan",
+        "tags": [
+          "membership"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_membership_plan_api_membership_plans__plan_id__put",
+        "path": "/api/membership/plans/{plan_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Membership Plan",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_membership_payment_api_membership__membership_id__delete",
+        "path": "/api/membership/{membership_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Membership Payment",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_membership_payment_api_membership__membership_id__get",
+        "path": "/api/membership/{membership_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Membership Payment",
+        "tags": [
+          "membership"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_membership_payment_api_membership__membership_id__put",
+        "path": "/api/membership/{membership_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Membership Payment",
+        "tags": [
+          "membership",
+          "Edit"
+        ]
+      }
+    ],
+    "shelves": [
+      {
+        "method": "GET",
+        "operationId": "get_general_expenses_api_money_expenses_get",
+        "path": "/api/money/expenses",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get General Expenses",
+        "tags": [
+          "shelves"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_general_expense_api_money_expenses_post",
+        "path": "/api/money/expenses",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create General Expense",
+        "tags": [
+          "shelves"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_general_expense_api_money_expenses__expense_id__delete",
+        "path": "/api/money/expenses/{expense_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete General Expense",
+        "tags": [
+          "shelves"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_general_expense_api_money_expenses__expense_id__get",
+        "path": "/api/money/expenses/{expense_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get General Expense",
+        "tags": [
+          "shelves"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_general_expense_api_money_expenses__expense_id__put",
+        "path": "/api/money/expenses/{expense_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update General Expense",
+        "tags": [
+          "shelves"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "list_shelf_plans_api_shelves_plans_get",
+        "path": "/api/shelves/plans",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "List Shelf Plans",
+        "tags": [
+          "shelves"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_shelf_plan_api_shelves_plans_post",
+        "path": "/api/shelves/plans",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Shelf Plan",
+        "tags": [
+          "shelves",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_shelf_plan_api_shelves_plans__plan_id__get",
+        "path": "/api/shelves/plans/{plan_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Shelf Plan",
+        "tags": [
+          "shelves"
+        ]
+      },
+      {
+        "method": "PATCH",
+        "operationId": "update_shelf_plan_api_shelves_plans__plan_id__patch",
+        "path": "/api/shelves/plans/{plan_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Shelf Plan",
+        "tags": [
+          "shelves",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "list_shelf_rentals_api_shelves_rentals_get",
+        "path": "/api/shelves/rentals",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "List Shelf Rentals",
+        "tags": [
+          "shelves"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_shelf_rental_api_shelves_rentals_post",
+        "path": "/api/shelves/rentals",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Shelf Rental",
+        "tags": [
+          "shelves",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_shelf_rental_api_shelves_rentals__rental_id__delete",
+        "path": "/api/shelves/rentals/{rental_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Shelf Rental",
+        "tags": [
+          "shelves",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_shelf_rental_api_shelves_rentals__rental_id__get",
+        "path": "/api/shelves/rentals/{rental_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Shelf Rental",
+        "tags": [
+          "shelves"
+        ]
+      },
+      {
+        "method": "PATCH",
+        "operationId": "update_shelf_rental_api_shelves_rentals__rental_id__patch",
+        "path": "/api/shelves/rentals/{rental_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Shelf Rental",
+        "tags": [
+          "shelves",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "list_shelves_api_shelves_shelves_get",
+        "path": "/api/shelves/shelves",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "List Shelves",
+        "tags": [
+          "shelves"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_shelf_api_shelves_shelves_post",
+        "path": "/api/shelves/shelves",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Shelf",
+        "tags": [
+          "shelves",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_shelf_api_shelves_shelves__shelf_id__delete",
+        "path": "/api/shelves/shelves/{shelf_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Shelf",
+        "tags": [
+          "shelves",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_shelf_api_shelves_shelves__shelf_id__get",
+        "path": "/api/shelves/shelves/{shelf_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Shelf",
+        "tags": [
+          "shelves"
+        ]
+      },
+      {
+        "method": "PATCH",
+        "operationId": "update_shelf_api_shelves_shelves__shelf_id__patch",
+        "path": "/api/shelves/shelves/{shelf_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Shelf",
+        "tags": [
+          "shelves",
+          "Edit"
+        ]
+      }
+    ],
+    "statistics": [
+      {
+        "method": "GET",
+        "operationId": "get_attendance_statistics_api_statistics_attendance_get",
+        "path": "/api/statistics/attendance",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Attendance Statistics",
+        "tags": [
+          "statistics"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "list_checkpoints_api_statistics_checkpoint_get",
+        "path": "/api/statistics/checkpoint",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "List Checkpoints",
+        "tags": [
+          "statistics"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_checkpoint_api_statistics_checkpoint_post",
+        "path": "/api/statistics/checkpoint",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Create Checkpoint",
+        "tags": [
+          "statistics"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_checkpoint_api_statistics_checkpoint__checkpoint_date__get",
+        "path": "/api/statistics/checkpoint/{checkpoint_date}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Checkpoint",
+        "tags": [
+          "statistics"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_checkpoint_api_statistics_checkpoint__checkpoint_date__put",
+        "path": "/api/statistics/checkpoint/{checkpoint_date}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Checkpoint",
+        "tags": [
+          "statistics"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_checkpoint_api_statistics_checkpoint__checkpoint_id__delete",
+        "path": "/api/statistics/checkpoint/{checkpoint_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Checkpoint",
+        "tags": [
+          "statistics"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_financial_summary_api_statistics_financial_get",
+        "path": "/api/statistics/financial",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Financial Summary",
+        "tags": [
+          "statistics"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "group_finance_by_month_api_statistics_group_finance_by_month_get",
+        "path": "/api/statistics/group/finance/by-month",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Group Finance By Month",
+        "tags": [
+          "statistics"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "group_new_member_by_month_api_statistics_group_new_member_by_month_get",
+        "path": "/api/statistics/group/new-member/by-month",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Group New Member By Month",
+        "tags": [
+          "statistics"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "group_training_forms_by_schedule_api_statistics_group_training_forms_by_schedule_get",
+        "path": "/api/statistics/group/training-forms/by-schedule",
+        "responses": [
+          "200"
+        ],
+        "summary": "Group Training Forms By Schedule",
+        "tags": [
+          "statistics"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_member_statistics_api_statistics_member_get",
+        "path": "/api/statistics/member",
+        "responses": [
+          "200"
+        ],
+        "summary": "Get Member Statistics",
+        "tags": [
+          "statistics"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_member_statistics_api_statistics_members_get",
+        "path": "/api/statistics/members",
+        "responses": [
+          "200"
+        ],
+        "summary": "Get Member Statistics",
+        "tags": [
+          "statistics"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_monthly_report_api_statistics_reports_monthly__year___month__get",
+        "path": "/api/statistics/reports/monthly/{year}/{month}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Monthly Report",
+        "tags": [
+          "statistics"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_quarterly_report_api_statistics_reports_quarterly__year___quarter__get",
+        "path": "/api/statistics/reports/quarterly/{year}/{quarter}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Quarterly Report",
+        "tags": [
+          "statistics"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_yearly_report_api_statistics_reports_yearly__year__get",
+        "path": "/api/statistics/reports/yearly/{year}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Yearly Report",
+        "tags": [
+          "statistics"
+        ]
+      }
+    ],
+    "training": [
+      {
+        "method": "GET",
+        "operationId": "get_attendance_api_training_attendance_get",
+        "path": "/api/training/attendance",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Attendance",
+        "tags": [
+          "training"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_attendance_api_training_attendance_post",
+        "path": "/api/training/attendance",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Attendance",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_attendance_api_training_attendance__attendance_id__delete",
+        "path": "/api/training/attendance/{attendance_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Attendance",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_attendance_record_api_training_attendance__attendance_id__get",
+        "path": "/api/training/attendance/{attendance_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Attendance Record",
+        "tags": [
+          "training"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_training_forms_api_training_forms_get",
+        "path": "/api/training/forms",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Training Forms",
+        "tags": [
+          "training"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_training_form_api_training_forms_post",
+        "path": "/api/training/forms",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Training Form",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_training_form_api_training_forms__form_id__delete",
+        "path": "/api/training/forms/{form_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Training Form",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_training_form_api_training_forms__form_id__get",
+        "path": "/api/training/forms/{form_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Training Form",
+        "tags": [
+          "training"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_training_form_api_training_forms__form_id__put",
+        "path": "/api/training/forms/{form_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Training Form",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_schedules_api_training_schedule_get",
+        "path": "/api/training/schedule",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Schedules",
+        "tags": [
+          "training"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_schedule_api_training_schedule_post",
+        "path": "/api/training/schedule",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Schedule",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_schedule_api_training_schedule__schedule_id__delete",
+        "path": "/api/training/schedule/{schedule_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Schedule",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_schedule_api_training_schedule__schedule_id__get",
+        "path": "/api/training/schedule/{schedule_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Schedule",
+        "tags": [
+          "training"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_schedule_api_training_schedule__schedule_id__put",
+        "path": "/api/training/schedule/{schedule_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Schedule",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_seasons_api_training_seasons_get",
+        "path": "/api/training/seasons",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Seasons",
+        "tags": [
+          "training"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_season_api_training_seasons_post",
+        "path": "/api/training/seasons",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Season",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_season_api_training_seasons__season_id__delete",
+        "path": "/api/training/seasons/{season_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Season",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_season_api_training_seasons__season_id__get",
+        "path": "/api/training/seasons/{season_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Season",
+        "tags": [
+          "training"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_season_api_training_seasons__season_id__put",
+        "path": "/api/training/seasons/{season_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Season",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_training_sessions_api_training_sessions_get",
+        "path": "/api/training/sessions",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Training Sessions",
+        "tags": [
+          "training"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_training_session_api_training_sessions_post",
+        "path": "/api/training/sessions",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Training Session",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_training_session_api_training_sessions__session_id__delete",
+        "path": "/api/training/sessions/{session_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Training Session",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_training_session_api_training_sessions__session_id__get",
+        "path": "/api/training/sessions/{session_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Training Session",
+        "tags": [
+          "training"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_training_session_api_training_sessions__session_id__put",
+        "path": "/api/training/sessions/{session_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Training Session",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_training_zones_api_training_zones_get",
+        "path": "/api/training/zones",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Training Zones",
+        "tags": [
+          "training"
+        ]
+      },
+      {
+        "method": "POST",
+        "operationId": "create_training_zone_api_training_zones_post",
+        "path": "/api/training/zones",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "201",
+          "422"
+        ],
+        "summary": "Create Training Zone",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "DELETE",
+        "operationId": "delete_training_zone_api_training_zones__zone_id__delete",
+        "path": "/api/training/zones/{zone_id}",
+        "responses": [
+          "204",
+          "422"
+        ],
+        "summary": "Delete Training Zone",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "get_training_zone_api_training_zones__zone_id__get",
+        "path": "/api/training/zones/{zone_id}",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Get Training Zone",
+        "tags": [
+          "training"
+        ]
+      },
+      {
+        "method": "PUT",
+        "operationId": "update_training_zone_api_training_zones__zone_id__put",
+        "path": "/api/training/zones/{zone_id}",
+        "requestContentTypes": [
+          "application/json"
+        ],
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Update Training Zone",
+        "tags": [
+          "training",
+          "Edit"
+        ]
+      }
+    ],
+    "untagged": [
+      {
+        "method": "GET",
+        "operationId": "root__get",
+        "path": "/",
+        "responses": [
+          "200"
+        ],
+        "summary": "Root",
+        "tags": [
+          "untagged"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "search_objects_api_search_get",
+        "path": "/api/search",
+        "responses": [
+          "200",
+          "422"
+        ],
+        "summary": "Search Objects",
+        "tags": [
+          "untagged"
+        ]
+      },
+      {
+        "method": "GET",
+        "operationId": "health_check_health_get",
+        "path": "/health",
+        "responses": [
+          "200"
+        ],
+        "summary": "Health Check",
+        "tags": [
+          "untagged"
+        ]
+      }
+    ]
+  }
+}

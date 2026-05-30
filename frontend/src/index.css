@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Forest Garden Art Deco Color Palette */
+    --background: 40 30% 97%; /* Кремово-бежевый #FAF8F3 */
+    --foreground: 25 60% 10%; /* Глубокий коричневый #2C1810 */
+    
+    --card: 40 35% 96%; /* Светлый бежевый для карточек */
+    --card-foreground: 25 60% 10%;
+    
+    --popover: 40 35% 96%;
+    --popover-foreground: 25 60% 10%;
+    
+    --primary: 150 65% 22%; /* Изумрудно-зеленый лес #0F5132 */
+    --primary-foreground: 40 30% 97%;
+    
+    --secondary: 45 70% 50%; /* Золотой металлик #D4AF37 */
+    --secondary-foreground: 25 60% 10%;
+    
+    --muted: 75 20% 60%; /* Мягкий оливковый */
+    --muted-foreground: 25 40% 30%;
+    
+    --accent: 25 55% 50%; /* Теплый янтарный #C87F35 */
+    --accent-foreground: 40 30% 97%;
+    
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 40 30% 97%;
+    
+    --border: 75 20% 60%; /* Оливковые границы #8B9467 */
+    --input: 75 20% 55%;
+    --ring: 45 70% 50%; /* Золотое кольцо фокуса */
+    
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  
+  /* Art Deco Typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+}
+
+@layer components {
+  /* Art Deco Geometric Corners */
+  .art-deco-corners {
+    position: relative;
+  }
+  
+  .art-deco-corners::before,
+  .art-deco-corners::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-style: solid;
+    border-color: hsl(var(--secondary));
+  }
+  
+  .art-deco-corners::before {
+    top: -1px;
+    left: -1px;
+    border-width: 2px 0 0 2px;
+  }
+  
+  .art-deco-corners::after {
+    bottom: -1px;
+    right: -1px;
+    border-width: 0 2px 2px 0;
+  }
+  
+  /* Forest Pattern Background */
+  .forest-pattern {
+    background-image: 
+      linear-gradient(135deg, transparent 0%, transparent 48%, rgba(15, 81, 50, 0.02) 50%, transparent 52%, transparent 100%),
+      linear-gradient(45deg, transparent 0%, transparent 48%, rgba(15, 81, 50, 0.02) 50%, transparent 52%, transparent 100%);
+    background-size: 40px 40px;
+  }
+  
+  /* Art Deco Card */
+  .art-deco-card {
+    @apply bg-card rounded-lg shadow-sm border-2 border-border;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .art-deco-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      hsl(var(--secondary)) 50%, 
+      transparent 100%);
+  }
+  
+  /* Golden Divider */
+  .golden-divider {
+    height: 2px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      hsl(var(--secondary)) 20%, 
+      hsl(var(--secondary)) 80%, 
+      transparent 100%);
+  }
+  
+  /* Forest Button */
+  .btn-forest {
+    @apply bg-primary text-primary-foreground px-4 py-2 rounded-lg font-semibold;
+    @apply hover:bg-primary/90 transition-all duration-200;
+    @apply shadow-sm hover:shadow-md;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .btn-forest::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+    transition: left 0.5s;
+  }
+  
+  .btn-forest:hover::before {
+    left: 100%;
+  }
+  
+  /* Golden Button */
+  .btn-golden {
+    @apply bg-secondary text-secondary-foreground px-4 py-2 rounded-lg font-semibold;
+    @apply hover:bg-secondary/90 transition-all duration-200;
+    @apply shadow-sm hover:shadow-md;
+  }
+  
+  /* Art Deco Stats Card */
+  .stats-card {
+    @apply art-deco-card p-6 hover:shadow-lg transition-all duration-300;
+    border-left: 4px solid hsl(var(--primary));
+  }
+  
+  .stats-card-golden {
+    @apply art-deco-card p-6 hover:shadow-lg transition-all duration-300;
+    border-left: 4px solid hsl(var(--secondary));
+  }
+  
+  /* Sidebar Navigation Item */
+  .nav-item {
+    @apply relative flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200;
+    @apply text-foreground/80 hover:text-foreground hover:bg-primary/10;
+  }
+  
+  .nav-item-active {
+    @apply bg-primary text-primary-foreground shadow-sm;
+    @apply before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1;
+    @apply before:bg-secondary before:rounded-r;
+  }
+  
+  /* Form Input Art Deco Style */
+  .input-art-deco {
+    @apply w-full px-4 py-2 border-2 border-input rounded-md;
+    @apply focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent;
+    @apply bg-background text-foreground;
+    @apply transition-all duration-200;
+  }
+  
+  .input-art-deco:focus {
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+  }
+
+  /* Disabled state: make disabled fields lighter and softer */
+  .input-art-deco:disabled,
+  .input-art-deco.bg-muted:disabled {
+    background-color: hsl(var(--muted) / 0.12) !important; /* lighter than bg-muted */
+    color: hsl(var(--foreground) / 0.7);
+    border-color: hsl(var(--border) / 0.4);
+    cursor: not-allowed;
+    opacity: 1; /* keep text readable */
+  }
+
+  .input-art-deco:disabled::placeholder {
+    color: hsl(var(--muted-foreground) / 0.7);
+  }
+
+  .input-art-deco:disabled:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+@layer utilities {
+  /* Text Shadows for Art Deco Effect */
+  .text-shadow-gold {
+    text-shadow: 2px 2px 4px rgba(212, 175, 55, 0.3);
+  }
+  
+  /* Forest Gradient */
+  .gradient-forest {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(150 55% 30%) 100%);
+  }
+  
+  /* Golden Gradient */
+  .gradient-golden {
+    background: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(45 60% 45%) 100%);
+  }
+  
+  /* Amber Gradient */
+  .gradient-amber {
+    background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(25 45% 45%) 100%);
+  }
+}
