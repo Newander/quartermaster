@@ -1,0 +1,13 @@
+# General
+.idea/
+ignored/
+
+# Backend
+.venv/
+*.db
+*.egg-info/
+
+# Frontend
+node_modules/
+dist/
+.pnpm-store/
