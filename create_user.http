@@ -1,0 +1,46 @@
+### 1. Register a new user
+POST http://127.0.0.1:8080/api/auth/register
+Content-Type: application/json
+Authorization: not-really-a-key
+
+{
+  "username": "admin_hema",
+  "email": "admin@gmail.com",
+  "password": "supersecretpassword123",
+  "is_active": true,
+  "member_id": 1,
+  "role_id": 1
+}
+
+> {% client.global.set("auth_username", response.body.username); %}
+
+
+### 2. Login to get a token
+# OAuth2PasswordRequestForm requires form-urlencoded data
+POST http://127.0.0.1:8080/api/auth/login
+Content-Type: application/x-www-form-urlencoded
+
+username=admin_hema&password=supersecretpassword123
+
+> {%
+    client.global.set("auth_token", response.body.access_token);
+%}
+
+
+### 3. Check current user (Me)
+GET http://127.0.0.1:8080/api/auth/me
+Authorization: Bearer {{auth_token}}
+Accept: application/json
+
+
+### 4. Attempt login with a wrong password (for error testing)
+POST http://127.0.0.1:8080/api/auth/login
+Content-Type: application/x-www-form-urlencoded
+
+username=admin_hema&password=wrongpassword
+
+
+###
+GET http://127.0.0.1:8080/api/auth/roles
+Authorization: Bearer {{auth_token}}
+Accept: application/json

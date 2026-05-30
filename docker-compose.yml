@@ -1,0 +1,94 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: hema-garden-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-hema_garden}
+      MYSQL_USER: ${MYSQL_USER:-hema_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-hema_password}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+    ports:
+      - "${MYSQL_PORT:-7779}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot_password"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+    image: hema-garden-backend
+    container_name: hema-garden-backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    environment:
+      DATABASE_URL: mysql+pymysql://${MYSQL_USER:-hema_user}:${MYSQL_PASSWORD:-hema_password}@mysql:3306/${MYSQL_DATABASE:-hema_garden}
+      SECRET_TOKEN: ${SECRET_TOKEN:-not-really-a-key}
+      SALT: ${SALT:-quartermaster-dev-secret-change-me}
+      REFRESH_TOKEN_SALT: ${REFRESH_TOKEN_SALT:-quartermaster-dev-refresh-secret-change-me}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-30}
+      REFRESH_TOKEN_EXPIRE_DAYS: ${REFRESH_TOKEN_EXPIRE_DAYS:-14}
+      REFRESH_TOKEN_ROTATE: ${REFRESH_TOKEN_ROTATE:-true}
+      APP_PORT: 8080
+    ports:
+      - "${BACKEND_PORT:-7778}:8080"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import os, urllib.request; urllib.request.urlopen(f\"http://localhost:{os.getenv('APP_PORT', '8080')}/health\")",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend-fixtures:
+    image: hema-garden-backend
+    container_name: hema-garden-backend-fixtures
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      BASE_URL: http://backend:8080/api
+      AUTH_USERNAME: admin_hema
+      AUTH_PASSWORD: supersecretpassword123
+      AUTH_EMAIL: admin@gmail.com
+      SECRET_TOKEN: ${SECRET_TOKEN:-not-really-a-key}
+    command: ["fixtures"]
+    restart: "no"
+
+  frontend:
+    build:
+      context: ./frontend
+    image: hema-garden-frontend
+    container_name: hema-garden-frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-7777}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget -q -O - http://127.0.0.1/hema-crm/ >/dev/null 2>&1 || exit 1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_data:

@@ -1,0 +1,39 @@
+### Default backend auth + member schema
+### The backend currently exposes the schema route as /api/member/schema.
+
+@baseUrl = http://127.0.0.1:8080/api
+@secretToken = not-really-a-key
+@username = admin_hema
+@password = supersecretpassword123
+@email = admin@gmail.com
+
+### 1. Ensure the default user exists
+### This request is idempotent enough for local usage:
+### 201 for created, 400 if the user already exists.
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+Authorization: {{secretToken}}
+
+{
+  "username": "{{username}}",
+  "email": "{{email}}",
+  "password": "{{password}}",
+  "is_active": true,
+  "member_id": null,
+  "role_id": 1
+}
+
+### 2. Authenticate the default user
+POST {{baseUrl}}/auth/login
+Content-Type: application/x-www-form-urlencoded
+
+username={{username}}&password={{password}}
+
+> {%
+  client.global.set("auth_token", response.body.access_token);
+%}
+
+### 3. Call member schema
+GET {{baseUrl}}/member/schema
+Authorization: Bearer {{auth_token}}
+Accept: application/json

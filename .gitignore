@@ -11,3 +11,11 @@ ignored/
 node_modules/
 dist/
 .pnpm-store/
+
+# AI
+.agents/
+.codex/
+.rtk/
+AGENTS.md
+CLAUDE.md
+RTK.md

@@ -1,0 +1,536 @@
+### Quartermaster System - API Test Requests
+### Business Process Flow
+
+### Base URL
+@baseUrl = http://localhost:8080/api
+
+### ============================================
+### 1. SETUP: Create Instructors
+### ============================================
+
+### Create Instructor 1 - Longsword Specialist
+POST {{baseUrl}}/instructors
+Content-Type: application/json
+
+{
+  "first_name": "John",
+  "last_name": "Smith",
+  "email": "john.smith@hemagym.com",
+  "phone": "+1234567890",
+  "specialization": "Longsword",
+  "bio": "15 years of HEMA experience, specializing in German longsword techniques"
+}
+
+### Create Instructor 2 - Rapier Specialist
+POST {{baseUrl}}/instructors
+Content-Type: application/json
+
+{
+  "first_name": "Maria",
+  "last_name": "Garcia",
+  "email": "maria.garcia@hemagym.com",
+  "phone": "+1234567891",
+  "specialization": "Rapier",
+  "bio": "Expert in Italian rapier and Spanish destreza"
+}
+
+### Get All Instructors
+GET {{baseUrl}}/instructors
+
+### ============================================
+### 2. SETUP: Create Training Forms
+### ============================================
+
+### Create Training Form - Longsword
+POST {{baseUrl}}/training/forms
+Content-Type: application/json
+
+{
+  "name": "Longsword",
+  "description": "German longsword techniques based on historical treatises",
+  "instructor_id": 1
+}
+
+### Create Training Form - Rapier
+POST {{baseUrl}}/training/forms
+Content-Type: application/json
+
+{
+  "name": "Rapier",
+  "description": "Italian and Spanish rapier fencing",
+  "instructor_id": 2
+}
+
+### Get All Training Forms
+GET {{baseUrl}}/training/forms
+
+### ============================================
+### 3. SETUP: Create Weekly Schedules
+### ============================================
+
+### Create Schedule - Longsword Monday
+POST {{baseUrl}}/training/schedules
+Content-Type: application/json
+
+{
+  "training_form_id": 1,
+  "instructor_id": 1,
+  "day_of_week": "monday",
+  "start_time": "18:00:00",
+  "end_time": "20:00:00",
+  "max_participants": 15
+}
+
+### Create Schedule - Rapier Wednesday
+POST {{baseUrl}}/training/schedules
+Content-Type: application/json
+
+{
+  "training_form_id": 2,
+  "instructor_id": 2,
+  "day_of_week": "wednesday",
+  "start_time": "19:00:00",
+  "end_time": "21:00:00",
+  "max_participants": 12
+}
+
+### Get All Schedules
+GET {{baseUrl}}/training/schedules
+
+### ============================================
+### 4. SETUP: Create Membership Plans
+### ============================================
+
+### Create Monthly Membership Plan
+POST {{baseUrl}}/memberships/plans
+Content-Type: application/json
+
+{
+  "name": "Monthly Unlimited",
+  "description": "Unlimited access to all training sessions for 30 days",
+  "membership_type": "monthly",
+  "price": 100.00,
+  "duration_days": 30
+}
+
+### Create Visit-Based Membership Plan
+POST {{baseUrl}}/memberships/plans
+Content-Type: application/json
+
+{
+  "name": "10 Visit Pass",
+  "description": "10 training sessions, valid for 90 days",
+  "membership_type": "visits",
+  "price": 80.00,
+  "duration_days": 90,
+  "visit_count": 10
+}
+
+### Get All Membership Plans
+GET {{baseUrl}}/memberships/plans
+
+### ============================================
+### 5. MEMBER REGISTRATION
+### ============================================
+
+### Register New Member 1
+POST {{baseUrl}}/member
+Content-Type: application/json
+
+{
+  "first_name": "Alice",
+  "last_name": "Johnson",
+  "email": "alice.johnson@example.com",
+  "phone": "+1234567892",
+  "date_of_birth": "1995-03-15",
+  "notes": "Interested in longsword"
+}
+
+### Register New Member 2
+POST {{baseUrl}}/member
+Content-Type: application/json
+
+{
+  "first_name": "Bob",
+  "last_name": "Williams",
+  "email": "bob.williams@example.com",
+  "phone": "+1234567893",
+  "date_of_birth": "1988-07-22",
+  "notes": "Previous fencing experience"
+}
+
+### Register New Member 3
+POST {{baseUrl}}/member
+Content-Type: application/json
+
+{
+  "first_name": "Carol",
+  "last_name": "Davis",
+  "email": "carol.davis@example.com",
+  "phone": "+1234567894",
+  "date_of_birth": "2000-11-08"
+}
+
+### Get All Members
+GET {{baseUrl}}/member
+
+### Get Active Members Only
+GET {{baseUrl}}/member?is_active=true
+
+### ============================================
+### 6. CREATE MEMBERSHIPS
+### ============================================
+
+### Create Membership for Alice (Monthly)
+POST {{baseUrl}}/memberships
+Content-Type: application/json
+
+{
+  "member_id": 1,
+  "plan_id": 1,
+  "start_date": "2025-01-01"
+}
+
+### Create Membership for Bob (10 Visits)
+POST {{baseUrl}}/memberships
+Content-Type: application/json
+
+{
+  "member_id": 2,
+  "plan_id": 2,
+  "start_date": "2025-01-01"
+}
+
+### Create Membership for Carol (Monthly)
+POST {{baseUrl}}/memberships
+Content-Type: application/json
+
+{
+  "member_id": 3,
+  "plan_id": 1,
+  "start_date": "2025-01-01"
+}
+
+### Get All Memberships
+GET {{baseUrl}}/memberships
+
+### Get Memberships for Specific Member
+GET {{baseUrl}}/memberships?member_id=1
+
+### ============================================
+### 7. RECORD PAYMENTS
+### ============================================
+
+### Record Payment for Alice's Membership
+POST {{baseUrl}}/memberships/payments
+Content-Type: application/json
+
+{
+  "membership_id": 1,
+  "amount": 100.00,
+  "payment_date": "2025-01-01",
+  "payment_method": "card",
+  "notes": "Paid via credit card"
+}
+
+### Record Payment for Bob's Membership
+POST {{baseUrl}}/memberships/payments
+Content-Type: application/json
+
+{
+  "membership_id": 2,
+  "amount": 80.00,
+  "payment_date": "2025-01-01",
+  "payment_method": "cash"
+}
+
+### Record Payment for Carol's Membership
+POST {{baseUrl}}/memberships/payments
+Content-Type: application/json
+
+{
+  "membership_id": 3,
+  "amount": 100.00,
+  "payment_date": "2025-01-01",
+  "payment_method": "transfer",
+  "notes": "Bank transfer"
+}
+
+### Get All Payments
+GET {{baseUrl}}/memberships/payments
+
+### ============================================
+### 8. CREATE TRAINING SESSIONS
+### ============================================
+
+### Create Training Session - Longsword Monday
+POST {{baseUrl}}/training/sessions
+Content-Type: application/json
+
+{
+  "schedule_id": 1,
+  "session_date": "2025-01-06",
+  "notes": "Focus on guards and cuts"
+}
+
+### Create Training Session - Rapier Wednesday
+POST {{baseUrl}}/training/sessions
+Content-Type: application/json
+
+{
+  "schedule_id": 2,
+  "session_date": "2025-01-08",
+  "notes": "Footwork and lunges"
+}
+
+### Get All Training Sessions
+GET {{baseUrl}}/training/sessions
+
+### Get Sessions by Date Range
+GET {{baseUrl}}/training/sessions?start_date=2025-01-01&end_date=2025-01-31
+
+### ============================================
+### 9. RECORD ATTENDANCE
+### ============================================
+
+### Record Attendance - Alice at Longsword
+POST {{baseUrl}}/training/attendance
+Content-Type: application/json
+
+{
+  "session_id": 1,
+  "member_id": 1,
+  "attended": true,
+  "notes": "Great progress on guards"
+}
+
+### Record Attendance - Bob at Longsword
+POST {{baseUrl}}/training/attendance
+Content-Type: application/json
+
+{
+  "session_id": 1,
+  "member_id": 2,
+  "attended": true
+}
+
+### Record Attendance - Carol at Rapier
+POST {{baseUrl}}/training/attendance
+Content-Type: application/json
+
+{
+  "session_id": 2,
+  "member_id": 3,
+  "attended": true,
+  "notes": "First class, very enthusiastic"
+}
+
+### Get Attendance for Session
+GET {{baseUrl}}/training/attendance?session_id=1
+
+### Get Attendance for Member
+GET {{baseUrl}}/training/attendance?member_id=1
+
+### ============================================
+### 10. CREATE SPECIAL EVENTS
+### ============================================
+
+### Create Event - Workshop
+POST {{baseUrl}}/events
+Content-Type: application/json
+
+{
+  "name": "Advanced Longsword Workshop",
+  "description": "Two-day intensive workshop on advanced longsword techniques",
+  "event_date": "2025-02-15",
+  "start_time": "2025-02-15T10:00:00",
+  "end_time": "2025-02-15T17:00:00",
+  "location": "Main Training Hall",
+  "max_participants": 20,
+  "price": 150.00
+}
+
+### Create Event - Tournament
+POST {{baseUrl}}/events
+Content-Type: application/json
+
+{
+  "name": "Spring Tournament",
+  "description": "Friendly sparring tournament for all levels",
+  "event_date": "2025-03-20",
+  "start_time": "2025-03-20T09:00:00",
+  "end_time": "2025-03-20T18:00:00",
+  "location": "Main Training Hall",
+  "max_participants": 30,
+  "price": 25.00
+}
+
+### Get All Events
+GET {{baseUrl}}/events
+
+### Get Upcoming Events
+GET {{baseUrl}}/events?start_date=2025-01-01&is_active=true
+
+### ============================================
+### 11. EVENT REGISTRATIONS
+### ============================================
+
+### Register Alice for Workshop
+POST {{baseUrl}}/events/registrations
+Content-Type: application/json
+
+{
+  "event_id": 1,
+  "member_id": 1,
+  "amount_paid": 150.00,
+  "notes": "Paid in full"
+}
+
+### Register Bob for Tournament
+POST {{baseUrl}}/events/registrations
+Content-Type: application/json
+
+{
+  "event_id": 2,
+  "member_id": 2,
+  "amount_paid": 25.00
+}
+
+### Update Registration Payment Status
+PUT {{baseUrl}}/events/registrations/1
+Content-Type: application/json
+
+{
+  "payment_status": "paid"
+}
+
+### Get Event Registrations
+GET {{baseUrl}}/events/registrations?event_id=1
+
+### ============================================
+### 12. RECORD EXPENSES
+### ============================================
+
+### Record Monthly Expense - Rent
+POST {{baseUrl}}/events/general-expenses
+Content-Type: application/json
+
+{
+  "description": "Monthly gym rent",
+  "amount": 2000.00,
+  "expense_date": "2025-01-01",
+  "category": "rent",
+  "is_recurring": true,
+  "notes": "January rent payment"
+}
+
+### Record Monthly Expense - Utilities
+POST {{baseUrl}}/events/general-expenses
+Content-Type: application/json
+
+{
+  "description": "Electricity and water",
+  "amount": 300.00,
+  "expense_date": "2025-01-05",
+  "category": "utilities",
+  "is_recurring": true
+}
+
+### Record Monthly Expense - Equipment
+POST {{baseUrl}}/events/general-expenses
+Content-Type: application/json
+
+{
+  "description": "New training swords",
+  "amount": 500.00,
+  "expense_date": "2025-01-10",
+  "category": "equipment",
+  "is_recurring": false,
+  "notes": "5 synthetic longswords"
+}
+
+### Record Event Expense
+POST {{baseUrl}}/events/expenses
+Content-Type: application/json
+
+{
+  "event_id": 1,
+  "description": "Guest instructor fee",
+  "amount": 500.00,
+  "expense_date": "2025-02-15",
+  "category": "instructor",
+  "notes": "Payment for workshop instructor"
+}
+
+### Get Monthly Expenses
+GET {{baseUrl}}/events/general-expenses
+
+### Get Monthly Expenses by Category
+GET {{baseUrl}}/events/general-expenses?category=rent
+
+### Get Monthly Expenses by Date Range
+GET {{baseUrl}}/events/general-expenses?start_date=2025-01-01&end_date=2025-01-31
+
+### ============================================
+### 13. STATISTICS AND REPORTS
+### ============================================
+
+### Get Member Statistics
+GET {{baseUrl}}/statistics/member
+
+### Get Financial Summary
+GET {{baseUrl}}/statistics/financial?start_date=2025-01-01&end_date=2025-01-31
+
+### Get Attendance Statistics
+GET {{baseUrl}}/statistics/attendance?start_date=2025-01-01&end_date=2025-01-31
+
+### Get Monthly Report
+GET {{baseUrl}}/statistics/reports/monthly/2025/1
+
+### Get Quarterly Report (Q1)
+GET {{baseUrl}}/statistics/reports/quarterly/2025/1
+
+### Get Yearly Report
+GET {{baseUrl}}/statistics/reports/yearly/2025
+
+### ============================================
+### ADDITIONAL OPERATIONS
+### ============================================
+
+### Update Member Information
+PUT {{baseUrl}}/member/1
+Content-Type: application/json
+
+{
+  "phone": "+1234567899",
+  "notes": "Updated phone number, progressing well in longsword"
+}
+
+### Update Membership Status
+PUT {{baseUrl}}/memberships/1
+Content-Type: application/json
+
+{
+  "payment_status": "paid"
+}
+
+### Get Specific Member
+GET {{baseUrl}}/member/1
+
+### Get Specific Instructor
+GET {{baseUrl}}/instructors/1
+
+### Get Specific Event
+GET {{baseUrl}}/events/1
+
+### Cancel Training Session
+PUT {{baseUrl}}/training/sessions/1
+Content-Type: application/json
+
+{
+  "is_cancelled": true,
+  "notes": "Instructor unavailable"
+}
+
+### Deactivate Member
+PUT {{baseUrl}}/member
