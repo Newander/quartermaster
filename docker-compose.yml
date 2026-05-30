@@ -77,6 +77,8 @@ services:
     restart: unless-stopped
     ports:
       - "${FRONTEND_PORT:-7777}:80"
+    volumes:
+      - ./frontend:/app
     depends_on:
       backend:
         condition: service_healthy

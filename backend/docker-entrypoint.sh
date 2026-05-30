@@ -8,6 +8,7 @@ run_migrations() {
 
 run_fixtures() {
   echo "Loading fixture data..."
+  python -m fixture_data.auth
   python -m fixture_data.upload_all_data
   python -m fixture_data.upload_expenses
   python -m fixture_data.upload_shelf_instructors

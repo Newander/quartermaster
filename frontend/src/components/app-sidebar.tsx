@@ -32,7 +32,7 @@ export function AppSidebar({
   onSectionChange: (section: AppSection) => void
 }) {
   const mainNavigationItems = useMainNavigation()
-  const logoSrc = `${import.meta.env.BASE_URL}FHSW_300x300px_black-300x297.png`
+  const logoSrc = `${import.meta.env.BASE_URL}favicon.png`
 
   const sidebarUser = {
     name: user?.name ?? "HEMA Gardens",

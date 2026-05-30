@@ -25,11 +25,16 @@ class HEMAGymAPITester:
     # Helper Methods
     # ============================================
 
+    def get_list(self, path: str, **params) -> Dict[str, Any] | list[Dict[str, Any]]:
+        """Fetch list endpoints with enough rows for idempotency checks."""
+        params.setdefault("limit", 10000)
+        response = self.session.get(f"{self.base_url}{path}", params=params)
+        response.raise_for_status()
+        return response.json()
+
     def find_instructor_by_email(self, email: str) -> Optional[Dict[str, Any]]:
         """Find instructor by member email"""
-        response = self.session.get(f"{self.base_url}/instructor/")
-        response.raise_for_status()
-        data = response.json()
+        data = self.get_list("/instructor/")
         for instructor in data.get('instructors', []):
             member = instructor.get('member') or {}
             if member.get('email') == email:
@@ -38,9 +43,7 @@ class HEMAGymAPITester:
 
     def find_member_by_email(self, email: str) -> Optional[Dict[str, Any]]:
         """Find member by email"""
-        response = self.session.get(f"{self.base_url}/member/")
-        response.raise_for_status()
-        data = response.json()
+        data = self.get_list("/member/")
         for member in data.get('members', []):
             if member.get('email') == email:
                 return member
@@ -48,9 +51,7 @@ class HEMAGymAPITester:
 
     def find_training_form_by_name(self, name: str) -> Optional[Dict[str, Any]]:
         """Find training form by name"""
-        response = self.session.get(f"{self.base_url}/training/forms")
-        response.raise_for_status()
-        data = response.json()
+        data = self.get_list("/training/forms")
         for form in data.get('forms', []):
             if form.get('name') == name:
                 return form
@@ -58,9 +59,7 @@ class HEMAGymAPITester:
 
     def find_membership_plan_by_name(self, name: str) -> Optional[Dict[str, Any]]:
         """Find membership plan by name"""
-        response = self.session.get(f"{self.base_url}/membership/plans")
-        response.raise_for_status()
-        data = response.json()
+        data = self.get_list("/membership/plans")
         for plan in data.get('plans', []):
             if plan.get('name') == name:
                 return plan
@@ -68,9 +67,7 @@ class HEMAGymAPITester:
 
     def find_event_by_name(self, name: str) -> Optional[Dict[str, Any]]:
         """Find event by name"""
-        response = self.session.get(f"{self.base_url}/events")
-        response.raise_for_status()
-        data = response.json()
+        data = self.get_list("/events")
         for event in data.get('events', []):
             if event.get('name') == name:
                 return event
@@ -78,9 +75,7 @@ class HEMAGymAPITester:
 
     def find_schedule(self, training_form_id: int, day_of_week: str) -> Optional[Dict[str, Any]]:
         """Find schedule by training form and day"""
-        response = self.session.get(f"{self.base_url}/training/schedule")
-        response.raise_for_status()
-        data = response.json()
+        data = self.get_list("/training/schedule")
         for schedule in data.get('schedules', []):
             if schedule.get('training_form_id') == training_form_id and schedule.get('day_of_week') == day_of_week:
                 return schedule
@@ -88,9 +83,7 @@ class HEMAGymAPITester:
 
     def find_membership(self, member_id: int, plan_id: int) -> Optional[Dict[str, Any]]:
         """Find membership payment link by member and plan"""
-        response = self.session.get(f"{self.base_url}/membership?member_id={member_id}")
-        response.raise_for_status()
-        data = response.json()
+        data = self.get_list("/membership", member_id=member_id)
         for membership in data.get('memberships', []):
             if membership.get('plan_id') == plan_id:
                 return membership
@@ -98,9 +91,7 @@ class HEMAGymAPITester:
 
     def find_payment(self, description: str, amount: float, payment_date: str) -> Optional[Dict[str, Any]]:
         """Find an existing payment by description, amount and date"""
-        response = self.session.get(f"{self.base_url}/membership/payments")
-        response.raise_for_status()
-        data = response.json()
+        data = self.get_list("/membership/payments")
         for payment in data.get('payments', []) if isinstance(data, dict) else data:
             if (
                     payment.get('description') == description and
@@ -112,9 +103,7 @@ class HEMAGymAPITester:
 
     def find_training_session(self, schedule_id: int, session_date: str) -> Optional[Dict[str, Any]]:
         """Find training session by schedule and date"""
-        response = self.session.get(f"{self.base_url}/training/sessions")
-        response.raise_for_status()
-        data = response.json()
+        data = self.get_list("/training/sessions")
         for session in data.get('sessions', []):
             if session.get('schedule_id') == schedule_id and session.get('session_date') == session_date:
                 return session
@@ -123,9 +112,7 @@ class HEMAGymAPITester:
     def find_season_by_name(self, name: str) -> Optional[Dict[str, Any]]:
         """Find season by name"""
         try:
-            response = self.session.get(f"{self.base_url}/training/seasons")
-            response.raise_for_status()
-            data = response.json()
+            data = self.get_list("/training/seasons")
             for season in data.get('seasons', []):
                 if season.get('name') == name:
                     return season
@@ -135,9 +122,7 @@ class HEMAGymAPITester:
 
     def find_money_category_by_name(self, name: str) -> Optional[Dict[str, Any]]:
         """Find money category by name"""
-        response = self.session.get(f"{self.base_url}/membership/categories")
-        response.raise_for_status()
-        data = response.json()
+        data = self.get_list("/membership/categories")
         for category in data.get('categories', []):
             if category.get('name') == name:
                 return category
@@ -146,9 +131,7 @@ class HEMAGymAPITester:
     def find_contract_by_title(self, title: str) -> Optional[Dict[str, Any]]:
         """Find contract by title"""
         try:
-            response = self.session.get(f"{self.base_url}/contracts/")
-            response.raise_for_status()
-            data = response.json()
+            data = self.get_list("/contracts/")
             for contract in data.get('contracts', []):
                 if contract.get('title') == title:
                     return contract
@@ -159,9 +142,7 @@ class HEMAGymAPITester:
     def find_shelf_by_number(self, shelf_number: str) -> Optional[Dict[str, Any]]:
         """Find shelf by shelf number"""
         try:
-            response = self.session.get(f"{self.base_url}/shelves/shelves")
-            response.raise_for_status()
-            data = response.json()
+            data = self.get_list("/shelves/shelves")
             for shelf in data.get('shelves', []):
                 if shelf.get('shelf_number') == shelf_number:
                     return shelf
@@ -172,9 +153,7 @@ class HEMAGymAPITester:
     def find_shelf_plan_by_name(self, name: str) -> Optional[Dict[str, Any]]:
         """Find shelf plan by name"""
         try:
-            response = self.session.get(f"{self.base_url}/shelves/plans")
-            response.raise_for_status()
-            plans = response.json()
+            plans = self.get_list("/shelves/plans")
             for plan in plans:
                 if plan.get('name') == name:
                     return plan

@@ -19,7 +19,7 @@ from app.models.event import EventRegistration, EventExpense
 from app.models.hr import Member
 from app.models.money import Expense
 from app.models.money import Payment
-from app.models.training import TrainingSession, TrainingSessionAttendance, TrainingForm
+from app.models.training import Schedule, TrainingSession, TrainingSessionAttendance, TrainingForm
 from app.schemas.statistics import (
     MemberStatistics,
     FinancialSummary,
@@ -43,6 +43,126 @@ class FinancialSummaryDict(TypedDict):
 
 
 stat_router = APIRouter()
+
+
+@stat_router.get("/dashboard")
+def get_dashboard_statistics(
+        days: int = Query(default=90, ge=1, le=365),
+        as_of: date | None = None,
+        occupancy_start_date: date | None = None,
+        occupancy_end_date: date | None = None,
+        load_end_date: date | None = None,
+        db: Session = Depends(get_db),
+):
+    """Aggregated dashboard metrics used by the frontend landing dashboard."""
+    today = as_of or date.today()
+    current_month_start = today.replace(day=1)
+    previous_month_end = current_month_start - timedelta(days=1)
+    previous_month_start = previous_month_end.replace(day=1)
+
+    current_month_count = db.query(Member).filter(
+        Member.is_deleted == False,
+        Member.registration_date >= current_month_start,
+        Member.registration_date <= today,
+    ).count()
+    previous_month_count = db.query(Member).filter(
+        Member.is_deleted == False,
+        Member.registration_date >= previous_month_start,
+        Member.registration_date <= previous_month_end,
+    ).count()
+    delta_count = current_month_count - previous_month_count
+    delta_percent = (
+        (delta_count / previous_month_count) * 100
+        if previous_month_count
+        else None
+    )
+
+    occupancy_end = occupancy_end_date or today
+    occupancy_start = occupancy_start_date or (occupancy_end - timedelta(days=days - 1))
+    session_rows = db.query(
+        TrainingSession.id,
+        Schedule.max_participants,
+    ).outerjoin(
+        Schedule,
+        TrainingSession.schedule_id == Schedule.id,
+    ).filter(
+        TrainingSession.session_date >= occupancy_start,
+        TrainingSession.session_date <= occupancy_end,
+        TrainingSession.is_cancelled == False,
+    ).all()
+    session_ids = [row.id for row in session_rows]
+    sessions_count = len(session_ids)
+    total_capacity = sum((row.max_participants or 0) for row in session_rows)
+    total_attended = 0
+    if session_ids:
+        total_attended = db.query(TrainingSessionAttendance).filter(
+            TrainingSessionAttendance.session_id.in_(session_ids),
+            TrainingSessionAttendance.attended == True,
+        ).count()
+    occupancy_percent = (
+        (total_attended / total_capacity) * 100
+        if total_capacity
+        else 0.0
+    )
+
+    load_end = load_end_date or today
+    load_start = load_end - timedelta(days=days - 1)
+    training_counts = {
+        item.session_date: item.count
+        for item in db.query(
+            TrainingSession.session_date,
+            func.count(TrainingSession.id).label("count"),
+        ).filter(
+            TrainingSession.session_date >= load_start,
+            TrainingSession.session_date <= load_end,
+            TrainingSession.is_cancelled == False,
+        ).group_by(TrainingSession.session_date).all()
+    }
+    payment_counts = {
+        item.payment_date: item.count
+        for item in db.query(
+            Payment.payment_date,
+            func.count(Payment.id).label("count"),
+        ).filter(
+            Payment.payment_date >= load_start,
+            Payment.payment_date <= load_end,
+        ).group_by(Payment.payment_date).all()
+    }
+    points = []
+    for offset in range(days):
+        point_date = load_start + timedelta(days=offset)
+        points.append({
+            "date": point_date.isoformat(),
+            "trainings": training_counts.get(point_date, 0),
+            "payments": payment_counts.get(point_date, 0),
+        })
+
+    return {
+        "new_members": {
+            "as_of": today.isoformat(),
+            "current_month_start": current_month_start.isoformat(),
+            "current_month_count": current_month_count,
+            "previous_month_start": previous_month_start.isoformat(),
+            "previous_month_end": previous_month_end.isoformat(),
+            "previous_month_count": previous_month_count,
+            "delta_count": delta_count,
+            "delta_percent": delta_percent,
+        },
+        "group_occupancy": {
+            "start_date": occupancy_start.isoformat(),
+            "end_date": occupancy_end.isoformat(),
+            "sessions_count": sessions_count,
+            "total_capacity": total_capacity,
+            "total_attended": total_attended,
+            "occupancy_percent": occupancy_percent,
+        },
+        "club_load": {
+            "start_date": load_start.isoformat(),
+            "end_date": load_end.isoformat(),
+            "days": days,
+            "points": points,
+        },
+    }
 
 
 @stat_router.get("/members", response_model=MemberStatistics)

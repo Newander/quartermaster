@@ -65,3 +65,9 @@ def ensure_bearer_auth(
             "or assign a role to the existing user in the database."
         )
     return token
+
+
+if __name__ == "__main__":
+    session = requests.Session()
+    ensure_bearer_auth(session)
+    print(f"Authenticated fixture user: {DEFAULT_AUTH_USERNAME}")

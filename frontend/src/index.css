@@ -1,39 +1,86 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../tailwind.config.js";
 
 @layer base {
   :root {
     /* Forest Garden Art Deco Color Palette */
-    --background: 40 30% 97%; /* Кремово-бежевый #FAF8F3 */
-    --foreground: 25 60% 10%; /* Глубокий коричневый #2C1810 */
+    --background: 42 38% 96%;
+    --foreground: 24 55% 9%;
     
-    --card: 40 35% 96%; /* Светлый бежевый для карточек */
-    --card-foreground: 25 60% 10%;
+    --card: 42 42% 98%;
+    --card-foreground: 24 55% 9%;
     
-    --popover: 40 35% 96%;
-    --popover-foreground: 25 60% 10%;
+    --popover: 42 42% 98%;
+    --popover-foreground: 24 55% 9%;
     
-    --primary: 150 65% 22%; /* Изумрудно-зеленый лес #0F5132 */
-    --primary-foreground: 40 30% 97%;
+    --primary: 151 66% 22%;
+    --primary-foreground: 42 42% 98%;
     
-    --secondary: 45 70% 50%; /* Золотой металлик #D4AF37 */
-    --secondary-foreground: 25 60% 10%;
+    --secondary: 43 74% 46%;
+    --secondary-foreground: 24 55% 9%;
     
-    --muted: 75 20% 60%; /* Мягкий оливковый */
-    --muted-foreground: 25 40% 30%;
+    --muted: 75 24% 86%;
+    --muted-foreground: 26 31% 29%;
     
-    --accent: 25 55% 50%; /* Теплый янтарный #C87F35 */
-    --accent-foreground: 40 30% 97%;
+    --accent: 25 61% 47%;
+    --accent-foreground: 42 42% 98%;
     
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 40 30% 97%;
+    --destructive: 0 70% 48%;
+    --destructive-foreground: 42 42% 98%;
     
-    --border: 75 20% 60%; /* Оливковые границы #8B9467 */
-    --input: 75 20% 55%;
-    --ring: 45 70% 50%; /* Золотое кольцо фокуса */
+    --border: 75 20% 58%;
+    --input: 75 18% 62%;
+    --ring: 43 74% 46%;
+
+    --sidebar-background: 44 40% 94%;
+    --sidebar-foreground: 24 55% 9%;
+    --sidebar-primary: 151 66% 22%;
+    --sidebar-primary-foreground: 42 42% 98%;
+    --sidebar-accent: 151 32% 86%;
+    --sidebar-accent-foreground: 151 66% 18%;
+    --sidebar-border: 75 20% 58%;
+    --sidebar-ring: 43 74% 46%;
     
     --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 153 30% 8%;
+    --foreground: 42 38% 92%;
+
+    --card: 151 28% 11%;
+    --card-foreground: 42 38% 92%;
+
+    --popover: 151 30% 10%;
+    --popover-foreground: 42 38% 92%;
+
+    --primary: 150 48% 42%;
+    --primary-foreground: 153 30% 8%;
+
+    --secondary: 43 75% 56%;
+    --secondary-foreground: 24 55% 9%;
+
+    --muted: 151 18% 20%;
+    --muted-foreground: 44 20% 72%;
+
+    --accent: 25 70% 56%;
+    --accent-foreground: 153 30% 8%;
+
+    --destructive: 0 72% 58%;
+    --destructive-foreground: 42 38% 96%;
+
+    --border: 150 18% 27%;
+    --input: 150 18% 23%;
+    --ring: 43 75% 56%;
+
+    --sidebar-background: 153 34% 7%;
+    --sidebar-foreground: 42 38% 92%;
+    --sidebar-primary: 150 48% 42%;
+    --sidebar-primary-foreground: 153 30% 8%;
+    --sidebar-accent: 150 24% 16%;
+    --sidebar-accent-foreground: 42 38% 92%;
+    --sidebar-border: 150 18% 24%;
+    --sidebar-ring: 43 75% 56%;
   }
 }
 
@@ -158,13 +205,31 @@
   
   /* Art Deco Stats Card */
   .stats-card {
-    @apply art-deco-card p-6 hover:shadow-lg transition-all duration-300;
+    @apply bg-card rounded-lg shadow-sm border-2 border-border p-6 hover:shadow-lg transition-all duration-300;
+    position: relative;
+    overflow: hidden;
     border-left: 4px solid hsl(var(--primary));
   }
   
   .stats-card-golden {
-    @apply art-deco-card p-6 hover:shadow-lg transition-all duration-300;
+    @apply bg-card rounded-lg shadow-sm border-2 border-border p-6 hover:shadow-lg transition-all duration-300;
+    position: relative;
+    overflow: hidden;
     border-left: 4px solid hsl(var(--secondary));
+  }
+
+  .stats-card::before,
+  .stats-card-golden::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      hsl(var(--secondary)) 50%, 
+      transparent 100%);
   }
   
   /* Sidebar Navigation Item */
