@@ -19,3 +19,5 @@ dist/
 AGENTS.md
 CLAUDE.md
 RTK.md
+.codex
+.env
