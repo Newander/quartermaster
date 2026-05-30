@@ -7,7 +7,9 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
+from app.common.ui_schema import build_model_ui_schema
 from app.database import get_db
+from app.db_schemas import ModelMetaOut, RelationLookupOut
 from app.models.contract import Contract, MemberContract
 from app.models.hr import Member
 from app.schemas.contract import (
@@ -22,6 +24,33 @@ from app.schemas.contract import (
 )
 
 router = APIRouter()
+
+
+@router.get("/schema", response_model=ModelMetaOut)
+def get_contract_schema(db: Session = Depends(get_db)):
+    """Get table/form metadata for contracts."""
+    schema = build_model_ui_schema(Contract, db)
+    schema.filters = [("is_active", "Aktywny?", "bool")]
+    schema.relation_lookups = {
+        "member_contracts": RelationLookupOut(
+            api_route="/contract/member-options",
+            value_field="member_id",
+            label_field="label",
+            relation_kind="many",
+            foreign_key="member_id",
+            foreign_table="member",
+            transcription="Członkowie",
+            description="Wybierz członków przypisanych do dokumentu.",
+        ),
+        "shelf_rentals": RelationLookupOut(
+            api_route="/shelves/rentals",
+            value_field="id",
+            label_field="shelf_id",
+            relation_kind="many",
+            description="Powiązane wynajmy półek.",
+        ),
+    }
+    return schema
 
 
 # ---------- Contracts CRUD ----------
@@ -40,6 +69,7 @@ def create_contract(contract: ContractCreate, db: Session = Depends(get_db)):
     return db_contract
 
 
+@router.get("", response_model=ContractListResponse, include_in_schema=False)
 @router.get("/", response_model=ContractListResponse)
 def get_contracts(
         skip: int = 0,

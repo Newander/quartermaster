@@ -9,7 +9,9 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session, selectinload
 from starlette.responses import StreamingResponse
 
+from app.common.ui_schema import build_model_ui_schema
 from app.database import get_db
+from app.db_schemas import ModelMetaOut, RelationLookupOut
 from app.models import MemberContract, ShelfRental, Instructor
 from app.models.hr import Member
 from app.schemas.hr import (
@@ -21,6 +23,39 @@ from app.schemas.hr import (
 from app.utils import model_to_dict_selective
 
 router_member = APIRouter()
+
+
+@router_member.get("/schema", response_model=ModelMetaOut)
+def get_member_schema(db: Session = Depends(get_db)):
+    """Get table/form metadata for members."""
+    schema = build_model_ui_schema(Member, db)
+    schema.filters = [
+        ("is_instructor", "Instruktor?", "bool"),
+        ("is_deleted", "Usunęty?", "bool"),
+    ]
+    schema.relation_lookups = {
+        "instructor_impersonation": RelationLookupOut(
+            api_route="/instructor",
+            value_field="id",
+            label_field="specialization",
+            description="Powiązany rekord instruktora dla wybranego członka.",
+            app_route="/instructor",
+            relation_kind="one",
+        ),
+        "member_contracts": RelationLookupOut(
+            api_route="/contract",
+            value_field="id",
+            source_value_field="contract_id",
+            label_field="title",
+            transcription="Dokumenty",
+            description="Wybierz dokumenty przypisane do członka.",
+            app_route="/contract",
+            foreign_key="contract_id",
+            foreign_table="contract",
+            relation_kind="many",
+        ),
+    }
+    return schema
 
 
 @router_member.post("/", response_model=MemberResponse, status_code=status.HTTP_201_CREATED)
@@ -41,6 +76,7 @@ def create_member(member: MemberCreate, db: Session = Depends(get_db)):
     return db_member
 
 
+@router_member.get("", response_model=MemberListResponse, include_in_schema=False)
 @router_member.get("/", response_model=MemberListResponse)
 def list_members(
         db: Session = Depends(get_db),

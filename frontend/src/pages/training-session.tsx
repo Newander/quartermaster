@@ -14,11 +14,6 @@ type TrainingSessionPageProps = {
   currentRoute: string
 }
 
-type ListResponse<TRecord> = {
-  total: number
-  records: TRecord[]
-}
-
 type NamedRelation = {
   name?: unknown
 }
@@ -39,7 +34,7 @@ type TrainingSessionRecord = {
   season_name?: string | null
 }
 
-const TRAINING_SESSION_SCHEMA_ROUTE = "/training/training-session"
+const TRAINING_SESSION_SCHEMA_ROUTE = "/training/sessions"
 const SCHEDULE_SCHEMA_ROUTE = "/training/schedule"
 const DERIVED_FIELD_NAMES = ["training_form_name", "season_name"]
 const TRAINING_SESSION_EXCLUDED_COLUMNS = [
@@ -90,15 +85,31 @@ const DERIVED_SCHEMA_FIELDS: SchemaField[] = [
 ]
 
 const extractRecords = <TRecord,>(payload: unknown): TRecord[] => {
-  if (
-    typeof payload === "object" &&
-    payload !== null &&
-    Array.isArray((payload as { records?: unknown }).records)
-  ) {
+  if (typeof payload !== "object" || payload === null) {
+    return []
+  }
+
+  if (Array.isArray((payload as { records?: unknown }).records)) {
     return (payload as { records: TRecord[] }).records
   }
 
-  return []
+  const firstArrayValue = Object.entries(payload).find(
+    ([key, value]) => key !== "total" && Array.isArray(value)
+  )?.[1]
+
+  return Array.isArray(firstArrayValue) ? (firstArrayValue as TRecord[]) : []
+}
+
+const extractTotal = (payload: unknown, fallback: number) => {
+  if (
+    typeof payload === "object" &&
+    payload !== null &&
+    typeof (payload as { total?: unknown }).total === "number"
+  ) {
+    return (payload as { total: number }).total
+  }
+
+  return fallback
 }
 
 const toNullableString = (value: unknown) =>
@@ -196,7 +207,7 @@ const loadTrainingSessionData = async (
   request: DataTableLoadRequest
 ): Promise<DataTableLoadResponse<TrainingSessionRecord>> => {
   const [sessionResponse, schedulesById] = await Promise.all([
-    backendApi.client.get<ListResponse<TrainingSessionRecord>>(
+    backendApi.client.get<unknown>(
       TRAINING_SESSION_SCHEMA_ROUTE,
       {
         query: buildListQuery(request),
@@ -205,10 +216,11 @@ const loadTrainingSessionData = async (
     ),
     loadSchedules(request.signal),
   ])
+  const sessionRecords = extractRecords<TrainingSessionRecord>(sessionResponse)
 
   return {
-    total: sessionResponse.total,
-    records: sessionResponse.records.map((record) =>
+    total: extractTotal(sessionResponse, sessionRecords.length),
+    records: sessionRecords.map((record) =>
       enrichTrainingSessionRecord(record, schedulesById)
     ),
   }

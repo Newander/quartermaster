@@ -11,7 +11,7 @@ export default function TrainingFormPage({
     <CrudResourcePage
       currentRoute={currentRoute}
       baseRoute="/training-form"
-      schemaRoute="/training/training-form"
+      schemaRoute="/training/forms"
       entityLabel="Forma treningowa"
       emptyMessage="Brak form treningowych do wyświetlenia."
       detailTitleFields={["name"]}

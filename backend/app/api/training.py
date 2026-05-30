@@ -7,7 +7,9 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session, selectinload
 
+from app.common.ui_schema import build_model_ui_schema
 from app.database import get_db
+from app.db_schemas import ModelMetaOut, RelationLookupOut
 from app.models.training import TrainingForm, Schedule, TrainingSession, TrainingSessionAttendance, Season, TrainingZone
 from app.schemas.training import (
     TrainingFormCreate,
@@ -36,6 +38,18 @@ from app.schemas.training import (
 )
 
 router = APIRouter()
+
+
+def _schema(
+        model,
+        db: Session,
+        filters: list[tuple[str, str, str]] | None = None,
+        relation_lookups: dict[str, RelationLookupOut] | None = None,
+) -> ModelMetaOut:
+    schema = build_model_ui_schema(model, db)
+    schema.filters = filters or []
+    schema.relation_lookups = relation_lookups or {}
+    return schema
 
 
 # Training Forms endpoints
@@ -67,6 +81,12 @@ def get_training_forms(
     total = query.count()
     forms = query.offset(skip).limit(limit).all()
     return {"total": total, "forms": forms}
+
+
+@router.get("/forms/schema", response_model=ModelMetaOut)
+def get_training_form_schema(db: Session = Depends(get_db)):
+    """Get table/form metadata for training forms."""
+    return _schema(TrainingForm, db)
 
 
 @router.get("/forms/{form_id}", response_model=TrainingFormResponse)
@@ -174,6 +194,34 @@ def get_schedules(
     total = query.count()
     schedules = query.offset(skip).limit(limit).all()
     return {"total": total, "schedules": schedules}
+
+
+@router.get("/schedule/schema", response_model=ModelMetaOut)
+def get_schedule_schema(db: Session = Depends(get_db)):
+    """Get table/form metadata for schedules."""
+    return _schema(
+        Schedule,
+        db,
+        filters=[
+            ("is_deleted", "Usunięty?", "bool"),
+            ("training_form_id", "Forma treningowa", "int"),
+            ("season_id", "Sezon", "int"),
+        ],
+        relation_lookups={
+            "training_form_id": RelationLookupOut(
+                api_route="/training/forms",
+                value_field="id",
+                label_field="name",
+                app_route="/training-form",
+            ),
+            "season_id": RelationLookupOut(
+                api_route="/training/seasons",
+                value_field="id",
+                label_field="name",
+                app_route="/season",
+            ),
+        },
+    )
 
 
 @router.get("/schedule/{schedule_id}", response_model=ScheduleResponse)
@@ -297,6 +345,29 @@ def get_training_sessions(
     total = query.count()
     sessions = query.offset(skip).limit(limit).all()
     return {"total": total, "sessions": sessions}
+
+
+@router.get("/sessions/schema", response_model=ModelMetaOut)
+def get_training_session_schema(db: Session = Depends(get_db)):
+    """Get table/form metadata for training sessions."""
+    return _schema(
+        TrainingSession,
+        db,
+        filters=[
+            ("schedule_id", "Grafik", "int"),
+            ("start_date", "Od", "date"),
+            ("end_date", "Do", "date"),
+            ("is_cancelled", "Anulowana?", "bool"),
+        ],
+        relation_lookups={
+            "schedule_id": RelationLookupOut(
+                api_route="/training/schedule",
+                value_field="id",
+                label_field="id",
+                app_route="/schedule",
+            ),
+        },
+    )
 
 
 @router.get("/sessions/{session_id}", response_model=TrainingSessionResponse)
@@ -472,6 +543,16 @@ def get_seasons(
     return {"total": total, "seasons": seasons}
 
 
+@router.get("/seasons/schema", response_model=ModelMetaOut)
+def get_season_schema(db: Session = Depends(get_db)):
+    """Get table/form metadata for seasons."""
+    return _schema(
+        Season,
+        db,
+        filters=[("is_finished", "Zakończony?", "bool")],
+    )
+
+
 @router.get("/seasons/{season_id}", response_model=SeasonResponse)
 def get_season(season_id: int, db: Session = Depends(get_db)):
     """Get a specific season"""
@@ -534,6 +615,16 @@ def get_training_zones(
     total = query.count()
     zones = query.offset(skip).limit(limit).all()
     return {"total": total, "zones": zones}
+
+
+@router.get("/zones/schema", response_model=ModelMetaOut)
+def get_training_zone_schema(db: Session = Depends(get_db)):
+    """Get table/form metadata for training zones."""
+    return _schema(
+        TrainingZone,
+        db,
+        filters=[("is_available", "Dostępna?", "bool")],
+    )
 
 
 @router.get("/zones/{zone_id}", response_model=TrainingZoneResponse)

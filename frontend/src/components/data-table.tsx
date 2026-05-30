@@ -18,6 +18,7 @@ import {
   RiArchiveLine,
   RiCloseLine,
   RiDeleteBinLine,
+  RiErrorWarningLine,
   RiFilter3Line,
   RiLayoutColumnLine,
   RiMore2Line,
@@ -29,6 +30,13 @@ import { toast } from "sonner"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -118,6 +126,26 @@ type DataTableProps<TData> = {
 type ListResponse<TData> = {
   total: number
   records: TData[]
+}
+
+const normalizeListResponse = <TData,>(
+  response: ListResponse<TData> | Record<string, unknown>
+): ListResponse<TData> => {
+  if (Array.isArray((response as ListResponse<TData>).records)) {
+    return response as ListResponse<TData>
+  }
+
+  const records = Object.entries(response).find(
+    ([key, value]) => key !== "total" && Array.isArray(value)
+  )?.[1] as TData[] | undefined
+
+  return {
+    total:
+      typeof response.total === "number"
+        ? response.total
+        : (records?.length ?? 0),
+    records: records ?? [],
+  }
 }
 
 export type DataTableLoadRequest = {
@@ -348,6 +376,33 @@ const coerceFilterValue = (value: string, type: SchemaFieldType) => {
   }
 }
 
+function DataTableStatus({
+  title,
+  description,
+  tone = "default",
+}: {
+  title: string
+  description?: string
+  tone?: "default" | "destructive"
+}) {
+  return (
+    <Empty className="min-h-32 border-0 p-4">
+      <EmptyHeader>
+        <EmptyMedia
+          variant="icon"
+          className={cn(tone === "destructive" && "text-destructive")}
+        >
+          <RiErrorWarningLine />
+        </EmptyMedia>
+        <EmptyTitle>{title}</EmptyTitle>
+        {description ? (
+          <EmptyDescription>{description}</EmptyDescription>
+        ) : null}
+      </EmptyHeader>
+    </Empty>
+  )
+}
+
 export function DataTable<TData>({
   api,
   schemaRoute,
@@ -537,7 +592,8 @@ export function DataTable<TData>({
               sorting,
               signal: abortController.signal,
             })
-          : await api.client.get<ListResponse<TData>>(normalizedRoute, {
+          : normalizeListResponse<TData>(
+              await api.client.get<Record<string, unknown>>(normalizedRoute, {
               query: {
                 ...query,
                 filters: requestFilters
@@ -556,6 +612,7 @@ export function DataTable<TData>({
               },
               signal: abortController.signal,
             })
+            )
 
         if (!isCancelled) {
           setRecords(response.records)
@@ -1183,36 +1240,44 @@ export function DataTable<TData>({
               <TableRow>
                 <TableCell
                   colSpan={table.getVisibleLeafColumns().length || 1}
-                  className="h-24 text-center text-muted-foreground"
+                  className="h-32"
                 >
-                  Ładowanie schematu tabeli...
+                  <DataTableStatus title="Ładowanie schematu tabeli..." />
                 </TableCell>
               </TableRow>
             ) : schemaError ? (
               <TableRow>
                 <TableCell
                   colSpan={table.getVisibleLeafColumns().length || 1}
-                  className="h-24 text-center text-destructive"
+                  className="h-32"
                 >
-                  {schemaError}
+                  <DataTableStatus
+                    title="Nie udało się przygotować tabeli"
+                    description="Odśwież widok albo sprawdź konfigurację zasobu API."
+                    tone="destructive"
+                  />
                 </TableCell>
               </TableRow>
             ) : isDataLoading ? (
               <TableRow>
                 <TableCell
                   colSpan={table.getVisibleLeafColumns().length || 1}
-                  className="h-24 text-center text-muted-foreground"
+                  className="h-32"
                 >
-                  Ładowanie danych...
+                  <DataTableStatus title="Ładowanie danych..." />
                 </TableCell>
               </TableRow>
             ) : dataError ? (
               <TableRow>
                 <TableCell
                   colSpan={table.getVisibleLeafColumns().length || 1}
-                  className="h-24 text-center text-destructive"
+                  className="h-32"
                 >
-                  {dataError}
+                  <DataTableStatus
+                    title="Nie udało się pobrać danych"
+                    description="Odśwież tabelę albo zawęź filtry i spróbuj ponownie."
+                    tone="destructive"
+                  />
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows.length > 0 ? (
@@ -1235,9 +1300,12 @@ export function DataTable<TData>({
               <TableRow>
                 <TableCell
                   colSpan={table.getVisibleLeafColumns().length || 1}
-                  className="h-24 text-center text-muted-foreground"
+                  className="h-32"
                 >
-                  {emptyMessage}
+                  <DataTableStatus
+                    title={emptyMessage}
+                    description="Zmień filtry albo dodaj nowy rekord."
+                  />
                 </TableCell>
               </TableRow>
             )}
