@@ -79,14 +79,14 @@ export default function MembersPage({ currentRoute }: MembersPageProps) {
 
   const handleArchive = React.useCallback(async (member: Member | null) => {
     if (!member) {
-      toast.error("Nie udało się ustalić rekordu do archiwizacji.")
+      toast.error("Unable to identify the record to archive.")
       return
     }
 
     try {
       await backendApi.deleteByRoute(MEMBER_SCHEMA_ROUTE, member.id)
       toast.success(
-        `Zarchiwizowano ${member.first_name} ${member.last_name}.`
+        `Archived ${member.first_name} ${member.last_name}.`
       )
       setReloadKey((current) => current + 1)
       navigateTo(MEMBER_SCHEMA_ROUTE, { replace: true })
@@ -94,19 +94,19 @@ export default function MembersPage({ currentRoute }: MembersPageProps) {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Nie udało się zarchiwizować członka."
+          : "Unable to archive the member."
       )
     }
   }, [])
 
   const memberRowActions: DataTableRowAction<Member>[] = [
     {
-      label: "Pełny widok",
+      label: "Open details",
       icon: RiEyeLine,
       onSelect: (member) => navigateTo(`/member/${member.id}`),
     },
     {
-      label: "Archiwizuj",
+      label: "Archive",
       icon: RiArchiveLine,
       variant: "destructive",
       onSelect: (member) => void handleArchive(member),
@@ -127,7 +127,7 @@ export default function MembersPage({ currentRoute }: MembersPageProps) {
               excludedColumns={MEMBER_EXCLUDED_COLUMNS}
               withRowSelection
               getRowId={(row: Member) => row.id.toString()}
-              emptyMessage="Brak członków do wyświetlenia."
+              emptyMessage="No members to display."
               rowActions={memberRowActions}
               syncRelations={syncMemberContracts}
             />

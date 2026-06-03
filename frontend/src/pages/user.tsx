@@ -9,8 +9,8 @@ type UserPageProps = {
 const USER_CUSTOM_FIELDS: CustomFormField[] = [
   {
     name: "password",
-    transcription: "Hasło",
-    description: "Hasło początkowe użytkownika.",
+    transcription: "Password",
+    description: "Initial user password.",
     data_type: "str",
     ui_type: "password",
     nullable: false,
@@ -20,8 +20,8 @@ const USER_CUSTOM_FIELDS: CustomFormField[] = [
   },
   {
     name: "password",
-    transcription: "Nowe hasło",
-    description: "Wypełnij tylko wtedy, gdy chcesz zmienić hasło.",
+    transcription: "New password",
+    description: "Fill this in only when changing the password.",
     data_type: "str",
     ui_type: "password",
     nullable: true,
@@ -97,8 +97,8 @@ export default function UserPage({ currentRoute }: UserPageProps) {
       baseRoute="/auth/user"
       uiBaseRoute="/user"
       schemaRoute="/auth/user"
-      entityLabel="Użytkownik"
-      emptyMessage="Brak użytkowników do wyświetlenia."
+      entityLabel="User"
+      emptyMessage="No users to display."
       detailTitleFields={["username"]}
       customFields={USER_CUSTOM_FIELDS}
       syncRelations={syncUserRoles}
@@ -110,7 +110,7 @@ export default function UserPage({ currentRoute }: UserPageProps) {
         "refresh_tokens",
       ]}
       deleteSuccessMessage={(record) =>
-        `Usunięto użytkownika "${String(record.username ?? record.id)}".`
+        `Deleted user "${String(record.username ?? record.id)}".`
       }
     />
   )

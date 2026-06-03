@@ -100,7 +100,7 @@ const formatDate = (value: string) => {
 const formatDayChip = (value: string, isToday: boolean) => {
   if (isToday) {
     return {
-      label: "Dzisiaj",
+      label: "Today",
       description: formatShortDate(value),
     }
   }
@@ -142,7 +142,7 @@ const formatTrainingCount = (count: number) => {
     return `${count} treningi`
   }
 
-  return `${count} treningów`
+  return ` training sessions`
 }
 
 const hasSessions = (day: PublicAttendanceDay) => day.sessions.length > 0
@@ -215,7 +215,7 @@ export default function PublicAttendancePage() {
         toast.error(
           error instanceof Error
             ? error.message
-            : "Nie udało się załadować zajęć."
+            : "Unable to load classes."
         )
       } finally {
         if (showLoading) {
@@ -263,7 +263,7 @@ export default function PublicAttendancePage() {
         )
         const resolvedToken = response.device_token ?? storedToken
         if (!resolvedToken) {
-          throw new Error("Serwer nie zwrócił tokenu urządzenia.")
+          throw new Error("Server did not return a device token.")
         }
 
         setStoredPublicDeviceToken(resolvedToken)
@@ -280,7 +280,7 @@ export default function PublicAttendancePage() {
         toast.error(
           error instanceof Error
             ? error.message
-            : "Nie udało się przygotować urządzenia."
+            : "Unable to prepare the device."
         )
       } finally {
         if (isMounted) {
@@ -318,7 +318,7 @@ export default function PublicAttendancePage() {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Nie udało się przypisać użytkownika."
+          : "Unable to assign the user."
       )
     } finally {
       setIsAssigningMemberId(null)
@@ -343,12 +343,12 @@ export default function PublicAttendancePage() {
       setDays([])
       setSelectedDayDate("")
       setSelectedMember(null)
-      toast.success("Przypisany użytkownik został usunięty.")
+      toast.success("Assigned user was removed.")
     } catch (error) {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Nie udało się usunąć przypisanego użytkownika."
+          : "Unable to remove the assigned user."
       )
     } finally {
       setIsRemovingMember(false)
@@ -366,12 +366,12 @@ export default function PublicAttendancePage() {
             {formatTrainingCount(day.sessions.length)}
           </p>
         </div>
-        {day.is_today ? <Badge variant="secondary">Dzisiaj</Badge> : null}
+        {day.is_today ? <Badge variant="secondary">Today</Badge> : null}
       </div>
 
       {day.sessions.length === 0 ? (
         <p className="rounded-lg border border-dashed bg-background p-4 text-sm text-muted-foreground">
-          Tego dnia nie ma zajęć.
+          There are no classes on this day.
         </p>
       ) : (
         <div className="flex flex-col gap-3">
@@ -382,10 +382,10 @@ export default function PublicAttendancePage() {
             const hasInstructorAttendance =
               sessionItem.attended && sessionItem.source === "instructor"
             const attendanceStatusText = hasInstructorAttendance
-              ? "Obecność potwierdzona przez instruktora."
+              ? "Attendance confirmed by the instructor."
               : hasExternalAttendance
-                ? "Obecność zapisana z tego urządzenia."
-                : "Obecność nie jest jeszcze zaznaczona."
+                ? "Attendance saved from this device."
+                : "Attendance is not marked yet."
 
             return (
               <Card
@@ -423,7 +423,7 @@ export default function PublicAttendancePage() {
                       <CardDescription className="mt-1 truncate">
                         {sessionItem.instructors.length > 0
                           ? sessionItem.instructors.join(", ")
-                          : "Instruktor nie został wskazany"}
+                          : "No instructor assigned"}
                       </CardDescription>
                     </div>
                     {hasExternalAttendance ? (
@@ -451,7 +451,7 @@ export default function PublicAttendancePage() {
                   </div>
                   {sessionItem.is_cancelled ? (
                     <Badge variant="outline" className="w-fit">
-                      Odwołane
+                      Cancelled
                     </Badge>
                   ) : (
                     <div
@@ -472,7 +472,7 @@ export default function PublicAttendancePage() {
                             checked === true
                           )
                         }
-                        aria-label="Byłem"
+                        aria-label="I attended"
                       />
                       <button
                         type="button"
@@ -485,9 +485,9 @@ export default function PublicAttendancePage() {
                           )
                         }
                       >
-                        <span className="text-sm font-medium">Byłem</span>
+                        <span className="text-sm font-medium">I attended</span>
                         <span className="text-xs text-muted-foreground">
-                          Kliknij, aby zmienić status obecności.
+                          Click to change attendance status.
                         </span>
                       </button>
                       <div className="flex size-4 shrink-0 items-center justify-center">
@@ -549,7 +549,7 @@ export default function PublicAttendancePage() {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Nie udało się zapisać obecności."
+          : "Unable to save attendance."
       )
     } finally {
       setPendingSessionId(null)
@@ -560,7 +560,7 @@ export default function PublicAttendancePage() {
     return (
       <main className="flex min-h-svh items-center justify-center bg-muted/30 p-4 text-sm text-muted-foreground">
         <RiLoader4Line className="animate-spin" aria-hidden="true" />
-        <span className="ml-2">Ładowanie...</span>
+        <span className="ml-2">Loading...</span>
       </main>
     )
   }
@@ -580,11 +580,11 @@ export default function PublicAttendancePage() {
               <h1 className="truncate text-2xl font-semibold tracking-tight">
                 {assignedMember
                   ? memberName(assignedMember)
-                  : "Wybierz uczestnika"}
+                  : "Select participant"}
               </h1>
               {assignedMember ? (
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Obecności z ostatniego tygodnia
+                  Attendance from the last week
                 </p>
               ) : null}
             </div>
@@ -592,7 +592,7 @@ export default function PublicAttendancePage() {
           {assignedMember ? (
             <div className="flex items-center justify-between gap-3 rounded-md bg-muted/60 p-2">
               <div className="min-w-0 text-sm text-muted-foreground">
-                To urządzenie jest przypisane do wybranego uczestnika.
+                This device is assigned to the selected participant.
               </div>
               <Button
                 variant="ghost"
@@ -609,7 +609,7 @@ export default function PublicAttendancePage() {
                 ) : (
                   <RiUserUnfollowLine data-icon="inline-start" />
                 )}
-                Usuń
+                Remove
               </Button>
             </div>
           ) : null}
@@ -618,9 +618,9 @@ export default function PublicAttendancePage() {
         {!assignedMember ? (
           <Card>
             <CardHeader>
-              <CardTitle>Przypisz użytkownika</CardTitle>
+              <CardTitle>Assign user</CardTitle>
               <CardDescription>
-                To urządzenie będzie pamiętać jednego wybranego uczestnika.
+                This device will remember one selected participant.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -638,8 +638,7 @@ export default function PublicAttendancePage() {
                     }}
                   />
                   <FieldDescription>
-                    Po wyborze uczestnika to urządzenie będzie otwierać jego
-                    zajęcia.
+                    After selecting a participant, this device will open their classes.
                   </FieldDescription>
                 </Field>
               </FieldGroup>
@@ -650,7 +649,7 @@ export default function PublicAttendancePage() {
             {isLoadingDays ? (
               <div className="flex items-center justify-center gap-2 rounded-lg border bg-background p-6 text-sm text-muted-foreground">
                 <RiLoader4Line className="animate-spin" aria-hidden="true" />
-                Ładowanie zajęć...
+                Loading classes...
               </div>
             ) : null}
 
@@ -659,7 +658,7 @@ export default function PublicAttendancePage() {
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between gap-3">
                     <div className="min-w-0">
-                      <p className="text-sm font-medium">Wybierz dzień</p>
+                      <p className="text-sm font-medium">Select day</p>
                       <p className="text-xs text-muted-foreground">
                         {formatTrainingCount(selectedDaySessionCount)} w
                         wybranym dniu
@@ -714,7 +713,7 @@ export default function PublicAttendancePage() {
 
             {days.length === 0 && !isLoadingDays ? (
               <div className="rounded-lg border border-dashed bg-background p-6 text-sm text-muted-foreground">
-                W dostępnym okresie nie ma zajęć.
+                There are no classes in the available period.
               </div>
             ) : null}
           </section>
@@ -728,7 +727,7 @@ export default function PublicAttendancePage() {
             disabled={!deviceToken || isLoadingDays}
           >
             <RiRefreshLine data-icon="inline-start" />
-            Odśwież
+            Refresh
           </Button>
         ) : null}
       </div>

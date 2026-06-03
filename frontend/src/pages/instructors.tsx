@@ -46,32 +46,32 @@ export default function InstructorsPage({
 
   const handleArchive = React.useCallback(async (instructor: Instructor | null) => {
     if (!instructor) {
-      toast.error("Nie udało się ustalić rekordu do archiwizacji.")
+      toast.error("Unable to identify the record to archive.")
       return
     }
 
     try {
       await backendApi.deleteByRoute(INSTRUCTOR_SCHEMA_ROUTE, instructor.id)
-      toast.success(`Zarchiwizowano ${getInstructorName(instructor)}.`)
+      toast.success(`Archived ${getInstructorName(instructor)}.`)
       setReloadKey((current) => current + 1)
       navigateTo(INSTRUCTOR_SCHEMA_ROUTE, { replace: true })
     } catch (error) {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Nie udało się zarchiwizować instruktora."
+          : "Unable to archive the instructor."
       )
     }
   }, [])
 
   const instructorRowActions: DataTableRowAction<Instructor>[] = [
     {
-      label: "Pełny widok",
+      label: "Open details",
       icon: RiEyeLine,
       onSelect: (instructor) => navigateTo(`/instructor/${instructor.id}`),
     },
     {
-      label: "Archiwizuj",
+      label: "Archive",
       icon: RiArchiveLine,
       variant: "destructive",
       onSelect: (instructor) => void handleArchive(instructor),
@@ -92,7 +92,7 @@ export default function InstructorsPage({
               excludedColumns={INSTRUCTOR_EXCLUDED_COLUMNS}
               withRowSelection
               getRowId={(row: Instructor) => row.id.toString()}
-              emptyMessage="Brak instruktorów do wyświetlenia."
+              emptyMessage="No instructors to display."
               rowActions={instructorRowActions}
             />
           </CardContent>
@@ -103,7 +103,7 @@ export default function InstructorsPage({
         schemaRoute={INSTRUCTOR_SCHEMA_ROUTE}
         baseRoute={INSTRUCTOR_SCHEMA_ROUTE}
         recordId={selectedInstructorId}
-        entityLabel="Instruktor"
+        entityLabel="Instructor"
         readOnlyFields={INSTRUCTOR_EXCLUDED_COLUMNS}
         onClose={() => navigateTo(INSTRUCTOR_SCHEMA_ROUTE, { replace: true })}
         loadRecord={(instructorId) => backendApi.instructor.getById(instructorId)}

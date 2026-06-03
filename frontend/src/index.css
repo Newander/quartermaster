@@ -3,83 +3,83 @@
 
 @layer base {
   :root {
-    /* Forest Garden Art Deco Color Palette */
-    --background: 42 38% 96%;
-    --foreground: 24 55% 9%;
+    /* Blue Art Deco Color Palette */
+    --background: 210 40% 97%;
+    --foreground: 222 47% 11%;
     
-    --card: 42 42% 98%;
-    --card-foreground: 24 55% 9%;
+    --card: 210 45% 99%;
+    --card-foreground: 222 47% 11%;
     
-    --popover: 42 42% 98%;
-    --popover-foreground: 24 55% 9%;
+    --popover: 210 45% 99%;
+    --popover-foreground: 222 47% 11%;
     
-    --primary: 151 66% 22%;
-    --primary-foreground: 42 42% 98%;
+    --primary: 214 82% 36%;
+    --primary-foreground: 210 45% 99%;
     
     --secondary: 43 74% 46%;
-    --secondary-foreground: 24 55% 9%;
+    --secondary-foreground: 222 47% 11%;
     
-    --muted: 75 24% 86%;
-    --muted-foreground: 26 31% 29%;
+    --muted: 214 32% 90%;
+    --muted-foreground: 218 24% 32%;
     
     --accent: 25 61% 47%;
-    --accent-foreground: 42 42% 98%;
+    --accent-foreground: 210 45% 99%;
     
     --destructive: 0 70% 48%;
-    --destructive-foreground: 42 42% 98%;
+    --destructive-foreground: 210 45% 99%;
     
-    --border: 75 20% 58%;
-    --input: 75 18% 62%;
+    --border: 214 26% 70%;
+    --input: 214 24% 74%;
     --ring: 43 74% 46%;
 
-    --sidebar-background: 44 40% 94%;
-    --sidebar-foreground: 24 55% 9%;
-    --sidebar-primary: 151 66% 22%;
-    --sidebar-primary-foreground: 42 42% 98%;
-    --sidebar-accent: 151 32% 86%;
-    --sidebar-accent-foreground: 151 66% 18%;
-    --sidebar-border: 75 20% 58%;
+    --sidebar-background: 212 42% 95%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 214 82% 36%;
+    --sidebar-primary-foreground: 210 45% 99%;
+    --sidebar-accent: 214 40% 88%;
+    --sidebar-accent-foreground: 214 82% 24%;
+    --sidebar-border: 214 26% 70%;
     --sidebar-ring: 43 74% 46%;
     
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 153 30% 8%;
-    --foreground: 42 38% 92%;
+    --background: 222 47% 8%;
+    --foreground: 210 40% 94%;
 
-    --card: 151 28% 11%;
-    --card-foreground: 42 38% 92%;
+    --card: 222 42% 11%;
+    --card-foreground: 210 40% 94%;
 
-    --popover: 151 30% 10%;
-    --popover-foreground: 42 38% 92%;
+    --popover: 222 44% 10%;
+    --popover-foreground: 210 40% 94%;
 
-    --primary: 150 48% 42%;
-    --primary-foreground: 153 30% 8%;
+    --primary: 210 90% 58%;
+    --primary-foreground: 222 47% 8%;
 
     --secondary: 43 75% 56%;
-    --secondary-foreground: 24 55% 9%;
+    --secondary-foreground: 222 47% 8%;
 
-    --muted: 151 18% 20%;
-    --muted-foreground: 44 20% 72%;
+    --muted: 217 28% 18%;
+    --muted-foreground: 214 24% 72%;
 
     --accent: 25 70% 56%;
-    --accent-foreground: 153 30% 8%;
+    --accent-foreground: 222 47% 8%;
 
     --destructive: 0 72% 58%;
-    --destructive-foreground: 42 38% 96%;
+    --destructive-foreground: 210 40% 96%;
 
-    --border: 150 18% 27%;
-    --input: 150 18% 23%;
+    --border: 217 28% 28%;
+    --input: 217 28% 24%;
     --ring: 43 75% 56%;
 
-    --sidebar-background: 153 34% 7%;
-    --sidebar-foreground: 42 38% 92%;
-    --sidebar-primary: 150 48% 42%;
-    --sidebar-primary-foreground: 153 30% 8%;
-    --sidebar-accent: 150 24% 16%;
-    --sidebar-accent-foreground: 42 38% 92%;
-    --sidebar-border: 150 18% 24%;
+    --sidebar-background: 224 52% 7%;
+    --sidebar-foreground: 210 40% 94%;
+    --sidebar-primary: 210 90% 58%;
+    --sidebar-primary-foreground: 222 47% 8%;
+    --sidebar-accent: 217 32% 18%;
+    --sidebar-accent-foreground: 210 40% 94%;
+    --sidebar-border: 217 28% 24%;
     --sidebar-ring: 43 75% 56%;
   }
 }
@@ -134,11 +134,11 @@
     border-width: 0 2px 2px 0;
   }
   
-  /* Forest Pattern Background */
+  /* Blue Pattern Background */
   .forest-pattern {
     background-image: 
-      linear-gradient(135deg, transparent 0%, transparent 48%, rgba(15, 81, 50, 0.02) 50%, transparent 52%, transparent 100%),
-      linear-gradient(45deg, transparent 0%, transparent 48%, rgba(15, 81, 50, 0.02) 50%, transparent 52%, transparent 100%);
+      linear-gradient(135deg, transparent 0%, transparent 48%, rgba(30, 88, 168, 0.025) 50%, transparent 52%, transparent 100%),
+      linear-gradient(45deg, transparent 0%, transparent 48%, rgba(30, 88, 168, 0.025) 50%, transparent 52%, transparent 100%);
     background-size: 40px 40px;
   }
   
@@ -172,7 +172,7 @@
       transparent 100%);
   }
   
-  /* Forest Button */
+  /* Primary Button */
   .btn-forest {
     @apply bg-primary text-primary-foreground px-4 py-2 rounded-lg font-semibold;
     @apply hover:bg-primary/90 transition-all duration-200;
@@ -282,9 +282,9 @@
     text-shadow: 2px 2px 4px rgba(212, 175, 55, 0.3);
   }
   
-  /* Forest Gradient */
+  /* Blue Gradient */
   .gradient-forest {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(150 55% 30%) 100%);
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(214 78% 45%) 100%);
   }
   
   /* Golden Gradient */

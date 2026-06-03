@@ -126,22 +126,22 @@ const FIELD_TYPE_LABELS: Record<string, string> = {
   date: "data",
   float: "liczba zmiennoprzecinkowa",
   datetime: "data i czas",
-  int: "liczba całkowita",
+  int: "integer",
   str: "tekst",
-  bool: "wartość logiczna",
-  PaymentStatus: "status płatności",
-  MembershipType: "typ członkostwa",
-  PaymentMethod: "metoda płatności",
-  DayOfWeek: "dzień tygodnia",
+  bool: "boolean",
+  PaymentStatus: "payment status",
+  MembershipType: "membership type",
+  PaymentMethod: "payment method",
+  DayOfWeek: "day of week",
   ScheduleCycle: "cykl harmonogramu",
   time: "czas",
-  Decimal: "liczba dziesiętna",
+  Decimal: "decimal number",
   dict: "obiekt JSON",
   list: "lista",
   bytes: "bajty",
   UUID: "identyfikator UUID",
-  timedelta: "przedział czasu",
-  Any: "dowolna wartość",
+  timedelta: "time interval",
+  Any: "any value",
 }
 
 const getFieldTypeLabel = (type: string) => FIELD_TYPE_LABELS[type] ?? type
@@ -547,12 +547,12 @@ function RelationSelect({
     >
       <SelectTrigger id={id} className="w-full">
         <SelectValue
-          placeholder={isLoading ? "Ładowanie..." : "Wybierz wartość"}
+          placeholder={isLoading ? "Loading..." : "Select value"}
         />
       </SelectTrigger>
       <SelectContent align="start">
         {nullable ? (
-          <SelectItem value="__null">Brak wartości</SelectItem>
+          <SelectItem value="__null">No value</SelectItem>
         ) : null}
         {options.map((opt) => (
           <SelectItem
@@ -671,7 +671,7 @@ const getFieldMetaDescription = (
   const metaParts = [`Typ: ${getFieldTypeLabel(field?.data_type ?? "str")}`]
 
   if (!field?.description || field.description.trim() !== fieldName) {
-    metaParts.unshift(`Pole: ${fieldName}`)
+    metaParts.unshift(`Field: ${fieldName}`)
   }
 
   if (field?.foreign_keys && field.foreign_keys.length > 0) {
@@ -868,7 +868,7 @@ const buildFieldDefinitions = (
       if (lookupForeignTable) {
         relationMetaParts.push(`FK: ${lookupForeignTable}`)
       }
-      relationMetaParts.push(lookupDescription ?? "pole zależne (drugi krok)")
+      relationMetaParts.push(lookupDescription ?? "dependent field (second step)")
 
       return {
         allowedValues: [],
@@ -1209,7 +1209,7 @@ function PasswordInput({
         size="icon-sm"
         className="absolute top-0.5 right-0.5"
         disabled={readOnly}
-        aria-label={isPasswordVisible ? "Ukryj hasło" : "Pokaż hasło"}
+        aria-label={isPasswordVisible ? "Hide password" : "Show password"}
         onClick={() => setIsPasswordVisible((current) => !current)}
       >
         {isPasswordVisible ? <RiEyeOffLine /> : <RiEyeLine />}
@@ -1231,7 +1231,7 @@ function ActionResultOverlay({ action }: { action: ActionFeedbackType }) {
         className={cn(
           "flex size-24 animate-in items-center justify-center rounded-full border-2 shadow-lg ring-4 ring-background/60 duration-150 zoom-in-90",
           isSaved
-            ? "border-emerald-500 bg-emerald-500/15 text-emerald-600"
+            ? "border-blue-500 bg-blue-500/15 text-blue-600 dark:text-blue-400"
             : "border-zinc-500 bg-zinc-500/15 text-zinc-600"
         )}
       >
@@ -1293,8 +1293,8 @@ function DetailActions({
               ? "Tworzenie..."
               : "Zapisywanie..."
             : isCreateMode
-              ? "Utwórz"
-              : "Zapisz"}
+              ? "Create"
+              : "Save"}
         </Button>
       ) : null}
     </div>
@@ -1399,8 +1399,8 @@ export function RecordDetailSheet<TRecord extends Record<string, unknown>>({
       return
     }
 
-    // Сбрасываем эффект при открытии другой записи/режима, чтобы
-    // оверлей никогда не "залипал" между открытиями карточки.
+    // Reset the feedback effect when opening another record/mode so
+    // the overlay never persists between sheet openings.
     setActionFeedback(null)
   }, [isSheetOpen, isCreateMode, recordId])
 
@@ -1451,7 +1451,7 @@ export function RecordDetailSheet<TRecord extends Record<string, unknown>>({
         }
 
         if (recordId === null || !loadRecord) {
-          setError("Brak konfiguracji ładowania rekordu.")
+          setError("Missing record loading configuration.")
           setRecord(null)
           setFormValues({})
           return
@@ -1481,7 +1481,7 @@ export function RecordDetailSheet<TRecord extends Record<string, unknown>>({
           setError(
             loadError instanceof Error
               ? loadError.message
-              : "Nie udało się pobrać danych rekordu."
+              : "Unable to load record data."
           )
         }
       } finally {
@@ -1587,22 +1587,22 @@ export function RecordDetailSheet<TRecord extends Record<string, unknown>>({
     const sections: Omit<FieldGroup, "fields">[] = [
       {
         key: "main",
-        title: "Pola podstawowe",
-        description: "Główne dane rekordu.",
+        title: "Basic fields",
+        description: "Primary record data.",
       },
       {
         key: "relations",
-        title: "Powiązania",
-        description: "Dane innych tabeli.",
+        title: "Relations",
+        description: "Data from related tables.",
       },
       {
         key: "many-relations",
-        title: "Powiązania N-M",
+        title: "Many-to-many relations",
         description: "Relacje many-to-many edytowane tabelarycznie.",
       },
       {
         key: "system",
-        title: "Pola systemowe",
+        title: "System fields",
         description: "Informacje techniczne i pola tylko do odczytu.",
       },
     ]
@@ -1622,7 +1622,7 @@ export function RecordDetailSheet<TRecord extends Record<string, unknown>>({
 
   const detailTitle = React.useMemo(() => {
     if (isCreateMode) {
-      return `Nowy ${entityLabel}`
+      return `New ${entityLabel}`
     }
 
     if (recordId === null) {
@@ -1705,14 +1705,14 @@ export function RecordDetailSheet<TRecord extends Record<string, unknown>>({
     })
 
     if (missingRequiredField) {
-      const message = `Pole ${missingRequiredField} jest wymagane.`
+      const message = `Field ${missingRequiredField} is required.`
       setSaveErrorMessage(message)
       toast.error(message)
       return
     }
 
     if (invalidJsonField) {
-      const message = `Pole ${invalidJsonField} nie zawiera poprawnego JSON.`
+      const message = `Field ${invalidJsonField} does not contain valid JSON.`
       setSaveErrorMessage(message)
       toast.error(message)
       return
@@ -1726,7 +1726,7 @@ export function RecordDetailSheet<TRecord extends Record<string, unknown>>({
 
       if (isCreateMode) {
         if (!createRecord) {
-          const message = "Brak konfiguracji tworzenia rekordu."
+          const message = "Missing record creation configuration."
           setSaveErrorMessage(message)
           toast.error(message)
           return
@@ -1751,11 +1751,11 @@ export function RecordDetailSheet<TRecord extends Record<string, unknown>>({
           )
         ) {
           toast.info(
-            "Powiązania N-M/1-N wymagają dedykowanego endpointu synchronizacji."
+            "Many-to-many/one-to-many relations require a dedicated synchronization endpoint."
           )
         }
 
-        toast.success("Rekord został utworzony.")
+        toast.success("Record created.")
         setSaveErrorMessage(null)
         await onCreated?.(savedRecord)
         onClose()
@@ -1763,7 +1763,7 @@ export function RecordDetailSheet<TRecord extends Record<string, unknown>>({
       }
 
       if (recordId === null || !updateRecord) {
-        const message = "Brak konfiguracji zapisu rekordu."
+        const message = "Missing record save configuration."
         toast.error(message)
         return
       }
@@ -1787,19 +1787,19 @@ export function RecordDetailSheet<TRecord extends Record<string, unknown>>({
         )
       ) {
         toast.info(
-          "Powiązania N-M/1-N wymagają dedykowanego endpointu synchronizacji."
+          "Many-to-many/one-to-many relations require a dedicated synchronization endpoint."
         )
       }
 
       showActionFeedback("saved")
-      toast.success("Zmiany zostały zapisane.")
+      toast.success("Changes saved.")
       setSaveErrorMessage(null)
     } catch (saveError) {
       const message = resolveSaveErrorMessage(
         saveError,
         isCreateMode
-          ? "Nie udało się utworzyć rekordu."
-          : "Nie udało się zapisać zmian."
+          ? "Unable to create the record."
+          : "Unable to save changes."
       )
       if (isCreateMode) {
         setSaveErrorMessage(message)
@@ -1835,8 +1835,8 @@ export function RecordDetailSheet<TRecord extends Record<string, unknown>>({
         {isLoading ? (
           <div className="flex min-h-40 items-center justify-center text-sm text-muted-foreground">
             {isCreateMode
-              ? "Ładowanie formularza..."
-              : "Ładowanie danych rekordu..."}
+              ? "Loading form..."
+              : "Loading record data..."}
           </div>
         ) : error ? (
           <div className="flex min-h-40 items-center justify-center text-sm text-destructive">
@@ -1958,12 +1958,12 @@ export function RecordDetailSheet<TRecord extends Record<string, unknown>>({
                                   id={`${schemaRoute}-${field.name}`}
                                   className="w-full"
                                 >
-                                  <SelectValue placeholder="Wybierz wartość" />
+                                  <SelectValue placeholder="Select value" />
                                 </SelectTrigger>
                                 <SelectContent align="start">
                                   {field.nullable ? (
                                     <SelectItem value="__null">
-                                      Brak wartości
+                                      No value
                                     </SelectItem>
                                   ) : null}
                                   {field.allowedValues.map((allowedValue) => (
@@ -2004,7 +2004,7 @@ export function RecordDetailSheet<TRecord extends Record<string, unknown>>({
                                   />
                                   <p className="text-sm font-medium">
                                     {rawValue === null || rawValue === undefined
-                                      ? "Brak wartości"
+                                      ? "No value"
                                       : rawValue
                                         ? "Tak"
                                         : "Nie"}
@@ -2019,7 +2019,7 @@ export function RecordDetailSheet<TRecord extends Record<string, unknown>>({
                                     disabled={isReadOnly}
                                     onClick={() => handleFieldReset(field.name)}
                                   >
-                                    Wyczyść
+                                    Clear
                                   </Button>
                                 ) : null}
                               </div>
@@ -2170,8 +2170,8 @@ export function RecordDetailSheet<TRecord extends Record<string, unknown>>({
             <DrawerTitle>{detailTitle}</DrawerTitle>
             <DrawerDescription>
               {isCreateMode
-                ? "Tworzenie nowego rekordu."
-                : "Pełny widok i edycja rekordu."}
+                ? "Creating a new record."
+                : "Full record view and editing."}
             </DrawerDescription>
           </DrawerHeader>
           {content}
@@ -2193,8 +2193,8 @@ export function RecordDetailSheet<TRecord extends Record<string, unknown>>({
           <SheetTitle>{detailTitle}</SheetTitle>
           <SheetDescription>
             {isCreateMode
-              ? "Tworzenie nowego rekordu."
-              : "Pełny widok i edycja rekordu."}
+              ? "Creating a new record."
+              : "Full record view and editing."}
           </SheetDescription>
         </SheetHeader>
         {content}

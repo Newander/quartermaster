@@ -49,12 +49,12 @@ const DOCUMENTS_OPEN_STATE_KEY = "sidebar_documents_open_state"
 const STATIC_SECTION_GROUPS: StaticSectionGroup[] = [
   {
     id: "training-schedule",
-    name: "Harmonogram treningów",
+    name: "Training schedule",
     icon: <RiCalendarScheduleLine />,
     items: [
       {
         id: "training-weekly",
-        name: "Treningi tygodniowe",
+        name: "Weekly training",
         icon: <RiListUnordered />,
       },
       {
@@ -64,24 +64,24 @@ const STATIC_SECTION_GROUPS: StaticSectionGroup[] = [
       },
       {
         id: "training-search",
-        name: "Wyszukaj termin",
+        name: "Search date",
         icon: <RiSearchLine />,
       },
     ],
   },
   {
     id: "club-equipment",
-    name: "Sprzęt klubowy",
+    name: "Club equipment",
     icon: <RiSwordLine />,
     items: [
       {
         id: "equipment-swords",
-        name: "Broń treningowa",
+        name: "Training weapons",
         icon: <RiSwordLine />,
       },
       {
         id: "equipment-protection",
-        name: "Sprzęt ochronny",
+        name: "Protective equipment",
         icon: <RiFolderLine />,
       },
       {
@@ -93,22 +93,22 @@ const STATIC_SECTION_GROUPS: StaticSectionGroup[] = [
   },
   {
     id: "payments",
-    name: "Płatności",
+    name: "Payments",
     icon: <RiMoneyDollarCircleLine />,
     items: [
       {
         id: "payments-membership",
-        name: "Składki członkowskie",
+        name: "Membership fees",
         icon: <RiMoneyDollarCircleLine />,
       },
       {
         id: "payments-history",
-        name: "Historia wpłat",
+        name: "Payment history",
         icon: <RiFileLine />,
       },
       {
         id: "payments-overdue",
-        name: "Zaległe płatności",
+        name: "Overdue payments",
         icon: <RiSearchLine />,
       },
     ],
@@ -120,7 +120,7 @@ const STATIC_SECTION_GROUPS: StaticSectionGroup[] = [
     items: [
       {
         id: "reports-monthly",
-        name: "Raport miesięczny",
+        name: "Monthly report",
         icon: <RiFileLine />,
       },
       {
@@ -130,7 +130,7 @@ const STATIC_SECTION_GROUPS: StaticSectionGroup[] = [
       },
       {
         id: "reports-internal",
-        name: "Dokumenty wewnętrzne",
+        name: "Internal documents",
         icon: <RiListUnordered />,
       },
     ],
@@ -286,7 +286,7 @@ export function NavDocuments({
               </SidebarMenuButton>
               <CollapsibleTrigger asChild>
                 <SidebarMenuAction
-                  aria-label={`Pokaż lub ukryj sekcję: ${group.name}`}
+                  aria-label={`Show or hide section: ${group.name}`}
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
                   <RiArrowDownSLine className="transition-transform group-data-[state=open]/collapsible:rotate-180" />

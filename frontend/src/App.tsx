@@ -194,7 +194,7 @@ export default function App() {
         navigateTo(DEFAULT_AUTHENTICATED_ROUTE, { replace: true })
       } catch (error) {
         setLoginError(
-          error instanceof Error ? error.message : "Nie udało się zalogować."
+          error instanceof Error ? error.message : "Unable to sign in."
         )
       } finally {
         setIsLoginSubmitting(false)

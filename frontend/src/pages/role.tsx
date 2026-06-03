@@ -27,8 +27,8 @@ const ROLE_SCHEMA: ModelMeta = {
     },
     {
       name: "name",
-      transcription: "Nazwa",
-      description: "Nazwa",
+      transcription: "Name",
+      description: "Name",
       data_type: "str",
       nullable: false,
       primary_key: false,
@@ -38,8 +38,8 @@ const ROLE_SCHEMA: ModelMeta = {
     },
     {
       name: "description",
-      transcription: "Opis",
-      description: "Opis",
+      transcription: "Description",
+      description: "Description",
       data_type: "str",
       nullable: true,
       primary_key: false,
@@ -70,8 +70,8 @@ export default function RolePage({ currentRoute }: RolePageProps) {
       currentRoute={currentRoute}
       baseRoute="/role"
       schemaRoute="/auth/roles"
-      entityLabel="Rola"
-      emptyMessage="Brak ról do wyświetlenia."
+      entityLabel="Role"
+      emptyMessage="No roles to display."
       detailTitleFields={["name"]}
       excludedColumns={["id"]}
       schemaOverride={ROLE_SCHEMA}
@@ -85,7 +85,7 @@ export default function RolePage({ currentRoute }: RolePageProps) {
       deleteRecord={(record) =>
         backendApi.client.delete(`/auth/roles/${record.id}`)
       }
-      deleteSuccessMessage={(record) => `Usunięto rolę "${record.name}".`}
+      deleteSuccessMessage={(record) => `Deleted role "${record.name}".`}
       disableUpdate
     />
   )

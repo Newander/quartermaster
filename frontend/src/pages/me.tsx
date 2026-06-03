@@ -50,8 +50,8 @@ const USER_PROFILE_READ_ONLY_FIELDS = [
 const USER_PROFILE_CUSTOM_FIELDS: CustomFormField[] = [
   {
     name: "password",
-    transcription: "Nowe hasło",
-    description: "Wypełnij tylko wtedy, gdy chcesz zmienić hasło.",
+    transcription: "New password",
+    description: "Fill this in only when changing the password.",
     data_type: "str",
     ui_type: "password",
     nullable: true,
@@ -73,23 +73,23 @@ const getInitials = (user: AuthUser) => {
 }
 
 const getMemberIdValue = (memberId: AuthUser["member_id"]) =>
-  memberId == null ? "Brak powiązanego członka" : String(memberId)
+  memberId == null ? "No linked member" : String(memberId)
 
 const getAccountStatus = (isActive: AuthUser["is_active"]) => {
   if (isActive == null) {
     return {
-      label: "Nieznany status",
+      label: "Unknown status",
       variant: "outline" as const,
     }
   }
 
   return isActive
     ? {
-        label: "Aktywne konto",
+        label: "Active account",
         variant: "default" as const,
       }
     : {
-        label: "Konto nieaktywne",
+        label: "Inactive account",
         variant: "secondary" as const,
       }
 }
@@ -164,10 +164,10 @@ export default function MePage({ user, onUserUpdate }: MePageProps) {
                   </AvatarFallback>
                 </Avatar>
                 <div className="min-w-0 flex-1 space-y-1">
-                  <CardTitle className="text-xl">Profil użytkownika</CardTitle>
+                  <CardTitle className="text-xl">User profile</CardTitle>
                   <CardDescription>
-                    Данные текущего пользователя. Расширенные и внешние поля
-                    редактируются в дефолтной карточке, как в DataTable.
+                    Current user data. Advanced and external fields are edited
+                    in the default record sheet, like in DataTable.
                   </CardDescription>
                   <div className="flex flex-wrap items-center gap-2 pt-2">
                     <Badge variant={accountStatus.variant}>
@@ -180,7 +180,7 @@ export default function MePage({ user, onUserUpdate }: MePageProps) {
                         </Badge>
                       ))
                     ) : (
-                      <Badge variant="outline">Brak ról</Badge>
+                      <Badge variant="outline">No roles</Badge>
                     )}
                   </div>
                 </div>
@@ -198,22 +198,22 @@ export default function MePage({ user, onUserUpdate }: MePageProps) {
                 <div className="space-y-1">
                   <FieldTitle>Podstawowe informacje</FieldTitle>
                   <FieldDescription>
-                    Read-only snapshot aktualnie zalogowanego użytkownika.
+                    Read-only snapshot currently signed-in user.
                   </FieldDescription>
                 </div>
 
                 <div className="space-y-4">
                   <AccountField
                     id="account-id"
-                    label="ID użytkownika"
+                    label="User ID"
                     value={String(user.id)}
-                    description="Wewnętrzny identyfikator konta w systemie."
+                    description="Internal account identifier in the system."
                   />
                   <AccountField
                     id="account-username"
                     label="Username"
                     value={user.username}
-                    description="Główna nazwa używana podczas logowania i identyfikacji użytkownika."
+                    description="Primary name used for login and user identification."
                   />
                   <AccountField
                     id="account-email"
@@ -226,7 +226,7 @@ export default function MePage({ user, onUserUpdate }: MePageProps) {
                     id="account-member-id"
                     label="Member ID"
                     value={getMemberIdValue(user.member_id)}
-                    description="Powiązanie z rekordem członka klubu, jeśli konto zostało spięte z profilem osoby."
+                    description="Link to a club member record, if the account is connected to a person profile."
                   />
                 </div>
               </FieldGroup>
@@ -237,9 +237,7 @@ export default function MePage({ user, onUserUpdate }: MePageProps) {
                 <div className="space-y-1">
                   <FieldTitle>Edycja profilu</FieldTitle>
                   <FieldDescription>
-                    Otwórz domyślną kartę edycji (jak pod DataTable), aby
-                    konfigurować pola zewnętrzne i relacje bieżącego
-                    użytkownika.
+                    Open the default edit sheet (as under DataTable) to configure external fields and current user relations.
                   </FieldDescription>
                 </div>
                 {!isProfileEditorOpen ? (
@@ -247,7 +245,7 @@ export default function MePage({ user, onUserUpdate }: MePageProps) {
                     type="button"
                     onClick={() => setIsProfileEditorOpen(true)}
                   >
-                    Otwórz kartę profilu
+                    Open profile sheet
                   </Button>
                 ) : null}
               </FieldGroup>
@@ -255,7 +253,7 @@ export default function MePage({ user, onUserUpdate }: MePageProps) {
 
             <CardFooter className="justify-between gap-3 text-sm text-muted-foreground max-sm:flex-col max-sm:items-start">
               <span>
-                Używana jest standardowa karta rekordu z sekcji DataTable.
+                Uses the standard record sheet from the DataTable section.
               </span>
             </CardFooter>
           </Card>
@@ -267,7 +265,7 @@ export default function MePage({ user, onUserUpdate }: MePageProps) {
         schemaRoute={USER_SCHEMA_ROUTE}
         baseRoute="/me"
         recordId={isProfileEditorOpen ? user.id : null}
-        entityLabel="Profil użytkownika"
+        entityLabel="User profile"
         readOnlyFields={USER_PROFILE_READ_ONLY_FIELDS}
         customFields={USER_PROFILE_CUSTOM_FIELDS}
         onClose={() => setIsProfileEditorOpen(false)}

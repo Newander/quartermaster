@@ -141,7 +141,7 @@ function RelationTable({
             id={`${tableId}-search`}
             value={query}
             onChange={(event) => onQueryChange(event.target.value)}
-            placeholder="Szukaj..."
+            placeholder="Search..."
             className="h-8 pl-8"
             disabled={disabled || isLoading}
           />
@@ -173,11 +173,11 @@ function RelationTable({
                       onCheckedChange={(checked) =>
                         onTogglePageRows(checked === true)
                       }
-                      aria-label={`Zaznacz wszystkie na stronie (${title})`}
+                      aria-label={`Select all on page (${title})`}
                       disabled={disabled || isLoading || pageRows.length === 0}
                     />
                   </TableHead>
-                  <TableHead>Nazwa</TableHead>
+                  <TableHead>Name</TableHead>
                   <TableHead className="w-24">ID</TableHead>
                 </TableRow>
               </TableHeader>
@@ -185,7 +185,7 @@ function RelationTable({
                 {isLoading ? (
                   <TableRow>
                     <TableCell colSpan={3} className="h-24 text-center text-muted-foreground">
-                      Ładowanie opcji...
+                      Loading options...
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -201,7 +201,7 @@ function RelationTable({
                           <Checkbox
                             checked={isChecked}
                             onCheckedChange={() => onToggleRow(row.key)}
-                            aria-label={`Przełącz ${row.label}`}
+                            aria-label={`Toggle ${row.label}`}
                             disabled={disabled || isLoading}
                           />
                         </TableCell>
@@ -209,7 +209,7 @@ function RelationTable({
                           <div className="flex min-w-0 items-center gap-2">
                             <span className="truncate">{row.label}</span>
                             {row.unresolved ? (
-                              <Badge variant="destructive">niedostępne</Badge>
+                              <Badge variant="destructive">unavailable</Badge>
                             ) : null}
                           </div>
                         </TableCell>
@@ -225,7 +225,7 @@ function RelationTable({
           </ScrollArea>
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs text-muted-foreground">
-              Strona {page + 1} / {pageCount}
+              Page {page + 1} / {pageCount}
             </span>
             <div className="flex items-center gap-1">
               <Button
@@ -234,7 +234,7 @@ function RelationTable({
                 size="icon-sm"
                 onClick={onPrevPage}
                 disabled={disabled || isLoading || page <= 0}
-                aria-label={`Poprzednia strona (${title})`}
+                aria-label={`Previous page (${title})`}
               >
                 <RiArrowLeftLine />
               </Button>
@@ -244,7 +244,7 @@ function RelationTable({
                 size="icon-sm"
                 onClick={onNextPage}
                 disabled={disabled || isLoading || page >= pageCount - 1}
-                aria-label={`Następna strona (${title})`}
+                aria-label={`Next page (${title})`}
               >
                 <RiArrowRightLine />
               </Button>
@@ -549,8 +549,8 @@ export function ManyToManyRelationEditor({
   const availableTable = (
     <RelationTable
       tableId={`${id}-available`}
-      title="Dostępne rekordy"
-      description="Wybierz rekordy do powiązania."
+      title="Available records"
+      description="Select records to link."
       query={availableQuery}
       onQueryChange={setAvailableQuery}
       rows={filteredAvailableRows}
@@ -565,16 +565,16 @@ export function ManyToManyRelationEditor({
       onTogglePageRows={toggleAvailablePageRows}
       disabled={disabled}
       isLoading={isLoading}
-      emptyTitle="Brak dostępnych rekordów"
-      emptyDescription="Wszystkie rekordy są już powiązane lub filtr nie zwrócił wyników."
+      emptyTitle="No available records"
+      emptyDescription="All records are already linked or the filter returned no results."
     />
   )
 
   const linkedTable = (
     <RelationTable
       tableId={`${id}-linked`}
-      title="Powiązane rekordy"
-      description="Rekordy zapisane do relacji N-M."
+      title="Linked records"
+      description="Records saved to the many-to-many relation."
       query={linkedQuery}
       onQueryChange={setLinkedQuery}
       rows={filteredLinkedRows}
@@ -589,8 +589,8 @@ export function ManyToManyRelationEditor({
       onTogglePageRows={toggleLinkedPageRows}
       disabled={disabled}
       isLoading={isLoading}
-      emptyTitle="Brak powiązań"
-      emptyDescription="Dodaj rekordy z lewej tabeli, aby utworzyć relację."
+      emptyTitle="No links"
+      emptyDescription="Add records from the left table to create a relation."
     />
   )
 
@@ -604,7 +604,7 @@ export function ManyToManyRelationEditor({
           disabled={disabled || isLoading || availableSelection.size === 0}
           onClick={addCheckedAvailable}
         >
-          Dodaj zaznaczone ({availableSelection.size})
+          Add selected ({availableSelection.size})
         </Button>
         <Button
           type="button"
@@ -613,7 +613,7 @@ export function ManyToManyRelationEditor({
           disabled={disabled || isLoading || filteredAvailableRows.length === 0}
           onClick={addAllFiltered}
         >
-          Dodaj wszystkie z filtra ({filteredAvailableRows.length})
+          Add all from filter ({filteredAvailableRows.length})
         </Button>
         <Button
           type="button"
@@ -622,7 +622,7 @@ export function ManyToManyRelationEditor({
           disabled={disabled || isLoading || linkedSelection.size === 0}
           onClick={removeCheckedLinked}
         >
-          Usuń zaznaczone ({linkedSelection.size})
+          Remove selected ({linkedSelection.size})
         </Button>
         <Button
           type="button"
@@ -631,7 +631,7 @@ export function ManyToManyRelationEditor({
           disabled={disabled || isLoading || filteredLinkedRows.length === 0}
           onClick={removeAllFiltered}
         >
-          Usuń wszystkie z filtra ({filteredLinkedRows.length})
+          Remove all from filter ({filteredLinkedRows.length})
         </Button>
         <Button
           type="button"
@@ -640,7 +640,7 @@ export function ManyToManyRelationEditor({
           disabled={disabled || isLoading || selectedValues.length === 0}
           onClick={clearAllLinks}
         >
-          Wyczyść relacje
+          Clear relations
         </Button>
       </div>
 
@@ -666,19 +666,19 @@ export function ManyToManyRelationEditor({
       <div className="grid gap-2 md:grid-cols-4">
         <div className="rounded-lg border bg-muted/20 px-3 py-2">
           <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-            Powiązane
+            Linked
           </p>
           <p className="text-sm font-medium">{selectedValues.length}</p>
         </div>
         <div className="rounded-lg border bg-muted/20 px-3 py-2">
           <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-            Dodane
+            Added
           </p>
           <p className="text-sm font-medium text-primary">{addedValues.length}</p>
         </div>
         <div className="rounded-lg border bg-muted/20 px-3 py-2">
           <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-            Usunięte
+            Removed
           </p>
           <p className="text-sm font-medium text-destructive">
             {removedValues.length}
@@ -686,7 +686,7 @@ export function ManyToManyRelationEditor({
         </div>
         <div className="rounded-lg border bg-muted/20 px-3 py-2">
           <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-            Niedostępne
+            Unavailable
           </p>
           <p className="text-sm font-medium">{unresolvedValues.length}</p>
         </div>

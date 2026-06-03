@@ -68,14 +68,14 @@ const SHELF_SCHEMA: ModelMeta = {
   name: "shelf",
   fields: [
     schemaField("id", "ID", "int", {
-      description: "Identyfikator półki",
+      description: "Shelf identifier",
       primary_key: true,
     }),
-    schemaField("shelf_number", "Numer półki", "str", {
-      description: "Unikalny numer półki",
+    schemaField("shelf_number", "Shelf number", "str", {
+      description: "Unique shelf number",
     }),
     schemaField("rack_id", "Stojak", "int", {
-      description: "Stojak, w którym znajduje się półka",
+      description: "Rack that contains the shelf",
       foreign_keys: [
         {
           target_table: "rack",
@@ -85,21 +85,21 @@ const SHELF_SCHEMA: ModelMeta = {
       ],
     }),
     schemaField("size", "Rozmiar", "str", {
-      description: "Rozmiar półki",
+      description: "Shelf size",
       nullable: true,
     }),
-    schemaField("description", "Opis", "str", {
-      description: "Dodatkowy opis półki",
+    schemaField("description", "Description", "str", {
+      description: "Additional shelf description",
       nullable: true,
       ui_type: "textarea",
     }),
-    schemaField("is_deleted", "Usunięta", "bool", {
-      description: "Czy półka jest oznaczona jako usunięta",
+    schemaField("is_deleted", "Deleted", "bool", {
+      description: "Whether the shelf is marked as deleted",
       nullable: true,
       default: false,
     }),
     schemaField("status", "Status", "ShelfStatus", {
-      description: "Aktualny status półki",
+      description: "Current shelf status",
       default: "available",
       allowed_values: ["available", "occupied", "maintenance", "reserved"],
     }),
@@ -110,7 +110,7 @@ const SHELF_SCHEMA: ModelMeta = {
       api_route: "/shelves/racks",
       value_field: "id",
       label_field: "name",
-      description: "Wybierz stojak, w którym znajduje się półka.",
+      description: "Select the rack that contains the shelf.",
       app_route: "/shelf/racks",
       relation_kind: "one",
       foreign_key: "rack_id",
@@ -126,8 +126,8 @@ const SHELF_PLAN_SCHEMA: ModelMeta = {
       description: "Identyfikator planu",
       primary_key: true,
     }),
-    schemaField("name", "Nazwa", "str"),
-    schemaField("description", "Opis", "str", {
+    schemaField("name", "Name", "str"),
+    schemaField("description", "Description", "str", {
       nullable: true,
       ui_type: "textarea",
       display: {
@@ -142,7 +142,7 @@ const SHELF_PLAN_SCHEMA: ModelMeta = {
     schemaField("duration_days", "Czas trwania", "int", {
       description: "Czas trwania w dniach",
     }),
-    schemaField("is_deleted", "Usunięty", "bool", {
+    schemaField("is_deleted", "Deleted", "bool", {
       nullable: true,
       default: false,
     }),
@@ -158,26 +158,26 @@ const SHELF_RENTAL_SCHEMA: ModelMeta = {
       description: "Identyfikator wynajmu",
       primary_key: true,
     }),
-    schemaField("shelf_id", "Półka", "int", {
-      description: "Półka przypisana do wynajmu",
+    schemaField("shelf_id", "Shelf", "int", {
+      description: "Shelf assigned to the rental",
     }),
-    schemaField("member_id", "Członek", "int", {
-      description: "Członek przypisany do wynajmu",
+    schemaField("member_id", "Member", "int", {
+      description: "Member assigned to the rental",
     }),
     schemaField("plan_id", "Plan", "int", {
-      description: "Plan wynajmu półki",
+      description: "Shelf rental plan",
     }),
     schemaField("contract_id", "Dokument", "int", {
-      description: "Dokument powiązany z wynajmem",
+      description: "Document linked to the rental",
       nullable: true,
     }),
-    schemaField("payment_id", "Płatność", "int", {
-      description: "Płatność wygenerowana dla wynajmu",
+    schemaField("payment_id", "Payment", "int", {
+      description: "Payment generated for the rental",
       nullable: true,
     }),
     schemaField("start_date", "Data startu", "date"),
-    schemaField("end_date", "Data końca", "date", {
-      description: "Wyliczona data końca wynajmu",
+    schemaField("end_date", "End date", "date", {
+      description: "Calculated rental end date",
     }),
     schemaField("is_active", "Aktywny", "bool", {
       description: "Czy wynajem jest obecnie aktywny",
@@ -187,25 +187,25 @@ const SHELF_RENTAL_SCHEMA: ModelMeta = {
       nullable: true,
       ui_type: "textarea",
     }),
-    schemaField("payment_amount", "Kwota płatności", "float", {
-      description: "Kwota używana przy tworzeniu wynajmu",
+    schemaField("payment_amount", "Payment amount", "float", {
+      description: "Amount used when creating the rental",
     }),
-    schemaField("payment_method", "Metoda płatności", "PaymentMethod", {
-      description: "Metoda płatności używana przy tworzeniu wynajmu",
+    schemaField("payment_method", "Payment method", "PaymentMethod", {
+      description: "Payment method used when creating the rental",
       default: "transfer",
       allowed_values: ["transfer", "cash", "card", "blik", "barter"],
     }),
   ],
   filters: [
-    ["member_id", "Członek", "int"],
-    ["shelf_id", "Półka", "int"],
+    ["member_id", "Member", "int"],
+    ["shelf_id", "Shelf", "int"],
   ],
   relation_lookups: {
     shelf_id: {
       api_route: "/shelves/shelves",
       value_field: "id",
       label_field: "shelf_number",
-      description: "Wybierz półkę przypisaną do wynajmu.",
+      description: "Select the shelf assigned to the rental.",
       app_route: "/shelf/shelves",
       relation_kind: "one",
       foreign_key: "shelf_id",
@@ -215,7 +215,7 @@ const SHELF_RENTAL_SCHEMA: ModelMeta = {
       api_route: "/member",
       value_field: "id",
       label_field: "email",
-      description: "Wybierz członka przypisanego do wynajmu.",
+      description: "Select the member assigned to the rental.",
       app_route: "/member",
       relation_kind: "one",
       foreign_key: "member_id",
@@ -225,7 +225,7 @@ const SHELF_RENTAL_SCHEMA: ModelMeta = {
       api_route: "/shelves/plans",
       value_field: "id",
       label_field: "name",
-      description: "Wybierz plan wynajmu.",
+      description: "Select the rental plan.",
       relation_kind: "one",
       foreign_key: "plan_id",
       foreign_table: "shelf_plan",
@@ -234,7 +234,7 @@ const SHELF_RENTAL_SCHEMA: ModelMeta = {
       api_route: "/contract",
       value_field: "id",
       label_field: "title",
-      description: "Wybierz dokument powiązany z wynajmem.",
+      description: "Select the document linked to the rental.",
       app_route: "/contract",
       relation_kind: "one",
       foreign_key: "contract_id",
@@ -244,7 +244,7 @@ const SHELF_RENTAL_SCHEMA: ModelMeta = {
       api_route: "/membership/payments",
       value_field: "id",
       label_field: "description",
-      description: "Płatność powiązana z wynajmem.",
+      description: "Payment linked to the rental.",
       relation_kind: "one",
       foreign_key: "payment_id",
       foreign_table: "payment",
@@ -350,11 +350,11 @@ export default function ShelfPage({ currentRoute }: ShelfPageProps) {
         currentRoute={currentRoute}
         baseRoute="/shelf/racks"
         schemaRoute="/shelves/racks"
-        entityLabel="Stojak"
-        emptyMessage="Brak stojaków do wyświetlenia."
+        entityLabel="Rack"
+        emptyMessage="No racks to display."
         detailTitleFields={["name", "owner"]}
         excludedColumns={["id", "created_at", "updated_at", "is_deleted"]}
-        deleteSuccessMessage={(record) => `Usunięto stojak "${record.name}".`}
+        deleteSuccessMessage={(record) => `Deleted rack "${record.name}".`}
       />
     )
   }
@@ -365,8 +365,8 @@ export default function ShelfPage({ currentRoute }: ShelfPageProps) {
         currentRoute={currentRoute}
         baseRoute="/shelf/rentals"
         schemaRoute="/shelves/rentals"
-        entityLabel="Wynajem półki"
-        emptyMessage="Brak wynajmów półek do wyświetlenia."
+        entityLabel="Shelf rental"
+        emptyMessage="No shelf rentals to display."
         detailTitleFields={["shelf_id", "member_id"]}
         excludedColumns={[
           "id",
@@ -394,7 +394,7 @@ export default function ShelfPage({ currentRoute }: ShelfPageProps) {
           backendApi.client.delete(`/shelves/rentals/${record.id}`)
         }
         deleteSuccessMessage={(record) =>
-          `Usunięto wynajem półki #${record.id}.`
+          `Deleted shelf rental #${record.id}.`
         }
       />
     )
@@ -406,8 +406,8 @@ export default function ShelfPage({ currentRoute }: ShelfPageProps) {
         currentRoute={currentRoute}
         baseRoute="/shelf/plans"
         schemaRoute="/shelves/plans"
-        entityLabel="Plan wynajmu"
-        emptyMessage="Brak planów wynajmu do wyświetlenia."
+        entityLabel="Rental plan"
+        emptyMessage="No rental plans to display."
         detailTitleFields={["name", "price"]}
         excludedColumns={["id", "is_deleted"]}
         schemaOverride={SHELF_PLAN_SCHEMA}
@@ -427,7 +427,7 @@ export default function ShelfPage({ currentRoute }: ShelfPageProps) {
         deleteRecord={(record) =>
           backendApi.client.delete(`/shelves/plans/${record.id}`)
         }
-        deleteSuccessMessage={(record) => `Usunięto plan "${record.name}".`}
+        deleteSuccessMessage={(record) => `Deleted plan "${record.name}".`}
       />
     )
   }
@@ -437,8 +437,8 @@ export default function ShelfPage({ currentRoute }: ShelfPageProps) {
       currentRoute={currentRoute}
       baseRoute="/shelf/shelves"
       schemaRoute="/shelves/shelves"
-      entityLabel="Półka"
-      emptyMessage="Brak półek do wyświetlenia."
+      entityLabel="Shelf"
+      emptyMessage="No shelves to display."
       detailTitleFields={["shelf_number", "rack_id"]}
       excludedColumns={["id", "is_deleted", "status"]}
       schemaOverride={SHELF_SCHEMA}
@@ -459,7 +459,7 @@ export default function ShelfPage({ currentRoute }: ShelfPageProps) {
         backendApi.client.delete(`/shelves/shelves/${record.id}`)
       }
       deleteSuccessMessage={(record) =>
-        `Usunięto półkę "${record.shelf_number}".`
+        `Deleted shelf "${record.shelf_number}".`
       }
     />
   )

@@ -132,7 +132,7 @@ export function MonthPicker({
   value,
   onChange,
   nullable = false,
-  placeholder = "Wybierz miesiąc i rok",
+  placeholder = "Select month and year",
   disabled = false,
 }: MonthPickerProps) {
   const [open, setOpen] = React.useState(false)
@@ -169,16 +169,16 @@ export function MonthPicker({
   const canExpandView = viewMode !== "decades"
   const previousLabel =
     viewMode === "months"
-      ? "Poprzedni rok"
+      ? "Previous year"
       : viewMode === "years"
-        ? "Poprzednia dekada"
-        : "Poprzednie stulecie"
+        ? "Previous decade"
+        : "Previous century"
   const nextLabel =
     viewMode === "months"
-      ? "Następny rok"
+      ? "Next year"
       : viewMode === "years"
-        ? "Następna dekada"
-        : "Następne stulecie"
+        ? "Next decade"
+        : "Next century"
 
   const handlePrevious = () => {
     if (viewMode === "months") {
@@ -277,7 +277,7 @@ export function MonthPicker({
                 </Button>
               </CardTitle>
               <CardDescription className="text-[11px]">
-                Wybierz miesiąc i rok
+                Select month and year
               </CardDescription>
             </div>
             <Button
@@ -392,7 +392,7 @@ export function MonthPicker({
               disabled={disabled}
               onClick={() => handleSelectMonth(new Date())}
             >
-              Bieżący miesiąc
+              Current month
             </Button>
             {nullable ? (
               <Button
@@ -404,7 +404,7 @@ export function MonthPicker({
                   setOpen(false)
                 }}
               >
-                Wyczyść
+                Clear
               </Button>
             ) : null}
           </CardFooter>

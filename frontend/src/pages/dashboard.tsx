@@ -30,7 +30,7 @@ export default function DashboardPage() {
         if (loadError instanceof Error) {
           setError(loadError.message)
         } else {
-          setError("Nie udało się pobrać danych panelu.")
+          setError("Unable to load dashboard data.")
         }
       } finally {
         if (isMounted) {

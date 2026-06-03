@@ -12,11 +12,11 @@ export default function PublicDeviceIdentityPage({
       currentRoute={currentRoute}
       baseRoute="/public-device-identity"
       schemaRoute="/public-device-identity"
-      entityLabel="Urządzenie publiczne"
-      emptyMessage="Brak urządzeń publicznych do wyświetlenia."
+      entityLabel="Public device"
+      emptyMessage="No public devices to display."
       detailTitleFields={["id", "assigned_member_id"]}
       deleteSuccessMessage={(record) =>
-        `Usunięto urządzenie publiczne #${record.id}.`
+        `Deleted public device #${record.id}.`
       }
     />
   )

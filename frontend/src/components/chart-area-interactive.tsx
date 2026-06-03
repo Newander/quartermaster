@@ -44,11 +44,11 @@ type ClubLoadChartPoint = {
 
 const chartConfig = {
   trainings: {
-    label: "Treningi",
+    label: "Training",
     color: "var(--primary)",
   },
   payments: {
-    label: "Płatności",
+    label: "Payments",
     color: "var(--primary)",
   },
 } satisfies ChartConfig
@@ -98,12 +98,12 @@ export function ChartAreaInteractive({
   return (
     <Card className="@container/card">
       <CardHeader>
-        <CardTitle>Obciążenie klubu</CardTitle>
+        <CardTitle>Club load</CardTitle>
         <CardDescription>
           <span className="hidden @[540px]/card:block">
-            Treningi i płatności z ostatnich 3 miesięcy
+            Training sessions and payments from the last 3 months
           </span>
-          <span className="@[540px]/card:hidden">Ostatnie 3 miesiące</span>
+          <span className="@[540px]/card:hidden">Last 3 months</span>
         </CardDescription>
         <CardAction>
           <ToggleGroup
@@ -113,7 +113,7 @@ export function ChartAreaInteractive({
             variant="outline"
             className="hidden *:data-[slot=toggle-group-item]:px-4! @[767px]/card:flex"
           >
-            <ToggleGroupItem value="90d">3 miesiące</ToggleGroupItem>
+            <ToggleGroupItem value="90d">3 months</ToggleGroupItem>
             <ToggleGroupItem value="30d">30 dni</ToggleGroupItem>
             <ToggleGroupItem value="7d">7 dni</ToggleGroupItem>
           </ToggleGroup>
@@ -121,19 +121,19 @@ export function ChartAreaInteractive({
             <SelectTrigger
               className="flex w-40 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate @[767px]/card:hidden"
               size="sm"
-              aria-label="Wybierz okres"
+              aria-label="Select period"
             >
-              <SelectValue placeholder="3 miesiące" />
+              <SelectValue placeholder="3 months" />
             </SelectTrigger>
             <SelectContent className="rounded-xl">
               <SelectItem value="360d" className="rounded-lg">
-                1 rok
+                1 year
               </SelectItem>
               <SelectItem value="180d" className="rounded-lg">
-                6 miesiące
+                6 months
               </SelectItem>
               <SelectItem value="90d" className="rounded-lg">
-                3 miesiące
+                3 months
               </SelectItem>
               <SelectItem value="30d" className="rounded-lg">
                 30 dni
@@ -224,7 +224,7 @@ export function ChartAreaInteractive({
         </ChartContainer>
         {!isLoading && filteredData.length === 0 ? (
           <p className="mt-2 text-xs text-muted-foreground">
-            Brak danych dla wybranego okresu.
+            No data for the selected period.
           </p>
         ) : null}
       </CardContent>

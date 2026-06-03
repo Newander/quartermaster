@@ -77,7 +77,7 @@ export function PublicMemberSearchSelect({
           toast.error(
             error instanceof Error
               ? error.message
-              : "Nie udało się znaleźć uczestników."
+              : "Unable to find participants."
           )
         }
       } finally {
@@ -107,7 +107,7 @@ export function PublicMemberSearchSelect({
           disabled={disabled}
         >
           <span className="truncate">
-            {value?.display_hint ?? "Wybierz uczestnika"}
+            {value?.display_hint ?? "Select participant"}
           </span>
           <RiArrowDownSLine data-icon="inline-end" />
         </Button>
@@ -122,10 +122,10 @@ export function PublicMemberSearchSelect({
           <CommandList>
             <CommandEmpty>
               {query.trim().length < 1
-                ? "Wpisz imię lub nazwisko."
+                ? "Enter a first or last name."
                 : isLoading
-                  ? "Ładowanie uczestników..."
-                  : "Nie znaleziono uczestników."}
+                  ? "Loading participants..."
+                  : "No participants found."}
             </CommandEmpty>
             {records.length > 0 ? (
               <CommandGroup>
@@ -169,7 +169,7 @@ export function PublicMemberSearchSelect({
             {isLoading ? (
               <div className="flex items-center justify-center gap-2 px-3 py-2 text-sm text-muted-foreground">
                 <RiLoader4Line className="animate-spin" aria-hidden="true" />
-                Ładowanie...
+                Loading...
               </div>
             ) : null}
           </CommandList>

@@ -12,11 +12,11 @@ export default function TrainingFormPage({
       currentRoute={currentRoute}
       baseRoute="/training-form"
       schemaRoute="/training/forms"
-      entityLabel="Forma treningowa"
-      emptyMessage="Brak form treningowych do wyświetlenia."
+      entityLabel="Training form"
+      emptyMessage="No training forms to display."
       detailTitleFields={["name"]}
       deleteSuccessMessage={(record) =>
-        `Usunięto formę treningową #${record.id}.`
+        `Deleted training form #${record.id}.`
       }
     />
   )

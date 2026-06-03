@@ -56,8 +56,8 @@ export function ThemeToggle() {
       size="sm"
       className="ml-auto gap-2 border-border/90"
       onClick={handleToggleTheme}
-      aria-label="Przełącz motyw"
-      title="Przełącz motyw"
+      aria-label="Toggle theme"
+      title="Toggle theme"
     >
       {isDark ? (
         <RiMoonClearLine className="size-4" aria-hidden="true" />

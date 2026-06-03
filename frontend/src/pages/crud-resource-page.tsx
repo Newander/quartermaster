@@ -107,8 +107,8 @@ export default function CrudResourcePage<
   excludedColumns = DEFAULT_EXCLUDED_COLUMNS,
   readOnlyFields = excludedColumns,
   detailTitleFields = [],
-  deleteActionLabel = "Usuń",
-  deleteErrorMessage = "Nie udało się usunąć rekordu.",
+  deleteActionLabel = "Delete",
+  deleteErrorMessage = "Unable to delete the record.",
   deleteSuccessMessage,
   schemaOverride,
   customFields,
@@ -140,7 +140,7 @@ export default function CrudResourcePage<
   const handleDelete = React.useCallback(
     async (record: TRecord | null) => {
       if (!record) {
-        toast.error("Nie udało się ustalić rekordu do usunięcia.")
+        toast.error("Unable to identify the record to delete.")
         return
       }
 
@@ -148,7 +148,7 @@ export default function CrudResourcePage<
         await deleteRecordByRecord(record)
         toast.success(
           deleteSuccessMessage?.(record) ??
-            `${entityLabel} #${record.id} usunięto.`
+            `${entityLabel} #${record.id} deleted.`
         )
         setReloadKey((current) => current + 1)
         navigateTo(resolvedBaseRoute, { replace: true })
@@ -170,7 +170,7 @@ export default function CrudResourcePage<
   >(() => {
     return [
       {
-        label: "Pełny widok",
+        label: "Open details",
         icon: RiEyeLine,
         onSelect: (record) => navigateTo(`${resolvedBaseRoute}/${record.id}`),
       },

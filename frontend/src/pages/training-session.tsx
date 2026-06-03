@@ -75,12 +75,12 @@ const DERIVED_SCHEMA_FIELDS: SchemaField[] = [
   createDerivedField(
     "training_form_name",
     "Forma treningowa",
-    "Nazwa formy treningowej z grafiku powiązanego z sesją."
+    "Training form name from the schedule linked to the session."
   ),
   createDerivedField(
     "season_name",
     "Sezon",
-    "Nazwa sezonu z grafiku powiązanego z sesją."
+    "Season name from the schedule linked to the session."
   ),
 ]
 
@@ -285,8 +285,8 @@ export default function TrainingSessionPage({
       currentRoute={currentRoute}
       baseRoute="/training-session"
       schemaRoute={TRAINING_SESSION_SCHEMA_ROUTE}
-      entityLabel="Sesja treningowa"
-      emptyMessage="Brak sesji treningowych do wyświetlenia."
+      entityLabel="Training session"
+      emptyMessage="No training sessions to display."
       excludedColumns={TRAINING_SESSION_EXCLUDED_COLUMNS}
       readOnlyFields={TRAINING_SESSION_READ_ONLY_FIELDS}
       detailTitleFields={["session_date"]}
@@ -295,14 +295,14 @@ export default function TrainingSessionPage({
       loadRecord={loadTrainingSessionRecord}
       rowActions={[
         {
-          label: "Lista obecności",
+          label: "Attendance roster",
           icon: RiUserStarLine,
           onSelect: (record) =>
             navigateTo(`/training-session-sheet/${record.id}`),
         },
       ]}
       deleteSuccessMessage={(record) =>
-        `Usunięto sesję treningową #${record.id}.`
+        `Deleted training session #${record.id}.`
       }
     />
   )

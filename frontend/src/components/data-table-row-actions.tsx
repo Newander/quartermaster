@@ -45,7 +45,7 @@ export function DataTableRowActions<TData>({
             className="size-8 text-muted-foreground data-[state=open]:bg-muted"
           >
             <RiMore2Line data-icon="inline-start" />
-            <span className="sr-only">Otwórz menu akcji</span>
+            <span className="sr-only">Open actions menu</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-44">

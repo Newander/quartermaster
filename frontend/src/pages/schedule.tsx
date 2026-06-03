@@ -11,10 +11,10 @@ export default function SchedulePage({ currentRoute }: SchedulePageProps) {
       currentRoute={currentRoute}
       baseRoute="/schedule"
       schemaRoute="/training/schedule"
-      entityLabel="Grafik"
-      emptyMessage="Brak grafików do wyświetlenia."
+      entityLabel="Schedule"
+      emptyMessage="No schedules to display."
       detailTitleFields={["day_of_week", "start_time"]}
-      deleteSuccessMessage={(record) => `Usunięto grafik #${record.id}.`}
+      deleteSuccessMessage={(record) => `Deleted schedule #${record.id}.`}
       syncRelations={syncScheduleRelations}
     />
   )

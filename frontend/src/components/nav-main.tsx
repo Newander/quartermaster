@@ -21,7 +21,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 
-const TRAINING_DROPDOWN_GROUP_TITLE = "Treningi"
+const TRAINING_DROPDOWN_GROUP_TITLE = "Training"
 const TRAINING_DROPDOWN_ITEM_IDS = new Set([
   "schedule",
   "harmonogram",
@@ -91,15 +91,15 @@ export function NavMain({
                     >
                       <SidebarMenuItem>
                         <SidebarMenuButton
-                          tooltip="Treningi"
+                          tooltip="Training"
                           isActive={TRAINING_DROPDOWN_ITEM_IDS.has(activeItem)}
                         >
                           <RiCalendarScheduleFill />
-                          <span>Treningi</span>
+                          <span>Training</span>
                         </SidebarMenuButton>
                         <CollapsibleTrigger asChild>
                           <SidebarMenuAction
-                            aria-label="Pokaż lub ukryj sekcję Treningi"
+                            aria-label="Show or hide the Training section"
                             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                           >
                             <RiArrowDownSLine className="transition-transform group-data-[state=open]/collapsible:rotate-180" />

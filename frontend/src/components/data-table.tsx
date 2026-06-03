@@ -413,7 +413,7 @@ export function DataTable<TData>({
   pageSize = 12,
   getRowId,
   withRowSelection = false,
-  emptyMessage = "Brak danych.",
+  emptyMessage = "No data.",
   query,
   filters,
   rowActions = [],
@@ -515,7 +515,7 @@ export function DataTable<TData>({
           setSchemaError(
             error instanceof Error
               ? error.message
-              : "Nie udało się pobrać schematu tabeli."
+              : "Unable to load the table schema."
           )
         }
       } finally {
@@ -625,7 +625,7 @@ export function DataTable<TData>({
           setDataError(
             error instanceof Error
               ? error.message
-              : "Nie udało się pobrać danych tabeli."
+              : "Unable to load table data."
           )
         }
       } finally {
@@ -751,7 +751,7 @@ export function DataTable<TData>({
             onCheckedChange={(value) =>
               table.toggleAllPageRowsSelected(!!value)
             }
-            aria-label="Zaznacz wszystkie wiersze"
+            aria-label="Select all rows"
             disabled={!table.getRowModel().rows.length}
           />
         </div>
@@ -761,7 +761,7 @@ export function DataTable<TData>({
           <Checkbox
             checked={row.getIsSelected()}
             onCheckedChange={(value) => row.toggleSelected(!!value)}
-            aria-label="Zaznacz wiersz"
+            aria-label="Select row"
           />
         </div>
       ),
@@ -821,7 +821,7 @@ export function DataTable<TData>({
 
   const handleBulkAction = (actionLabel: string) => {
     toast(
-      `${actionLabel} dla ${selectedRowsCount} zaznaczonych rekordów będzie dostępne w kolejnym kroku.`
+      `${actionLabel} for ${selectedRowsCount} selected records will be available in the next step.`
     )
   }
 
@@ -855,7 +855,7 @@ export function DataTable<TData>({
     const selectedRecords = selectedRows.map((row) => row.original)
 
     if (selectedRecords.length === 0) {
-      toast.error("Nie wybrano rekordów do usunięcia.")
+      toast.error("No records selected for deletion.")
       return
     }
 
@@ -870,7 +870,7 @@ export function DataTable<TData>({
         )
 
         if (selectedIds.some((id) => id === null)) {
-          throw new Error("Nie udało się ustalić identyfikatorów rekordów.")
+          throw new Error("Unable to resolve record identifiers.")
         }
 
         await Promise.all(
@@ -880,14 +880,14 @@ export function DataTable<TData>({
         )
       }
 
-      toast.success(`Usunięto ${selectedRecords.length} zaznaczone rekordy.`)
+      toast.success(`Deleted ${selectedRecords.length} selected records.`)
       setRowSelection({})
       setDataRevision((current) => current + 1)
     } catch (error) {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Nie udało się usunąć zaznaczonych rekordów."
+          : "Unable to delete selected records."
       )
     } finally {
       setIsBulkDeleting(false)
@@ -941,7 +941,7 @@ export function DataTable<TData>({
               id={`${normalizedRoute}-search`}
               value={searchValue}
               onChange={(event) => setSearchValue(event.target.value)}
-              placeholder="Szukaj w tabeli..."
+              placeholder="Search table..."
               className="w-full pl-8"
             />
           </div>
@@ -958,11 +958,11 @@ export function DataTable<TData>({
                     disabled={availableSchemaFilters.length === 0}
                   >
                     <RiFilter3Line data-icon="inline-start" />
-                    Dodaj filtr
+                    Add filter
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-56 min-w-56">
-                  <DropdownMenuLabel>Dostępne filtry</DropdownMenuLabel>
+                  <DropdownMenuLabel>Available filters</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   {availableSchemaFilters.length > 0 ? (
                     <DropdownMenuGroup>
@@ -977,14 +977,14 @@ export function DataTable<TData>({
                     </DropdownMenuGroup>
                   ) : (
                     <DropdownMenuItem disabled>
-                      Wszystkie filtry są już dodane
+                      All filters are already added
                     </DropdownMenuItem>
                   )}
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
               <span className="shrink-0 text-xs text-muted-foreground">
-                Brak filtrów w schemacie.
+                No filters in the schema.
               </span>
             )}
             {selectedSchemaFilters.length > 0 ? (
@@ -1030,7 +1030,7 @@ export function DataTable<TData>({
                           handleFilterChange(name, event.target.value)
                         }
                         type={filterInputTypeByFieldType(type)}
-                        placeholder="Wartość"
+                        placeholder="Value"
                         className="h-7 w-36 border-0 bg-transparent px-1.5 shadow-none focus-visible:ring-0"
                       />
                     )}
@@ -1039,8 +1039,8 @@ export function DataTable<TData>({
                       size="icon-xs"
                       className="shrink-0"
                       onClick={() => handleFilterRemove(name)}
-                      aria-label={`Usuń filtr ${toColumnLabel(name)}`}
-                      title={`Usuń filtr ${toColumnLabel(name)}`}
+                      aria-label={`Remove filter ${toColumnLabel(name)}`}
+                      title={`Remove filter ${toColumnLabel(name)}`}
                     >
                       <RiCloseLine />
                     </Button>
@@ -1049,12 +1049,12 @@ export function DataTable<TData>({
               })
             ) : (
               <span className="text-xs whitespace-nowrap text-muted-foreground">
-                Wybierz filtr z listy, aby dodać go do tabeli.
+                Select a filter from the list to add it to the table.
               </span>
             )}
             {activeFiltersCount > 0 ? (
               <Badge variant="secondary" className="h-5 shrink-0">
-                {activeFiltersCount} aktywne
+                {activeFiltersCount} active
               </Badge>
             ) : null}
           </div>
@@ -1069,12 +1069,12 @@ export function DataTable<TData>({
                   disabled={hideableColumns.length === 0}
                 >
                   <RiLayoutColumnLine data-icon="inline-start" />
-                  Kolumny
+                  Columns
                   <RiArrowDownSLine data-icon="inline-end" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-52">
-                <DropdownMenuLabel>Widoczne kolumny</DropdownMenuLabel>
+                <DropdownMenuLabel>Visible columns</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   {hideableColumns.length > 0 ? (
@@ -1093,7 +1093,7 @@ export function DataTable<TData>({
                     ))
                   ) : (
                     <DropdownMenuItem disabled>
-                      Brak kolumn do ukrywania
+                      No columns to hide
                     </DropdownMenuItem>
                   )}
                 </DropdownMenuGroup>
@@ -1105,7 +1105,7 @@ export function DataTable<TData>({
                   <Button
                     size="icon-sm"
                     onClick={handleCreate}
-                    aria-label="Nowy element"
+                    aria-label="New item"
                   >
                     <RiAddLine />
                   </Button>
@@ -1137,7 +1137,7 @@ export function DataTable<TData>({
                           selectedRowsCount === 0 ||
                           isBulkDeleting
                         }
-                        aria-label="Akcje grupowe"
+                        aria-label="Bulk actions"
                       >
                         <RiMore2Line />
                       </Button>
@@ -1170,7 +1170,7 @@ export function DataTable<TData>({
                     onSelect={() => void handleBulkDelete()}
                   >
                     <RiDeleteBinLine />
-                    <span>Usuń zaznaczone</span>
+                    <span>Delete selected</span>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
               </DropdownMenuContent>
@@ -1183,14 +1183,14 @@ export function DataTable<TData>({
                     size="icon-sm"
                     onClick={clearToolbarState}
                     disabled={!hasToolbarState}
-                    aria-label="Wyczyść wyszukiwanie i filtry"
+                    aria-label="Clear search and filters"
                   >
                     <RiRefreshLine />
                   </Button>
                 </span>
               </TooltipTrigger>
               <TooltipContent side="bottom" sideOffset={6}>
-                Wyczyść wyszukiwanie i filtry
+                Clear search and filters
               </TooltipContent>
             </Tooltip>
           </div>
@@ -1242,7 +1242,7 @@ export function DataTable<TData>({
                   colSpan={table.getVisibleLeafColumns().length || 1}
                   className="h-32"
                 >
-                  <DataTableStatus title="Ładowanie schematu tabeli..." />
+                  <DataTableStatus title="Loading table schema..." />
                 </TableCell>
               </TableRow>
             ) : schemaError ? (
@@ -1252,8 +1252,8 @@ export function DataTable<TData>({
                   className="h-32"
                 >
                   <DataTableStatus
-                    title="Nie udało się przygotować tabeli"
-                    description="Odśwież widok albo sprawdź konfigurację zasobu API."
+                    title="Unable to prepare the table"
+                    description="Refresh the view or check the API resource configuration."
                     tone="destructive"
                   />
                 </TableCell>
@@ -1264,7 +1264,7 @@ export function DataTable<TData>({
                   colSpan={table.getVisibleLeafColumns().length || 1}
                   className="h-32"
                 >
-                  <DataTableStatus title="Ładowanie danych..." />
+                  <DataTableStatus title="Loading data..." />
                 </TableCell>
               </TableRow>
             ) : dataError ? (
@@ -1274,8 +1274,8 @@ export function DataTable<TData>({
                   className="h-32"
                 >
                   <DataTableStatus
-                    title="Nie udało się pobrać danych"
-                    description="Odśwież tabelę albo zawęź filtry i spróbuj ponownie."
+                    title="Unable to load data"
+                    description="Refresh the table or narrow the filters and try again."
                     tone="destructive"
                   />
                 </TableCell>
@@ -1304,7 +1304,7 @@ export function DataTable<TData>({
                 >
                   <DataTableStatus
                     title={emptyMessage}
-                    description="Zmień filtry albo dodaj nowy rekord."
+                    description="Change the filters or add a new record."
                   />
                 </TableCell>
               </TableRow>
@@ -1317,8 +1317,8 @@ export function DataTable<TData>({
           {withRowSelection
             ? `Wybrano ${selectedRowsCount} z ${totalRows}`
             : deferredSearchValue.trim()
-              ? `${table.getRowModel().rows.length} z ${totalRows} rekordów`
-              : `${totalRows} rekordów`}
+              ? `${table.getRowModel().rows.length} of ${totalRows} records`
+              : `${totalRows} records`}
         </div>
         <div className="flex items-center gap-2">
           <div className="hidden items-center gap-2 lg:flex">
@@ -1326,7 +1326,7 @@ export function DataTable<TData>({
               htmlFor={`${normalizedRoute}-rows-per-page`}
               className="text-sm font-medium"
             >
-              Wierszy na stronę
+              Rows per page
             </Label>
             <Select
               value={`${table.getState().pagination.pageSize}`}
@@ -1365,7 +1365,7 @@ export function DataTable<TData>({
             disabled={!table.getCanPreviousPage()}
           >
             <RiArrowLeftSLine />
-            <span className="sr-only">Poprzednia strona</span>
+            <span className="sr-only">Previous page</span>
           </Button>
           <Button
             variant="outline"
@@ -1374,7 +1374,7 @@ export function DataTable<TData>({
             disabled={!table.getCanNextPage()}
           >
             <RiArrowRightSLine />
-            <span className="sr-only">Następna strona</span>
+            <span className="sr-only">Next page</span>
           </Button>
         </div>
       </div>
@@ -1384,7 +1384,7 @@ export function DataTable<TData>({
         isOpen={isCreateSheetOpen}
         schemaRoute={normalizedRoute}
         baseRoute={normalizedCreateRouteBase ?? normalizedRoute}
-        entityLabel="rekord"
+        entityLabel="record"
         readOnlyFields={readOnlyFields}
         schemaOverride={schemaOverride}
         customFields={customFields}

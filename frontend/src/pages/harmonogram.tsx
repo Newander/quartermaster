@@ -195,7 +195,7 @@ const getInstructorSummary = (event: HarmonogramEvent) => {
     .map((instructor) => `${instructor.first_name} ${instructor.last_name}`.trim())
     .filter(Boolean)
 
-  return names.length > 0 ? names.join(", ") : "Brak instruktora"
+  return names.length > 0 ? names.join(", ") : "No instructor"
 }
 
 const weekRangeLabel = (anchorDate: Date) => {
@@ -364,7 +364,7 @@ export default function HarmonogramPage({ currentRoute }: HarmonogramPageProps) 
           setError(
             loadError instanceof Error
               ? loadError.message
-              : "Nie udało się pobrać harmonogramu."
+              : "Unable to load the schedule."
           )
         }
       } finally {
@@ -448,13 +448,13 @@ export default function HarmonogramPage({ currentRoute }: HarmonogramPageProps) 
           start_time: minutesToTime(nextStartMinutes),
           end_time: minutesToTime(nextEndMinutes),
         })
-        toast.success("Grafik został przeniesiony.")
+        toast.success("Schedule entry moved.")
         refreshData()
       } catch (moveError) {
         toast.error(
           moveError instanceof Error
             ? moveError.message
-            : "Nie udało się przenieść grafiku."
+            : "Unable to move the schedule entry."
         )
       } finally {
         setIsMoving(false)
@@ -482,7 +482,7 @@ export default function HarmonogramPage({ currentRoute }: HarmonogramPageProps) 
 
         await handleMoveSchedule(payload, targetDate, targetHour)
       } catch {
-        toast.error("Nie udało się odczytać danych przeciągania.")
+        toast.error("Unable to read drag data.")
       }
     },
     [handleMoveSchedule]
@@ -543,7 +543,7 @@ export default function HarmonogramPage({ currentRoute }: HarmonogramPageProps) 
                 Harmonogram
               </CardTitle>
               <CardDescription>
-                Widok kalendarza dla grafików treningowych z obsługą tygodnia i miesiąca.
+                Calendar view for training schedules with week and month modes.
               </CardDescription>
             </div>
             <Tabs
@@ -553,8 +553,8 @@ export default function HarmonogramPage({ currentRoute }: HarmonogramPageProps) 
               }
             >
               <TabsList>
-                <TabsTrigger value="week">Tydzień</TabsTrigger>
-                <TabsTrigger value="month">Miesiąc</TabsTrigger>
+                <TabsTrigger value="week">Week</TabsTrigger>
+                <TabsTrigger value="month">Month</TabsTrigger>
               </TabsList>
             </Tabs>
           </CardHeader>
@@ -562,14 +562,14 @@ export default function HarmonogramPage({ currentRoute }: HarmonogramPageProps) 
             <div className="flex flex-wrap items-center gap-2">
               <Button variant="outline" size="icon" onClick={handlePrevious}>
                 <RiArrowLeftSLine />
-                <span className="sr-only">Poprzedni zakres</span>
+                <span className="sr-only">Previous range</span>
               </Button>
               <Button variant="outline" size="icon" onClick={handleNext}>
                 <RiArrowRightSLine />
-                <span className="sr-only">Następny zakres</span>
+                <span className="sr-only">Next range</span>
               </Button>
               <Button variant="outline" onClick={handleToday}>
-                Dzisiaj
+                Today
               </Button>
               <Badge variant="secondary" className="h-7">
                 {viewMode === "week"
@@ -586,7 +586,7 @@ export default function HarmonogramPage({ currentRoute }: HarmonogramPageProps) 
 
             {isLoading ? (
               <div className="flex min-h-64 items-center justify-center text-sm text-muted-foreground">
-                Ładowanie harmonogramu...
+                Loading schedule...
               </div>
             ) : error ? (
               <div className="flex min-h-64 items-center justify-center text-sm text-destructive">
@@ -765,7 +765,7 @@ export default function HarmonogramPage({ currentRoute }: HarmonogramPageProps) 
 
             {!isLoading && !error && events.length === 0 ? (
               <div className="rounded-lg border border-dashed p-6 text-center text-sm text-muted-foreground">
-                Brak zaplanowanych zajęć w wybranym zakresie.
+                No scheduled classes in the selected range.
               </div>
             ) : null}
           </CardContent>
@@ -777,7 +777,7 @@ export default function HarmonogramPage({ currentRoute }: HarmonogramPageProps) 
         schemaRoute={SCHEDULE_SCHEMA_ROUTE}
         baseRoute={HARMONOGRAM_ROUTE}
         recordId={selectedScheduleId}
-        entityLabel="Grafik"
+        entityLabel="Schedule"
         readOnlyFields={READ_ONLY_FIELDS}
         onClose={handleCloseSheet}
         loadRecord={(scheduleId) =>
@@ -790,7 +790,7 @@ export default function HarmonogramPage({ currentRoute }: HarmonogramPageProps) 
           const startTime =
             typeof record?.start_time === "string" ? toTimeLabel(record.start_time) : ""
           const titlePart = `${dayOfWeek} ${startTime}`.trim()
-          return titlePart.length > 0 ? titlePart : `Grafik #${recordId}`
+          return titlePart.length > 0 ? titlePart : `Schedule #${recordId}`
         }}
       />
     </div>

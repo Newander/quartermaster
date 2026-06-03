@@ -12,12 +12,12 @@ export default function AttendanceChangeLogPage({
       currentRoute={currentRoute}
       baseRoute="/attendance-change-log"
       schemaRoute="/attendance-change-log"
-      entityLabel="Zmiana obecności"
-      emptyMessage="Brak zmian obecności do wyświetlenia."
+      entityLabel="Attendance change"
+      emptyMessage="No attendance changes to display."
       detailTitleFields={["session_id", "member_id", "changed_by"]}
       disableUpdate
       deleteSuccessMessage={(record) =>
-        `Usunięto wpis historii obecności #${record.id}.`
+        `Deleted attendance history entry #${record.id}.`
       }
     />
   )

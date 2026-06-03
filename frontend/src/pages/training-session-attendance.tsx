@@ -41,7 +41,7 @@ const ATTENDANCE_SCHEMA: ModelMeta = {
     },
     {
       name: "member_id",
-      transcription: "Członek",
+      transcription: "Member",
       description: "Member ID",
       data_type: "int",
       nullable: false,
@@ -52,7 +52,7 @@ const ATTENDANCE_SCHEMA: ModelMeta = {
     },
     {
       name: "attended",
-      transcription: "Obecność",
+      transcription: "Attendance",
       description: "Attended",
       data_type: "bool",
       nullable: false,
@@ -86,8 +86,8 @@ const ATTENDANCE_SCHEMA: ModelMeta = {
   ],
   filters: [
     ["session_id", "Sesja ID", "int"],
-    ["member_id", "Członek ID", "int"],
-    ["attended", "Obecność", "bool"],
+    ["member_id", "Member ID", "int"],
+    ["attended", "Attendance", "bool"],
   ],
   relation_lookups: {},
 }
@@ -120,8 +120,8 @@ export default function TrainingSessionAttendancePage({
       currentRoute={currentRoute}
       baseRoute="/training-session-attendance"
       schemaRoute="/training/attendance"
-      entityLabel="Obecność"
-      emptyMessage="Brak wpisów obecności do wyświetlenia."
+      entityLabel="Attendance"
+      emptyMessage="No attendance entries to display."
       detailTitleFields={["session_id", "member_id"]}
       excludedColumns={["id", "created_at"]}
       schemaOverride={ATTENDANCE_SCHEMA}
@@ -136,7 +136,7 @@ export default function TrainingSessionAttendancePage({
         backendApi.client.delete(`/training/attendance/${record.id}`)
       }
       deleteSuccessMessage={(record) =>
-        `Usunięto wpis obecności #${record.id}.`
+        `Deleted attendance entry #${record.id}.`
       }
     />
   )

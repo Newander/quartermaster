@@ -46,21 +46,21 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Zaloguj się do systemu</CardTitle>
+          <CardTitle>Sign in to Quartermaster</CardTitle>
           <CardDescription>
-            Wpisz adres e-mail lub login oraz hasło, aby otworzyć panel klubu
+            Enter your username or email and password to open the club dashboard.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="identifier">E-mail lub login</FieldLabel>
+                <FieldLabel htmlFor="identifier">Email or username</FieldLabel>
                 <Input
                   id="identifier"
                   type="text"
                   autoComplete="username"
-                  placeholder="club@hema-garden.local lub club-admin"
+                  placeholder="club@hema-garden.local or club-admin"
                   value={identifier}
                   onChange={(event) => setIdentifier(event.target.value)}
                   disabled={isSubmitting}
@@ -69,12 +69,12 @@ export function LoginForm({
               </Field>
               <Field>
                 <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Hasło</FieldLabel>
+                  <FieldLabel htmlFor="password">Password</FieldLabel>
                   <a
                     href="#"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                   >
-                    Nie pamiętasz hasła?
+                    Forgot password?
                   </a>
                 </div>
                 <Input
@@ -86,17 +86,17 @@ export function LoginForm({
                   required
                 />
                 <FieldDescription>
-                  Wpisz hasło konta otrzymane od administratora.
+                  Use the password provided by the club administrator.
                 </FieldDescription>
               </Field>
               <Field>
                 <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Logowanie..." : "Zaloguj"}
+                  {isSubmitting ? "Signing in..." : "Sign in"}
                 </Button>
                 <FieldError>{error}</FieldError>
                 <FieldDescription className="text-center">
-                  Konto tworzy administrator klubu.{" "}
-                  <a href="#">Skontaktuj się</a>
+                  Accounts are created by a club administrator.{" "}
+                  <a href="#">Contact support</a>
                 </FieldDescription>
               </Field>
             </FieldGroup>

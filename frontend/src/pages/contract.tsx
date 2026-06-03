@@ -55,12 +55,12 @@ export default function ContractPage({ currentRoute }: ContractPageProps) {
       currentRoute={currentRoute}
       baseRoute="/contract"
       schemaRoute="/contract"
-      entityLabel="Dokument"
-      emptyMessage="Brak dokumentów do wyświetlenia."
+      entityLabel="Document"
+      emptyMessage="No documents to display."
       detailTitleFields={["title", "version"]}
       syncRelations={syncContractMembers}
       deleteSuccessMessage={(record) =>
-        `Usunięto dokument "${String(record.title ?? record.id)}".`
+        `Deleted document "${String(record.title ?? record.id)}".`
       }
     />
   )

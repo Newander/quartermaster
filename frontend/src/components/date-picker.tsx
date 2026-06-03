@@ -159,7 +159,7 @@ export function DatePicker({
   value,
   onChange,
   nullable = false,
-  placeholder = "Wybierz datę",
+  placeholder = "Select date",
   disabled = false,
 }: DatePickerProps) {
   const [open, setOpen] = React.useState(false)
@@ -201,20 +201,20 @@ export function DatePicker({
   const canExpandView = viewMode !== "decades"
   const previousLabel =
     viewMode === "days"
-      ? "Poprzedni miesiąc"
+      ? "Previous month"
       : viewMode === "months"
-        ? "Poprzedni rok"
+        ? "Previous year"
         : viewMode === "years"
-          ? "Poprzednia dekada"
-          : "Poprzednie stulecie"
+          ? "Previous decade"
+          : "Previous century"
   const nextLabel =
     viewMode === "days"
-      ? "Następny miesiąc"
+      ? "Next month"
       : viewMode === "months"
-        ? "Następny rok"
+        ? "Next year"
         : viewMode === "years"
-          ? "Następna dekada"
-          : "Następne stulecie"
+          ? "Next decade"
+          : "Next century"
 
   const handlePrevious = () => {
     if (viewMode === "days") {
@@ -480,7 +480,7 @@ export function DatePicker({
               disabled={disabled}
               onClick={() => handleSelect(new Date())}
             >
-              Dzisiaj
+              Today
             </Button>
             {nullable ? (
               <Button
@@ -492,7 +492,7 @@ export function DatePicker({
                   setOpen(false)
                 }}
               >
-                Wyczyść
+                Clear
               </Button>
             ) : null}
           </CardFooter>

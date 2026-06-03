@@ -186,7 +186,7 @@ const columns: ColumnDef<TaskRow>[] = [
     cell: ({ row }) => (
       <Badge variant="outline" className="px-1.5 text-muted-foreground">
         {row.original.status === "Done" ? (
-          <RiCheckboxCircleFill className="fill-green-500 dark:fill-green-400" />
+          <RiCheckboxCircleFill className="fill-blue-500 dark:fill-blue-400" />
         ) : (
           <RiLoader4Line />
         )}
@@ -204,7 +204,7 @@ const columns: ColumnDef<TaskRow>[] = [
           toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
             loading: `Zapisywanie ${row.original.header}`,
             success: "Gotowe",
-            error: "Błąd",
+            error: "Error",
           })
         }}
       >
@@ -229,7 +229,7 @@ const columns: ColumnDef<TaskRow>[] = [
           toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
             loading: `Zapisywanie ${row.original.header}`,
             success: "Gotowe",
-            error: "Błąd",
+            error: "Error",
           })
         }}
       >
@@ -246,9 +246,9 @@ const columns: ColumnDef<TaskRow>[] = [
   },
   {
     accessorKey: "reviewer",
-    header: "Odpowiedzialny",
+    header: "Owner",
     cell: ({ row }) => {
-      const isAssigned = row.original.reviewer !== "Przydziel"
+      const isAssigned = row.original.reviewer !== "Assign"
 
       if (isAssigned) {
         return row.original.reviewer
@@ -257,7 +257,7 @@ const columns: ColumnDef<TaskRow>[] = [
       return (
         <>
           <Label htmlFor={`${row.original.id}-reviewer`} className="sr-only">
-            Odpowiedzialny
+            Owner
           </Label>
           <Select>
             <SelectTrigger
@@ -265,7 +265,7 @@ const columns: ColumnDef<TaskRow>[] = [
               size="sm"
               id={`${row.original.id}-reviewer`}
             >
-              <SelectValue placeholder="Przydziel" />
+              <SelectValue placeholder="Assign" />
             </SelectTrigger>
             <SelectContent align="end">
               <SelectGroup>
@@ -399,7 +399,7 @@ export function TasksDataTable({ data: initialData }: { data: TaskRow[] }) {
     >
       <div className="flex items-center justify-between px-4 lg:px-6">
         <Label htmlFor="view-selector" className="sr-only">
-          Widok
+          View
         </Label>
         <Select defaultValue="outline">
           <SelectTrigger
@@ -407,33 +407,33 @@ export function TasksDataTable({ data: initialData }: { data: TaskRow[] }) {
             size="sm"
             id="view-selector"
           >
-            <SelectValue placeholder="Wybierz sekcję" />
+            <SelectValue placeholder="Select section" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="outline">Operacje</SelectItem>
-              <SelectItem value="past-performance">Treningi</SelectItem>
-              <SelectItem value="key-personnel">Zespół</SelectItem>
-              <SelectItem value="focus-documents">Dokumenty</SelectItem>
+              <SelectItem value="outline">Operations</SelectItem>
+              <SelectItem value="past-performance">Training</SelectItem>
+              <SelectItem value="key-personnel">Team</SelectItem>
+              <SelectItem value="focus-documents">Documents</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
         <TabsList className="hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:bg-muted-foreground/30 **:data-[slot=badge]:px-1 @4xl/main:flex">
-          <TabsTrigger value="outline">Operacje</TabsTrigger>
+          <TabsTrigger value="outline">Operations</TabsTrigger>
           <TabsTrigger value="past-performance">
-            Treningi <Badge variant="secondary">3</Badge>
+            Training <Badge variant="secondary">3</Badge>
           </TabsTrigger>
           <TabsTrigger value="key-personnel">
-            Zespół <Badge variant="secondary">2</Badge>
+            Team <Badge variant="secondary">2</Badge>
           </TabsTrigger>
-          <TabsTrigger value="focus-documents">Dokumenty</TabsTrigger>
+          <TabsTrigger value="focus-documents">Documents</TabsTrigger>
         </TabsList>
         <div className="flex items-center gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
                 <RiLayoutColumnLine data-icon="inline-start" />
-                Kolumny
+                Columns
                 <RiArrowDownSLine data-icon="inline-end" />
               </Button>
             </DropdownMenuTrigger>
@@ -463,7 +463,7 @@ export function TasksDataTable({ data: initialData }: { data: TaskRow[] }) {
           </DropdownMenu>
           <Button variant="outline" size="sm">
             <RiAddLine />
-            <span className="hidden lg:inline">Dodaj zadanie</span>
+            <span className="hidden lg:inline">Add task</span>
           </Button>
         </div>
       </div>
@@ -514,7 +514,7 @@ export function TasksDataTable({ data: initialData }: { data: TaskRow[] }) {
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      Brak danych.
+                      No data.
                     </TableCell>
                   </TableRow>
                 )}
@@ -530,7 +530,7 @@ export function TasksDataTable({ data: initialData }: { data: TaskRow[] }) {
           <div className="flex w-full items-center gap-8 lg:w-fit">
             <div className="hidden items-center gap-2 lg:flex">
               <Label htmlFor="rows-per-page" className="text-sm font-medium">
-                Wierszy na stronę
+                Rows per page
               </Label>
               <Select
                 value={`${table.getState().pagination.pageSize}`}
@@ -655,7 +655,7 @@ function TableCellViewer({ item }: { item: TaskRow }) {
         <DrawerHeader className="gap-1">
           <DrawerTitle>{item.header}</DrawerTitle>
           <DrawerDescription>
-            Podsumowanie zadania i powiązanych metryk za 6 miesięcy
+            Task summary and related metrics over 6 months
           </DrawerDescription>
         </DrawerHeader>
         <div className="flex flex-col gap-4 overflow-y-auto px-4 text-sm">
@@ -704,13 +704,12 @@ function TableCellViewer({ item }: { item: TaskRow }) {
               <Separator />
               <div className="grid gap-2">
                 <div className="flex gap-2 leading-none font-medium">
-                  Wskaźnik wzrósł o 5,2% w tym miesiącu{" "}
+                  The metric increased by 5.2% this month{" "}
                   <RiArrowUpLine className="size-4" />
                 </div>
                 <div className="text-muted-foreground">
-                  Użyj karty, aby szybko sprawdzić stan zadania, przypisać
-                  odpowiedzialnego oraz porównać plan z wykonaniem w operacjach
-                  klubu.
+                  Use this card to review task status, assign an owner, and
+                  compare planned work with club operations.
                 </div>
               </div>
               <Separator />

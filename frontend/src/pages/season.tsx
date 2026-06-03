@@ -10,10 +10,10 @@ export default function SeasonPage({ currentRoute }: SeasonPageProps) {
       currentRoute={currentRoute}
       baseRoute="/season"
       schemaRoute="/training/seasons"
-      entityLabel="Sezon"
-      emptyMessage="Brak sezonów do wyświetlenia."
+      entityLabel="Season"
+      emptyMessage="No seasons to display."
       detailTitleFields={["name"]}
-      deleteSuccessMessage={(record) => `Usunięto sezon #${record.id}.`}
+      deleteSuccessMessage={(record) => `Deleted season #${record.id}.`}
     />
   )
 }

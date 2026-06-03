@@ -161,7 +161,7 @@ const toTimestampLabel = (value: string | null) => {
 
 const getMemberFullName = (member?: MemberRecord) => {
   if (!member) {
-    return "Nieznany członek"
+    return "Unknown member"
   }
 
   return `${member.first_name} ${member.last_name}`.trim()
@@ -251,7 +251,7 @@ export default function TrainingSessionSheetPage({
           toast.error(
             error instanceof Error
               ? error.message
-              : "Nie udało się pobrać listy sesji."
+              : "Unable to load the session list."
           )
         }
       } finally {
@@ -297,7 +297,7 @@ export default function TrainingSessionSheetPage({
           toast.error(
             error instanceof Error
               ? error.message
-              : "Nie udało się pobrać listy członków."
+              : "Unable to load the member list."
           )
         }
       } finally {
@@ -365,7 +365,7 @@ export default function TrainingSessionSheetPage({
           toast.error(
             error instanceof Error
               ? error.message
-              : "Nie udało się pobrać danych sesji."
+              : "Unable to load session data."
           )
         }
       } finally {
@@ -424,7 +424,7 @@ export default function TrainingSessionSheetPage({
           toast.error(
             error instanceof Error
               ? error.message
-              : "Nie udało się pobrać terminów z harmonogramu."
+              : "Unable to load schedule dates."
           )
         }
       } finally {
@@ -488,7 +488,7 @@ export default function TrainingSessionSheetPage({
     }
 
     if (rows.some((row) => row.member_id === memberId)) {
-      toast.error("Ten członek jest już na liście.")
+      toast.error("This member is already on the list.")
       return
     }
 
@@ -583,13 +583,13 @@ export default function TrainingSessionSheetPage({
         })
       }
 
-      toast.success("Lista obecności została zapisana.")
+      toast.success("Attendance roster saved.")
       setSessionDataRevision((current) => current + 1)
     } catch (error) {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Nie udało się zapisać listy obecności."
+          : "Unable to save the attendance roster."
       )
     } finally {
       setIsSaving(false)
@@ -601,19 +601,19 @@ export default function TrainingSessionSheetPage({
       <div className="px-4 lg:px-6">
         <Card>
           <CardHeader className="gap-3">
-            <CardTitle>Lista obecności sesji</CardTitle>
+            <CardTitle>Session attendance roster</CardTitle>
             <CardDescription>
-              Wybierz konkretną sesję treningową i uzupełnij listę obecności.
+              Select a training session and complete the attendance roster.
             </CardDescription>
             <div className="max-w-xl">
               <Select value={selectedSessionId} onValueChange={handleSessionSelect}>
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Wybierz sesję treningową" />
+                  <SelectValue placeholder="Select training session" />
                 </SelectTrigger>
                 <SelectContent>
                   {isLoadingSessions ? (
                     <SelectItem value="__loading" disabled>
-                      Ładowanie sesji...
+                      Loading sessions...
                     </SelectItem>
                   ) : sessions.length > 0 ? (
                     sessions.map((session) => (
@@ -623,7 +623,7 @@ export default function TrainingSessionSheetPage({
                     ))
                   ) : (
                     <SelectItem value="__empty" disabled>
-                      Brak sesji treningowych.
+                      No training sessions.
                     </SelectItem>
                   )}
                 </SelectContent>
@@ -633,24 +633,24 @@ export default function TrainingSessionSheetPage({
           <CardContent className="space-y-6">
             {!selectedSessionId ? (
               <p className="text-sm text-muted-foreground">
-                Po wybraniu sesji pojawi się tabela obecności oraz terminy z harmonogramu.
+                After selecting a session, the attendance table and schedule dates will appear.
               </p>
             ) : isLoadingSessionData ? (
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <RiLoader4Line className="size-4 animate-spin" />
-                Ładowanie danych sesji...
+                Loading session data...
               </div>
             ) : (
               <>
                 <div className="grid gap-4 lg:grid-cols-2">
                   <Card className="border-dashed">
                     <CardHeader className="pb-3">
-                      <CardTitle className="text-base">Poprzednie terminy</CardTitle>
+                      <CardTitle className="text-base">Previous dates</CardTitle>
                     </CardHeader>
                     <CardContent>
                       {isLoadingHarmonogram ? (
                         <p className="text-sm text-muted-foreground">
-                          Ładowanie harmonogramu...
+                          Loading schedule...
                         </p>
                       ) : previousEvents.length > 0 ? (
                         <ul className="space-y-2 text-sm">
@@ -663,19 +663,19 @@ export default function TrainingSessionSheetPage({
                         </ul>
                       ) : (
                         <p className="text-sm text-muted-foreground">
-                          Brak wcześniejszych terminów w oknie harmonogramu.
+                          No earlier dates in the schedule window.
                         </p>
                       )}
                     </CardContent>
                   </Card>
                   <Card className="border-dashed">
                     <CardHeader className="pb-3">
-                      <CardTitle className="text-base">Nadchodzące terminy</CardTitle>
+                      <CardTitle className="text-base">Upcoming dates</CardTitle>
                     </CardHeader>
                     <CardContent>
                       {isLoadingHarmonogram ? (
                         <p className="text-sm text-muted-foreground">
-                          Ładowanie harmonogramu...
+                          Loading schedule...
                         </p>
                       ) : upcomingEvents.length > 0 ? (
                         <ul className="space-y-2 text-sm">
@@ -688,7 +688,7 @@ export default function TrainingSessionSheetPage({
                         </ul>
                       ) : (
                         <p className="text-sm text-muted-foreground">
-                          Brak kolejnych terminów w oknie harmonogramu.
+                          No upcoming dates in the schedule window.
                         </p>
                       )}
                     </CardContent>
@@ -701,8 +701,8 @@ export default function TrainingSessionSheetPage({
                       <SelectValue
                         placeholder={
                           isLoadingMembers
-                            ? "Ładowanie członków..."
-                            : "Wybierz członka do dodania"
+                            ? "Loading members..."
+                            : "Select member to add"
                         }
                       />
                     </SelectTrigger>
@@ -715,14 +715,14 @@ export default function TrainingSessionSheetPage({
                         ))
                       ) : (
                         <SelectItem value="__no-members" disabled>
-                          Brak członków do dodania.
+                          No members to add.
                         </SelectItem>
                       )}
                     </SelectContent>
                   </Select>
                   <Button onClick={handleAddMember} disabled={!memberToAdd}>
                     <RiAddLine data-icon="inline-start" />
-                    Dodaj członka
+                    Add member
                   </Button>
                   <Button onClick={handleSave} disabled={isSaving || !selectedSessionId}>
                     {isSaving ? (
@@ -730,7 +730,7 @@ export default function TrainingSessionSheetPage({
                     ) : (
                       <RiSave3Line data-icon="inline-start" />
                     )}
-                    Zapisz listę
+                    Save roster
                   </Button>
                 </div>
 
@@ -738,9 +738,9 @@ export default function TrainingSessionSheetPage({
                   <Table>
                     <TableHeader className="bg-border">
                       <TableRow>
-                        <TableHead>Członek</TableHead>
+                        <TableHead>Member</TableHead>
                         <TableHead className="w-28">Obecny</TableHead>
-                        <TableHead className="w-44">Źródło</TableHead>
+                        <TableHead className="w-44">Source</TableHead>
                         <TableHead>Notatka</TableHead>
                         <TableHead className="w-28 text-right">Akcje</TableHead>
                       </TableRow>
@@ -760,14 +760,14 @@ export default function TrainingSessionSheetPage({
                                     attended: checked === true,
                                   })
                                 }
-                                aria-label={`Obecność członka ${row.member_id}`}
+                                aria-label={`Attendance for member ${row.member_id}`}
                               />
                             </TableCell>
                             <TableCell>
                               <div className="flex flex-col gap-1">
                                 {row.source === "external_device" ? (
                                   <Badge variant="secondary" className="w-fit">
-                                    Urządzenie
+                                    Device
                                   </Badge>
                                 ) : row.source === "instructor" ? (
                                   <Badge variant="outline" className="w-fit">
@@ -806,7 +806,7 @@ export default function TrainingSessionSheetPage({
                                 variant="ghost"
                                 size="icon-sm"
                                 onClick={() => handleRemoveRow(row.member_id)}
-                                aria-label="Usuń wiersz"
+                                aria-label="Remove row"
                               >
                                 <RiDeleteBinLine />
                               </Button>
@@ -819,7 +819,7 @@ export default function TrainingSessionSheetPage({
                             colSpan={5}
                             className="h-24 text-center text-muted-foreground"
                           >
-                            Lista jest pusta. Dodaj członków i oznacz obecność.
+                            The list is empty. Add members and mark attendance.
                           </TableCell>
                         </TableRow>
                       )}
