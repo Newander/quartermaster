@@ -16,13 +16,16 @@ import {
 } from "@remixicon/react"
 
 import type {
+  ClubLoadStatistics,
   GroupOccupancyStatistics,
   NewMembersStatistics,
 } from "@/lib/dashboard-api"
+import { Skeleton } from "@/components/ui/skeleton"
 
 type SectionCardsProps = {
   newMembers: NewMembersStatistics | null
   groupOccupancy: GroupOccupancyStatistics | null
+  clubLoad: ClubLoadStatistics | null
   isLoading?: boolean
 }
 
@@ -43,9 +46,20 @@ const formatSignedNumber = (value: number) => {
 
 const formatOccupancyPercent = (value: number) => `${value.toFixed(1)}%`
 
+const sumClubLoad = (clubLoad: ClubLoadStatistics | null) => {
+  return (clubLoad?.points ?? []).reduce(
+    (totals, point) => ({
+      payments: totals.payments + point.payments,
+      trainings: totals.trainings + point.trainings,
+    }),
+    { payments: 0, trainings: 0 }
+  )
+}
+
 export function SectionCards({
   newMembers,
   groupOccupancy,
+  clubLoad,
   isLoading = false,
 }: SectionCardsProps) {
   const newMembersCount = newMembers?.current_month_count ?? 0
@@ -56,6 +70,8 @@ export function SectionCards({
   const occupancyAttended = groupOccupancy?.total_attended ?? 0
   const occupancyCapacity = groupOccupancy?.total_capacity ?? 0
   const occupancySessions = groupOccupancy?.sessions_count ?? 0
+  const clubLoadTotals = sumClubLoad(clubLoad)
+  const operationalEvents = clubLoadTotals.trainings + clubLoadTotals.payments
 
   const trendIcon =
     newMembersDelta > 0 ? (
@@ -67,12 +83,12 @@ export function SectionCards({
     )
 
   return (
-    <div className="grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 dark:*:data-[slot=card]:bg-card">
+    <div className="grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-3">
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>New members</CardDescription>
+          <CardDescription>Member acquisition</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            {isLoading ? "..." : newMembersCount}
+            {isLoading ? <Skeleton className="h-9 w-20" /> : newMembersCount}
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
@@ -87,7 +103,7 @@ export function SectionCards({
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Month-over-month change
+            New members this month
           </div>
           <div className="text-muted-foreground">
             {isLoading
@@ -98,9 +114,13 @@ export function SectionCards({
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Group occupancy</CardDescription>
+          <CardDescription>Seat utilization</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            {isLoading ? "..." : formatOccupancyPercent(occupancyPercent)}
+            {isLoading ? (
+              <Skeleton className="h-9 w-24" />
+            ) : (
+              formatOccupancyPercent(occupancyPercent)
+            )}
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
@@ -117,6 +137,30 @@ export function SectionCards({
             {isLoading
               ? "Loading data..."
               : `${occupancyAttended} attendances / ${occupancyCapacity} seats`}
+          </div>
+        </CardFooter>
+      </Card>
+      <Card className="@container/card">
+        <CardHeader>
+          <CardDescription>Operational events</CardDescription>
+          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+            {isLoading ? <Skeleton className="h-9 w-24" /> : operationalEvents}
+          </CardTitle>
+          <CardAction>
+            <Badge variant="outline">
+              <RiArrowRightLine />
+              {isLoading ? "..." : `${clubLoad?.days ?? 90} days`}
+            </Badge>
+          </CardAction>
+        </CardHeader>
+        <CardFooter className="flex-col items-start gap-1.5 text-sm">
+          <div className="line-clamp-1 flex gap-2 font-medium">
+            Training and payment activity
+          </div>
+          <div className="text-muted-foreground">
+            {isLoading
+              ? "Loading data..."
+              : `${clubLoadTotals.trainings} trainings / ${clubLoadTotals.payments} payments`}
           </div>
         </CardFooter>
       </Card>

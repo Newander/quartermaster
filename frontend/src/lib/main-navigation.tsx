@@ -69,7 +69,7 @@ const MAIN_NAVIGATION_DEFINITIONS: NavigationDefinition[] = [
     pageTitle: "Documents",
     url: "/contract",
     iconClass: RiListUnordered,
-    groupTitle: "Klub",
+    groupTitle: "Club",
   },
   {
     id: "member",
@@ -77,15 +77,15 @@ const MAIN_NAVIGATION_DEFINITIONS: NavigationDefinition[] = [
     pageTitle: "Club members",
     url: "/member",
     iconClass: RiTeamFill,
-    groupTitle: "Klub",
+    groupTitle: "Club",
   },
   {
     id: "instructor",
     title: "Instructors",
-    pageTitle: "Instruktorzy klubu",
+    pageTitle: "Club instructors",
     url: "/instructor",
     iconClass: RiGitRepositoryLine,
-    groupTitle: "Klub",
+    groupTitle: "Club",
   },
   {
     id: "schedule",
@@ -106,7 +106,7 @@ const MAIN_NAVIGATION_DEFINITIONS: NavigationDefinition[] = [
   {
     id: "training-form",
     title: "Training forms",
-    pageTitle: "Formy treningowe",
+    pageTitle: "Training forms",
     url: "/training-form",
     iconClass: RiMedalLine,
     groupTitle: "Training",
@@ -114,7 +114,7 @@ const MAIN_NAVIGATION_DEFINITIONS: NavigationDefinition[] = [
   {
     id: "season",
     title: "Seasons",
-    pageTitle: "Sezony treningowe",
+    pageTitle: "Training seasons",
     url: "/season",
     iconClass: RiListUnordered,
     groupTitle: "Training",
@@ -122,7 +122,7 @@ const MAIN_NAVIGATION_DEFINITIONS: NavigationDefinition[] = [
   {
     id: "training-session",
     title: "Sessions",
-    pageTitle: "Sesje treningowe",
+    pageTitle: "Training sessions",
     url: "/training-session",
     iconClass: RiFolderUserLine,
     groupTitle: "Training",
@@ -194,10 +194,10 @@ const MAIN_NAVIGATION_DEFINITIONS: NavigationDefinition[] = [
   {
     id: "role",
     title: "Roles",
-    pageTitle: "Role systemowe",
+    pageTitle: "System roles",
     url: "/role",
     iconClass: RiShieldUserLine,
-    groupTitle: "Administracja",
+    groupTitle: "Administration",
   },
   {
     id: "user",
@@ -205,7 +205,7 @@ const MAIN_NAVIGATION_DEFINITIONS: NavigationDefinition[] = [
     pageTitle: "System users",
     url: "/user",
     iconClass: RiUserSettingsLine,
-    groupTitle: "Administracja",
+    groupTitle: "Administration",
   },
 ]
 

@@ -3,6 +3,7 @@ import { RiMoonClearLine, RiSunLine } from "@remixicon/react"
 
 import { useTheme } from "@/components/theme-provider"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 const COLOR_SCHEME_QUERY = "(prefers-color-scheme: dark)"
 
@@ -19,7 +20,13 @@ function getSystemTheme(): ResolvedTheme {
   return "light"
 }
 
-export function ThemeToggle() {
+export function ThemeToggle({
+  className,
+  showLabel = true,
+}: {
+  className?: string
+  showLabel?: boolean
+}) {
   const { theme, setTheme } = useTheme()
   const [systemTheme, setSystemTheme] =
     React.useState<ResolvedTheme>(getSystemTheme)
@@ -53,18 +60,18 @@ export function ThemeToggle() {
     <Button
       type="button"
       variant="outline"
-      size="sm"
-      className="ml-auto gap-2 border-border/90"
+      size={showLabel ? "sm" : "icon-sm"}
+      className={cn("border-border/90", showLabel && "gap-2", className)}
       onClick={handleToggleTheme}
       aria-label="Toggle theme"
       title="Toggle theme"
     >
       {isDark ? (
-        <RiMoonClearLine className="size-4" aria-hidden="true" />
+        <RiMoonClearLine data-icon="inline-start" aria-hidden="true" />
       ) : (
-        <RiSunLine className="size-4" aria-hidden="true" />
+        <RiSunLine data-icon="inline-start" aria-hidden="true" />
       )}
-      <span>{isDark ? "Ciemny" : "Jasny"}</span>
+      {showLabel ? <span>{isDark ? "Dark" : "Light"}</span> : null}
     </Button>
   )
 }
