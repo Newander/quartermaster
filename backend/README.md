@@ -1,6 +1,6 @@
 # Quartermaster System - Backend API
 
-A comprehensive backend service for managing a HEMA (Historical European Martial Arts) gym, built with FastAPI, SQLAlchemy, and SQLite.
+A comprehensive backend service for managing a HEMA (Historical European Martial Arts) gym, built with FastAPI, SQLAlchemy, Alembic, and a MySQL/SQLite-compatible development setup.
 
 ## Features
 
@@ -20,10 +20,10 @@ A comprehensive backend service for managing a HEMA (Historical European Martial
 
 ## Technology Stack
 
-- **Python 3.13**
+- **Python 3.14**
 - **FastAPI** - Modern web framework for building APIs
 - **SQLAlchemy** - SQL toolkit and ORM
-- **SQLite** - Lightweight database
+- **MySQL / SQLite** - MySQL for Docker demo, SQLite-compatible local development paths
 - **Pydantic** - Data validation using Python type annotations
 - **Uvicorn** - ASGI server
 
@@ -68,7 +68,7 @@ backend/
 
 2. **Create and activate virtual environment**:
 ```bash
-python3.13 -m venv .venv
+python3.14 -m venv .venv
 source .venv/bin/activate  # On macOS/Linux
 ```
 
@@ -76,6 +76,8 @@ source .venv/bin/activate  # On macOS/Linux
 ```bash
 pip install -r requirements.txt
 ```
+
+For the Docker-based full-stack demo, use the repository root `docker-compose.yml`; it starts MySQL, the backend, fixtures, and the frontend.
 
 ## Running the Application
 

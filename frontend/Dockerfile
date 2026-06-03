@@ -4,11 +4,13 @@ WORKDIR /app
 
 ENV CI=true
 
-COPY package.json package-lock.json ./
-RUN npm install --include=dev --no-audit --no-fund
+RUN corepack enable && corepack prepare pnpm@11.3.0 --activate
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile
 
 COPY . .
-RUN npx vite build
+RUN pnpm run build
 
 FROM nginx:1.27-alpine
 

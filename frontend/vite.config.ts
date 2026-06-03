@@ -3,6 +3,64 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
+function getVendorChunk(id: string): string | undefined {
+    if (!id.includes('node_modules')) {
+        return undefined
+    }
+
+    if (
+        id.includes('/node_modules/react/') ||
+        id.includes('/node_modules/react-dom/') ||
+        id.includes('/node_modules/scheduler/')
+    ) {
+        return 'vendor-react'
+    }
+
+    if (id.includes('/node_modules/@radix-ui/')) {
+        return 'vendor-radix'
+    }
+
+    if (
+        id.includes('/node_modules/@dnd-kit/') ||
+        id.includes('/node_modules/@tanstack/react-table/')
+    ) {
+        return 'vendor-table-dnd'
+    }
+
+    if (
+        id.includes('/node_modules/recharts/') ||
+        id.includes('/node_modules/d3-') ||
+        id.includes('/node_modules/victory-vendor/')
+    ) {
+        return 'vendor-charts'
+    }
+
+    if (
+        id.includes('/node_modules/@hookform/') ||
+        id.includes('/node_modules/react-hook-form/') ||
+        id.includes('/node_modules/zod/')
+    ) {
+        return 'vendor-forms'
+    }
+
+    if (
+        id.includes('/node_modules/@remixicon/') ||
+        id.includes('/node_modules/class-variance-authority/') ||
+        id.includes('/node_modules/clsx/') ||
+        id.includes('/node_modules/cmdk/') ||
+        id.includes('/node_modules/lucide-react/') ||
+        id.includes('/node_modules/radix-ui/') ||
+        id.includes('/node_modules/react-resizable-panels/') ||
+        id.includes('/node_modules/sonner/') ||
+        id.includes('/node_modules/tailwind-merge/') ||
+        id.includes('/node_modules/vaul/')
+    ) {
+        return 'vendor-ui'
+    }
+
+    return 'vendor'
+}
+
 // https://vitejs.dev/config/
 export default defineConfig(({command, mode}) => {
     // Загружаем переменные из .env файлов, если нужно
@@ -17,6 +75,13 @@ export default defineConfig(({command, mode}) => {
         resolve: {
             alias: {
                 '@': path.resolve(__dirname, './src'),
+            },
+        },
+        build: {
+            rollupOptions: {
+                output: {
+                    manualChunks: getVendorChunk,
+                },
             },
         },
         server: {

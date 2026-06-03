@@ -1,159 +1,99 @@
-# HEMA Garden CRM (Gym Management System)
+# Quartermaster CRM
 
-A monorepo for managing a HEMA (Historical European Martial Arts) gym: members, instructors, training schedules, attendance, memberships, payments, events, storage rentals, and finances.
+Quartermaster CRM is a full-stack management system for a HEMA (Historical European Martial Arts) club. It covers daily club operations: members, instructors, training schedules, attendance, contracts, shelves, payments, events, expenses, and finance-oriented analytics.
 
-This repository contains two applications:
-- backend — FastAPI-based REST API with SQLite/SQLAlchemy
-- frontend — React + TypeScript (Vite) web UI
+The repository is structured as a portfolio-grade monorepo: a FastAPI backend, a React/Vite frontend, Docker-based local demo setup, demo fixtures, OpenAPI-driven frontend types, and a CI workflow that verifies the main build path.
 
-For detailed documentation of each app, see:
-- backend/README.md
-- frontend/README.md
+## Why This Project Matters
 
-## Repository Structure
+- Models a real operational domain instead of a toy CRUD example.
+- Uses generated API metadata to drive reusable CRUD screens and form behavior.
+- Includes role-aware backend access patterns for sensitive finance, shelf, document, event, and attendance data.
+- Ships with a Docker full-stack demo path: MySQL, backend, fixtures, and static frontend.
+- Keeps frontend quality gates reproducible with `pnpm install --frozen-lockfile`, TypeScript checking, and production build.
 
-```
-hema-garden-crm/
-├── backend/      # FastAPI service (Python 3.13)
-├── frontend/     # React + TypeScript (Vite)
-├── processes.md  # High-level processes (ru)
-└── ignored/      # Project notes (ru), not part of the app runtime
+## Stack
+
+- Backend: Python 3.14, FastAPI, SQLAlchemy 2.x, Alembic, MySQL/SQLite-compatible development setup
+- Frontend: React 18, TypeScript, Vite, Tailwind CSS, shadcn/ui-style primitives, TanStack Table, Recharts
+- Tooling: Docker Compose, pnpm, OpenAPI-generated TypeScript types, GitHub Actions CI
+
+## Repository Layout
+
+```text
+quartermaster/
+├── backend/              # FastAPI service, SQLAlchemy models, Alembic migrations
+├── frontend/             # React + TypeScript + Vite SPA
+├── docs/                 # Local run docs and operational SQL notes
+├── docker-compose.yml    # Full-stack local demo
+└── .github/workflows/    # CI quality gate
 ```
 
 ## Feature Overview
 
 - Member and instructor management
-- Training forms, weekly schedules, and attendance tracking
-- Membership plans and payment tracking
-- Events (workshops, tournaments) with registrations and expenses
-- Storage rental (shelves/lockers) management
-- Financial tracking (income, expenses, payouts) and analytics
-
-## Roadmap & Status
-
-The following list tracks major capabilities and their status.
-
-### Member Management
-- [x] Add new club members
-- [x] Assign instructors
-
-### Shelf Management
-- [x] Add shelves
-- [x] Group shelves by location
-- [x] Assign shelves to club members
-- [ ] Display shelves with filtering by status:
-  - [x] Occupied / Vacant
-  - [x] With contract / Without contract
-  - [x] Paid / Unpaid
-  - [ ] With expired contract
-- [x] Attach contracts to shelves (membership)
-
-### Payment Tracking
-- [x] Record payment facts (completed and pending) for:
-  - [x] Contracts (monthly / yearly)
-  - [x] Shelves (monthly / yearly)
-
-### Balance Management
-- [x] Record current club balance (daily)
-
-### Expense Tracking
-- [x] Add expenses manually
-- [ ] Set up recurring payments (fixed monthly amounts)
-
-### Analytics & Statistics
-- [ ] Active club members over time and by seasons
-  - [x] Filter by start date
-- [ ] First-time visits over time and by seasons
-  - [ ] Breakdown by age groups
-- [ ] Financial income and expenses by months and seasons
-  - [ ] Breakdown by categories
-- [ ] Number of training sessions over time and by seasons
-  - [ ] Breakdown by type, instructor, and participant count
-
-### Removes
-- [ ] Remove members (nominal)
-- [ ] Remove shelves (nominal)
-- [ ] Remove contracts (nominal)
-- [ ] Remove expenses (absolute)
-- [ ] Remove payments (absolute)
-- [ ] Remove storage rentals
-
-## Prerequisites
-
-- Backend: Python 3.13, pip
-- Frontend: Node.js ≥ 18, npm
+- Training forms, weekly schedules, training sessions, and attendance
+- Public attendance flow with device identity support
+- Membership contracts, shelves/lockers, and shelf rental tracking
+- Payment, expense, balance, and money category management
+- Dashboard and analytics views
+- Authenticated admin shell with role-aware API access
 
 ## Quick Start
 
-### 1) Backend (FastAPI)
+The most complete local demo is Docker Compose:
 
-From the backend folder:
+```bash
+docker compose up --build
+```
+
+Open:
+
+```text
+http://localhost:7777/hema-crm/
+```
+
+Demo credentials loaded by fixtures:
+
+```text
+username: admin_hema
+password: supersecretpassword123
+```
+
+For more local run details, see [docs/run-local.md](docs/run-local.md).
+
+## Development Checks
+
+Backend:
 
 ```bash
 cd backend
-python3.13 -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-python main.py
+.venv/bin/python -m compileall -q app main.py
 ```
 
-The API will be available at:
-- http://localhost:8000
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
-
-More details: backend/README.md
-
-### 2) Frontend (React + Vite)
-
-From the frontend folder:
+Frontend:
 
 ```bash
 cd frontend
-npm install
-npm run dev
+pnpm install --frozen-lockfile
+pnpm exec tsc --noEmit
+pnpm run build
 ```
 
-The app will be available at: http://localhost:5173
+The same core checks are captured in `.github/workflows/ci.yml`.
 
-More details: frontend/README.md
+## Application Docs
 
-## Configuration
+- [Backend README](backend/README.md)
+- [Frontend README](frontend/README.md)
+- [Local full-stack run guide](docs/run-local.md)
+- [Frontend API summary](frontend/docs/api-summary.md)
+- [Frontend code patterns](frontend/docs/code-patterns.md)
 
-### Backend
+## Current Status
 
-- Environment variables are managed via `.env` (loaded by Pydantic Settings):
-  - `APP_NAME` (default: "HEMA Garden Management System")
-  - `APP_VERSION` (default: `1.0.0`)
-  - `API_PREFIX` (default: `/api`)
-  - `DATABASE_URL` (default: `sqlite:///./hema_gym.db`)
-  - `BACKEND_CORS_ORIGINS` (default: `[*]`)
-- OpenAPI schema: `/openapi.json`
-- Interactive docs: `/docs` and `/redoc`
-
-### Frontend
-
-- API base URL is configured in `frontend/src/lib/api-client.ts` (default: `http://localhost:8000/api`). Adjust if the backend runs on a different host/port.
-
-## Development Notes
-
-- This repository includes Russian-language process descriptions in `processes.md` and additional notes in `ignored/project_info.md` that outline business workflows and analytics expectations.
-- Prefer updating the per-app READMEs for deep technical details; use this file for top-level guidance.
-
-## Troubleshooting
-
-- Ports:
-  - Backend: 8000 (FastAPI/Uvicorn)
-  - Frontend: 5173 (Vite dev server)
-- CORS: If the frontend cannot reach the backend due to CORS, set `BACKEND_CORS_ORIGINS` in backend `.env` (e.g., `["http://localhost:5173"]`).
-- Database: The default SQLite database file `hema_gym.db` is created in the `backend/` working directory. Ensure the process has write permissions.
+The project is usable as a local full-stack demo and is being tightened for portfolio review. The current engineering focus is reproducibility, CI visibility, clearer documentation, and test coverage around the highest-risk business workflows.
 
 ## License
 
-If a separate LICENSE file is added to the repository, it will govern usage. Until then, treat this project as “all rights reserved” by the authors.
-
-## Support
-
-For issues and questions, please open an issue in this repository.
-
-— Last updated: 2025-11-12 15:22
+If a separate LICENSE file is added to the repository, it will govern usage. Until then, treat this project as all rights reserved by the authors.

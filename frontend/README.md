@@ -1,176 +1,97 @@
-# Quartermaster CRM — Frontend
+# Quartermaster CRM Frontend
 
-A modern web application for managing a HEMA (Historical European Martial Arts) club/gym, built with React, TypeScript, and Vite.
+React + TypeScript + Vite frontend for the Quartermaster HEMA club management system.
 
-## Features
+## What It Does
 
-- 📊 Dashboard with statistics and analytics
-- 👥 Member management
-- 👨‍🏫 Instructor management
-- 📅 Schedule management
-- 💳 Membership plans
-- 🗓️ Events management
-- 💰 Finance tracking (Income, Expenses, Reports)
-- 📈 Analytics and reporting
+- Authenticated dashboard shell for daily club administration
+- CRUD resource pages backed by OpenAPI-generated TypeScript types
+- Member, instructor, schedule, session, attendance, contract, shelf, user, and role screens
+- Public attendance flow for training check-ins
+- Reusable data table, detail sheet, date/month pickers, and shadcn-style UI primitives
+- Dashboard charts and operational summaries
+
+## Stack
+
+- React 18
+- TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui-style component primitives
+- TanStack Query and TanStack Table
+- Recharts
+- pnpm
 
 ## Prerequisites
 
-- Node.js (v18 or higher recommended)
-- npm (comes with Node.js)
+- Node.js 22 or newer
+- pnpm 11.3.0
 
-## Quick Start
-
-### Option 1: Using the Helper Script (Recommended)
-
-The easiest way to run the application is using the provided helper script:
+## Install
 
 ```bash
-./run.sh
+pnpm install --frozen-lockfile
 ```
 
-This will present you with an interactive menu:
-1. Run development server
-2. Build for production
-3. Preview production build
-4. Install dependencies
-5. Clean and reinstall dependencies
-6. Exit
+The project intentionally uses `pnpm` only. Do not add `package-lock.json`.
 
-### Option 2: Manual Commands
-
-#### Install Dependencies
+## Run Locally
 
 ```bash
-npm install
+pnpm run dev
 ```
 
-#### Run Development Server
+The Vite dev server is configured for:
 
-```bash
-npm run dev
+```text
+http://localhost:8123/hema-crm/
 ```
 
-The application will be available at `http://localhost:5173`
+The backend proxy target defaults to:
 
-#### Build for Production
-
-```bash
-npm run build
+```text
+http://127.0.0.1:8080
 ```
 
-The built files will be in the `dist` directory.
+Override it with `VITE_API_PROXY_TARGET` if needed.
 
-#### Preview Production Build
+## Build And Checks
 
 ```bash
-npm run preview
+pnpm exec tsc --noEmit
+pnpm run build
+```
+
+Optional lint check:
+
+```bash
+pnpm run lint
 ```
 
 ## Project Structure
 
-```
+```text
 frontend/
 ├── src/
-│   ├── components/       # Reusable UI components
-│   │   └── layout/      # Layout components (Header, Sidebar, etc.)
-│   ├── pages/           # Page components
-│   │   └── finance/     # Finance-related pages
-│   ├── services/        # API service layer
-│   ├── types/           # TypeScript type definitions
-│   ├── lib/             # Utility functions and API client
-│   ├── App.tsx          # Main application component
-│   └── main.tsx         # Application entry point
-├── public/              # Static assets
-├── dist/                # Production build output
-└── run.sh              # Helper script to run the application
+│   ├── components/       # Reusable components and shadcn-style primitives
+│   ├── hooks/            # Shared React hooks
+│   ├── lib/              # API client, auth, router, table helpers
+│   ├── pages/            # App pages and feature screens
+│   ├── types/            # Generated and shared TypeScript types
+│   ├── App.tsx           # App state, route mapping, auth gate
+│   └── main.tsx          # React entry point
+├── docs/                 # Generated API docs and code pattern notes
+├── public/               # Static assets
+├── dist/                 # Production output
+└── pnpm-workspace.yaml   # pnpm workspace and build-script policy
 ```
 
-## Available Scripts
+## API Types
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-
-## Technology Stack
-
-- **React 18** - UI library
-- **TypeScript** - Type-safe JavaScript
-- **Vite** - Build tool and dev server
-- **TanStack Query** - Data fetching and caching
-- **React Router** - Client-side routing
-- **Tailwind CSS** - Utility-first CSS framework
-- **Lucide React** - Icon library
-- **Recharts** - Charting library
-- **Axios** - HTTP client
-
-## API Configuration
-
-The application expects a backend API to be running. Configure the API endpoint in `src/lib/api-client.ts`:
-
-```typescript
-const apiClient = axios.create({
-  baseURL: 'http://localhost:8000/api', // Update this to your API URL
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-```
-
-## Development
-
-### Code Style
-
-The project uses ESLint for code linting. Run the linter with:
-
-```bash
-npm run lint
-```
-
-### Type Checking
-
-TypeScript is configured for strict type checking. The build process will fail if there are type errors.
-
-## Building for Production
-
-1. Build the application:
-   ```bash
-   npm run build
-   ```
-
-2. The production-ready files will be in the `dist` directory
-
-3. Deploy the `dist` directory to your web server or hosting platform
+Generated API types live in `src/types/api.generated.ts` and are based on the backend OpenAPI schema. API documentation artifacts live in `docs/api-index.json` and `docs/api-summary.md`.
 
 ## Troubleshooting
 
-### Port Already in Use
+If install or build scripts are blocked, check `pnpm-workspace.yaml`. The repo allows `esbuild` postinstall scripts explicitly because Vite depends on the native esbuild binary.
 
-If port 5173 is already in use, Vite will automatically try the next available port. Check the terminal output for the actual URL.
-
-### Dependencies Issues
-
-If you encounter dependency issues, try cleaning and reinstalling:
-
-```bash
-rm -rf node_modules package-lock.json
-npm install
-```
-
-Or use the helper script option 5.
-
-### Build Errors
-
-Make sure all TypeScript errors are resolved before building:
-
-```bash
-npm run build
-```
-
-## License
-
-This frontend is part of the Quartermaster CRM project.
-
-## Support
-
-For issues and questions, please open an issue in this repository or contact the development team.
+If the frontend cannot reach the backend, confirm that the backend is running on port `8080` or set `VITE_API_PROXY_TARGET`.
