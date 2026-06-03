@@ -1,10 +1,18 @@
 import * as React from "react"
 
 import { LoginForm } from "@/components/login-form"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { checkAuth, loginUser, logoutUser, type AuthUser } from "@/lib/auth"
+import {
+  checkAuth,
+  getToken,
+  loginUser,
+  logoutUser,
+  subscribeAuthChanged,
+  type AuthUser,
+} from "@/lib/auth"
 import {
   DEFAULT_AUTHENTICATED_ROUTE,
   DEFAULT_UNAUTHENTICATED_ROUTE,
@@ -40,6 +48,7 @@ import UserPage from "@/pages/user"
 import CrudResourcePage from "@/pages/crud-resource-page"
 
 const routeFromWindow = () => getPathFromLocation(window.location)
+const AUTH_STORAGE_POLL_INTERVAL_MS = 1_000
 
 function LoginScreen({
   error,
@@ -50,14 +59,73 @@ function LoginScreen({
   isSubmitting: boolean
   onLogin: (values: { identifier: string; password: string }) => Promise<void>
 }) {
+  const logoSrc = `${import.meta.env.BASE_URL}favicon.png`
+
   return (
-    <main className="flex min-h-svh items-center justify-center bg-muted/30 p-6">
-      <LoginForm
-        className="w-full max-w-sm"
-        error={error}
-        isSubmitting={isSubmitting}
-        onLogin={onLogin}
-      />
+    <main className="min-h-svh bg-background">
+      <div className="grid min-h-svh lg:grid-cols-[minmax(0,1fr)_minmax(28rem,34rem)]">
+        <section className="flex min-h-[42svh] flex-col justify-between border-b bg-sidebar p-6 text-sidebar-foreground lg:min-h-svh lg:border-r lg:border-b-0 lg:p-10">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-sidebar-border bg-sidebar-primary/10 shadow-xs">
+                <img
+                  src={logoSrc}
+                  alt="Quartermaster logo"
+                  className="size-8 object-contain"
+                />
+              </span>
+              <div>
+                <p className="text-sm font-medium text-sidebar-foreground/70">
+                  Quartermaster CRM
+                </p>
+                <h1 className="text-xl font-semibold tracking-tight">
+                  Club operations console
+                </h1>
+              </div>
+            </div>
+            <ThemeToggle />
+          </div>
+
+          <div className="max-w-2xl py-10 lg:py-0">
+            <p className="text-sm font-medium text-sidebar-foreground/65">
+              Demo environment
+            </p>
+            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-lg border border-sidebar-border bg-background/45 p-4">
+                <p className="text-2xl font-semibold tabular-nums">300+</p>
+                <p className="mt-1 text-sm text-sidebar-foreground/65">
+                  seeded members
+                </p>
+              </div>
+              <div className="rounded-lg border border-sidebar-border bg-background/45 p-4">
+                <p className="text-2xl font-semibold tabular-nums">90d</p>
+                <p className="mt-1 text-sm text-sidebar-foreground/65">
+                  dashboard window
+                </p>
+              </div>
+              <div className="rounded-lg border border-sidebar-border bg-background/45 p-4">
+                <p className="text-2xl font-semibold tabular-nums">API</p>
+                <p className="mt-1 text-sm text-sidebar-foreground/65">
+                  resource views
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-xs text-sidebar-foreground/55">
+            Local demo stack ready for review.
+          </p>
+        </section>
+
+        <section className="flex items-center justify-center p-6 lg:p-10">
+          <LoginForm
+            className="w-full max-w-md"
+            error={error}
+            isSubmitting={isSubmitting}
+            onLogin={onLogin}
+          />
+        </section>
+      </div>
     </main>
   )
 }
@@ -147,6 +215,7 @@ export default function App() {
   const [isAuthLoading, setIsAuthLoading] = React.useState(true)
   const [isLoginSubmitting, setIsLoginSubmitting] = React.useState(false)
   const [loginError, setLoginError] = React.useState<string | null>(null)
+  const lastAuthTokenRef = React.useRef<string | null>(null)
 
   React.useEffect(() => {
     const handlePopState = () => setRoute(routeFromWindow())
@@ -156,12 +225,16 @@ export default function App() {
 
   React.useEffect(() => {
     let isMounted = true
+    let syncRequestId = 0
 
     const resolveUser = async () => {
+      const requestId = ++syncRequestId
+      lastAuthTokenRef.current = getToken()
       const currentUser = await checkAuth()
-      if (!isMounted) {
+      if (!isMounted || requestId !== syncRequestId) {
         return
       }
+      lastAuthTokenRef.current = getToken()
       setUser(currentUser)
       setIsAuthLoading(false)
 
@@ -174,10 +247,36 @@ export default function App() {
       }
     }
 
+    const handleStorage = (event: StorageEvent) => {
+      if (event.storageArea === window.localStorage) {
+        void resolveUser()
+      }
+    }
+
+    const handleFocus = () => {
+      void resolveUser()
+    }
+
+    const authTokenPoll = window.setInterval(() => {
+      const token = getToken()
+      if (token !== lastAuthTokenRef.current) {
+        void resolveUser()
+      }
+    }, AUTH_STORAGE_POLL_INTERVAL_MS)
+    const unsubscribeAuthChanged = subscribeAuthChanged(() => {
+      void resolveUser()
+    })
+
+    window.addEventListener("storage", handleStorage)
+    window.addEventListener("focus", handleFocus)
     void resolveUser()
 
     return () => {
       isMounted = false
+      window.clearInterval(authTokenPoll)
+      window.removeEventListener("storage", handleStorage)
+      window.removeEventListener("focus", handleFocus)
+      unsubscribeAuthChanged()
     }
   }, [])
 
